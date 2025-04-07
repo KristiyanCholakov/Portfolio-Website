@@ -19,21 +19,6 @@ const config: Config = {
         warning: '#f59e0b',
         success: '#22c55e',
       },
-      animation: {
-        'spin-slow': 'spin 12s linear infinite',
-        float: 'float 6s ease-in-out infinite',
-        flip: 'flip 4s ease-in-out infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-8px)' },
-        },
-        flip: {
-          '0%, 100%': { transform: 'rotateX(0deg)' },
-          '50%': { transform: 'rotateX(180deg)' },
-        },
-      },
     },
   },
   darkMode: 'class',

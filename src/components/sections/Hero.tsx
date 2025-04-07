@@ -10,41 +10,59 @@ export default function Hero() {
       id="hero"
       className="relative flex min-h-screen items-center justify-center overflow-hidden px-4 pt-32 pb-24 sm:px-6 lg:px-8"
     >
-      {/* Animated Tiles Background */}
-      <div className="absolute inset-0 -z-10 grid grid-cols-12 grid-rows-6 gap-1 opacity-10">
-        {[...Array(72)].map((_, i) => (
-          <div
-            key={i}
-            className="bg-surfaceLight animate-flip h-full w-full"
-            style={{ animationDelay: `${(Math.sin(i) + 1) * 0.5}s` }}
-          />
-        ))}
-      </div>
-
-      {/* Content */}
+      {/* Content Container */}
       <div className="mx-auto flex max-w-5xl flex-col items-center text-center">
-        {/* Wavy Double Border Image */}
+        {/* Profile Picture with Animated Glow */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6, ease: 'easeOut' }}
-          className="relative mb-6 rounded-full p-2"
+          className="relative mb-6 flex items-center justify-center rounded-full"
         >
-          {/* Outer border */}
+          {/* ⚡️ Outer glow animation - placed OUTSIDE and centered */}
+          <div className="absolute top-1/2 left-1/2 -z-10 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2">
+            {/* Glow Layer 1 */}
+            <motion.div
+              className="from-accent to-highlight absolute top-0 left-0 h-full w-full rounded-full bg-gradient-to-tr opacity-30 blur-[100px]"
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            {/* Glow Layer 2 */}
+            <motion.div
+              className="from-highlight to-accent absolute top-[10%] left-[10%] h-[80%] w-[80%] rounded-full bg-gradient-to-br opacity-40 blur-2xl"
+              animate={{ scale: [1, 1.15, 1] }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+            {/* Glow ring shimmer */}
+            <motion.div
+              className="border-accent/40 absolute top-[20%] left-[20%] h-[60%] w-[60%] rounded-full border-2"
+              animate={{ scale: [1, 1.05, 1], opacity: [0.4, 0.7, 0.4] }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }}
+            />
+          </div>
+
+          {/* Actual image container with small inner border */}
           <motion.div
-            className="from-highlight to-accent absolute inset-0 rounded-full bg-gradient-to-r opacity-60 blur-lg"
-            animate={{
-              rotate: [0, 360],
-              scale: [1, 1.02, 1],
-            }}
+            className="from-accent to-highlight relative z-10 rounded-full bg-gradient-to-tr p-[3px]"
+            animate={{ scale: [1, 1.01, 1] }}
             transition={{
               repeat: Infinity,
-              duration: 10,
+              duration: 6,
               ease: 'easeInOut',
             }}
-          />
-          {/* Inner border */}
-          <div className="from-accent to-highlight relative z-10 rounded-full bg-gradient-to-tr p-[3px]">
+          >
             <div className="bg-background rounded-full p-1">
               <Image
                 src="/profile.jpeg"
@@ -55,10 +73,10 @@ export default function Hero() {
                 priority
               />
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
-        {/* Name Typing */}
+        {/* Typing Name */}
         <motion.h1
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
@@ -68,7 +86,7 @@ export default function Hero() {
           <TypingText text="Kristiyan Cholakov" />
         </motion.h1>
 
-        {/* Subtitle Typing */}
+        {/* Typing Subtitle */}
         <motion.p
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}

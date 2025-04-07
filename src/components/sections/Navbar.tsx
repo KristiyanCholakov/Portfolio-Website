@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
+import TypingText from '@/components/ui/TypingText'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -28,19 +29,8 @@ const linkVariants = {
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [typedName, setTypedName] = useState('')
 
   const fullName = 'Kristiyan Cholakov'
-
-  useEffect(() => {
-    let index = 0
-    const interval = setInterval(() => {
-      setTypedName(fullName.slice(0, index + 1))
-      index++
-      if (index >= fullName.length) clearInterval(interval)
-    }, 75)
-    return () => clearInterval(interval)
-  }, [])
 
   return (
     <header className="border-border bg-background/80 fixed top-0 z-50 w-full border-b font-mono shadow-md shadow-black/10 backdrop-blur-md">
@@ -51,14 +41,7 @@ export default function Navbar() {
             href="/"
             className="text-accent flex items-center text-lg font-bold tracking-tight whitespace-nowrap sm:text-xl"
           >
-            <motion.span
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-            >
-              {typedName}
-              <span className="text-accent ml-1 animate-pulse">|</span>
-            </motion.span>
+            <TypingText text={fullName} className="text-accent ml-1" />
           </Link>
 
           {/* Desktop Nav */}

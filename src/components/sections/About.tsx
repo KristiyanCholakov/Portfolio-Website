@@ -14,8 +14,12 @@ import {
   Hash,
   Bot,
   ArrowRight,
+  Cpu,
+  Globe,
+  BarChart,
 } from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
+import { scrollToSection } from '@/utils/navigation'
 
 // Highlights with icons
 const highlights = [
@@ -38,6 +42,38 @@ const highlights = [
 
 // Main technologies
 const mainTech = ['Python', 'TypeScript', 'React', 'Next.js', 'TensorFlow']
+
+// Skills data for visualization
+const skillCategories = [
+  {
+    name: 'Web Development',
+    icon: Globe,
+    skills: [
+      { name: 'React', level: 90 },
+      { name: 'Next.js', level: 85 },
+      { name: 'TypeScript', level: 80 },
+      { name: 'CSS/Tailwind', level: 85 },
+    ],
+  },
+  {
+    name: 'Machine Learning',
+    icon: Cpu,
+    skills: [
+      { name: 'TensorFlow', level: 75 },
+      { name: 'Computer Vision', level: 80 },
+      { name: 'NLP', level: 70 },
+    ],
+  },
+  {
+    name: 'Data Science',
+    icon: BarChart,
+    skills: [
+      { name: 'Python', level: 90 },
+      { name: 'Data Visualization', level: 85 },
+      { name: 'Statistical Analysis', level: 80 },
+    ],
+  },
+]
 
 // Decorative code icons for the background
 const codeIcons = [
@@ -179,7 +215,14 @@ export default function About() {
               viewport={{ once: true }}
               transition={{ delay: 0.3, duration: 0.5 }}
             >
-              <Link href="#tech-stack" className="group inline-flex items-center">
+              <Link
+                href="#tech-stack"
+                onClick={e => {
+                  e.preventDefault()
+                  scrollToSection('tech-stack')
+                }}
+                className="group inline-flex items-center"
+              >
                 <span className="text-text-muted group-hover:text-accent mr-2 text-sm transition-colors">
                   View my complete tech stack
                 </span>
@@ -210,39 +253,64 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Image section */}
+        {/* Interactive Skills Visualization - Replacing Image Section */}
         <motion.div
-          className="relative mb-16 flex justify-center"
+          className="relative mb-16"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
-          <div className="relative">
-            {/* Glow effect */}
-            <div className="from-accent/30 to-accent/10 absolute -inset-1 rounded-lg bg-gradient-to-r opacity-75 blur-lg" />
-            <div className="border-accent/20 bg-background/80 relative aspect-video w-full max-w-[640px] overflow-hidden rounded-lg border">
-              <Image
-                src="/about-image.jpg"
-                alt="Kristiyan working"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 640px"
-              />
+          <div className="from-accent/10 absolute -inset-10 bg-gradient-to-b to-transparent opacity-30 blur-3xl" />
 
-              {/* Overlay with animated gradient */}
+          <div className="border-accent/10 bg-surface/50 relative grid grid-cols-1 gap-6 rounded-xl border p-6 backdrop-blur-sm md:grid-cols-3">
+            {skillCategories.map((category, idx) => (
               <motion.div
-                className="from-accent/40 absolute inset-0 bg-gradient-to-tr to-transparent opacity-30"
-                animate={{
-                  background: [
-                    'linear-gradient(to top right, rgba(56,189,248,0.4), transparent)',
-                    'linear-gradient(to bottom right, rgba(56,189,248,0.4), transparent)',
-                    'linear-gradient(to top right, rgba(56,189,248,0.4), transparent)',
-                  ],
-                }}
-                transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-              />
-            </div>
+                key={category.name}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 + idx * 0.1, duration: 0.5 }}
+                className="border-accent/10 relative overflow-hidden rounded-lg border p-5"
+                whileHover={{ y: -5, boxShadow: '0 10px 30px -15px rgba(56,189,248,0.3)' }}
+              >
+                <div className="mb-4 flex items-center gap-3">
+                  <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-full">
+                    <category.icon size={20} />
+                  </div>
+                  <h3 className="text-accent text-lg font-bold">{category.name}</h3>
+                </div>
+
+                <div className="space-y-3">
+                  {category.skills.map((skill, i) => (
+                    <div key={skill.name} className="space-y-1">
+                      <div className="flex justify-between">
+                        <span className="text-text-primary text-sm">{skill.name}</span>
+                        <span className="text-text-muted text-xs">{skill.level}%</span>
+                      </div>
+                      <div className="bg-accent/10 h-2 w-full overflow-hidden rounded-full">
+                        <motion.div
+                          className="bg-accent h-full rounded-full"
+                          initial={{ width: 0 }}
+                          whileInView={{ width: `${skill.level}%` }}
+                          viewport={{ once: true }}
+                          transition={{
+                            duration: 1,
+                            delay: 0.4 + idx * 0.1 + i * 0.05,
+                            ease: [0.22, 1, 0.36, 1],
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Decorative elements */}
+                <div className="text-accent/5 absolute -right-4 -bottom-4 opacity-50">
+                  <category.icon size={80} />
+                </div>
+              </motion.div>
+            ))}
           </div>
         </motion.div>
 

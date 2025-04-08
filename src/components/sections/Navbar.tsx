@@ -6,6 +6,7 @@ import { Menu, X, Github, Linkedin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { motion, AnimatePresence } from 'framer-motion'
 import TypingText from '@/components/ui/TypingText'
+import { scrollToSection } from '@/utils/navigation'
 
 const navItems = [
   { href: '/', label: 'Home' },
@@ -35,6 +36,17 @@ const linkVariants = {
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const fullName = 'Kristiyan Cholakov'
+
+  // Function to handle smooth scrolling
+  const handleScrollToSection = (href: string) => (e: React.MouseEvent) => {
+    if (href.startsWith('#')) {
+      e.preventDefault()
+      scrollToSection(href.substring(1), 80, () => setMobileMenuOpen(false))
+    } else if (href === '/' && window.location.pathname === '/') {
+      e.preventDefault()
+      scrollToSection('top', 0, () => setMobileMenuOpen(false))
+    }
+  }
 
   return (
     <header className="border-border bg-background/95 relative w-full border-b font-mono shadow-md shadow-black/10 backdrop-blur-md">
@@ -99,6 +111,7 @@ export default function Navbar() {
               >
                 <Link
                   href={href}
+                  onClick={handleScrollToSection(href)}
                   className="group text-text-muted hover:text-accent relative text-sm font-medium transition-colors"
                 >
                   {label}
@@ -175,7 +188,7 @@ export default function Navbar() {
                   >
                     <Link
                       href={href}
-                      onClick={() => setMobileMenuOpen(false)}
+                      onClick={handleScrollToSection(href)}
                       className="text-text-muted hover:text-accent block text-sm font-medium transition-colors"
                     >
                       {label}

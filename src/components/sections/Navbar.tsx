@@ -49,14 +49,29 @@ export default function Navbar() {
               <TypingText text={fullName} className="text-accent ml-1" />
             </Link>
 
+            {/* Vertical Separator */}
+            <div className="border-text-muted/30 mx-3 h-6 border-l"></div>
+
             {/* Social Media Icons next to name */}
-            <div className="ml-4 flex items-center space-x-2">
+            <div className="flex items-center space-x-2">
               {socialLinks.map(({ href, icon: Icon, label }, i) => (
                 <motion.div
                   key={label}
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ delay: 0.8 + i * 0.1, duration: 0.3 }}
+                  custom={i}
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    hidden: { opacity: 0, y: -5 },
+                    visible: {
+                      opacity: 1,
+                      y: 0,
+                      transition: {
+                        delay: (fullName.length * 75) / 1000 + i * 0.1,
+                        duration: 0.3,
+                        ease: 'easeOut',
+                      },
+                    },
+                  }}
                 >
                   <a
                     href={href}

@@ -26,7 +26,7 @@ export default function TypingText({
   return (
     <span className={className}>
       {typed}
-      <span className="animate-pulse"> _</span>
+      <span className="animate-pulse"></span>
     </span>
   )
 }

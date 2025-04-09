@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 import { Menu, X, Github, Linkedin } from 'lucide-react'
-import { Button } from '@/components/ui/button'
+import { Button } from '@/components/ui/Button'
 import { motion, AnimatePresence } from 'framer-motion'
 import TypingText from '@/components/ui/TypingText'
 import { scrollToSection } from '@/utils/navigation'

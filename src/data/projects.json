@@ -1,0 +1,67 @@
+[
+  {
+    "id": "neural-image-classifier",
+    "title": "Neural Network Image Classifier",
+    "description": "A computer vision model that classifies images with 94% accuracy using convolutional neural networks.",
+    "longDescription": "This project implements a state-of-the-art CNN architecture to classify images across 10 categories. The model was trained on a dataset of 50,000 images and validated against 10,000 test images, achieving 94% accuracy.",
+    "thumbnail": "https://picsum.photos/id/237/200/300",
+    "technologies": ["Python", "TensorFlow", "Keras", "NumPy", "Matplotlib"],
+    "category": "Data Science",
+    "featured": true,
+    "github": "https://github.com/username/neural-classifier",
+    "demo": "https://demo-link.com/neural-classifier",
+    "completed": "2023-05"
+  },
+  {
+    "id": "portfolio-website",
+    "title": "Portfolio Website",
+    "description": "A modern, responsive portfolio website built with Next.js and Framer Motion featuring interactive animations.",
+    "longDescription": "A personal portfolio website showcasing my projects, skills, and experience. Built with Next.js for optimal performance and SEO, with Framer Motion for fluid animations and Tailwind CSS for styling.",
+    "thumbnail": "https://picsum.photos/id/1/200/300",
+    "technologies": ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    "category": "Web Development",
+    "featured": true,
+    "github": "https://github.com/username/portfolio",
+    "demo": "https://yourportfolio.com",
+    "completed": "2023-08"
+  },
+  {
+    "id": "sentiment-analyzer",
+    "title": "Real-time Sentiment Analyzer",
+    "description": "NLP tool that analyzes sentiment in text data from social media platforms with 87% accuracy.",
+    "longDescription": "An NLP application that performs real-time sentiment analysis on tweets and other social media content. Uses BERT for contextual understanding and provides visualization of sentiment trends over time.",
+    "thumbnail": "https://picsum.photos/id/2/200/300",
+    "technologies": ["Python", "NLTK", "Transformers", "Flask", "D3.js"],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/username/sentiment-analyzer",
+    "demo": "https://demo-link.com/sentiment",
+    "completed": "2022-11"
+  },
+  {
+    "id": "e-commerce-platform",
+    "title": "E-Commerce Platform",
+    "description": "Full-stack e-commerce application with user authentication, product catalog, and payment processing.",
+    "longDescription": "A complete e-commerce solution with user authentication, product catalog, shopping cart, and payment processing using Stripe. Features include product search, filtering, and responsive design for all devices.",
+    "thumbnail": "https://picsum.photos/id/3/200/300",
+    "technologies": ["React", "Node.js", "Express", "MongoDB", "Stripe"],
+    "category": "Web Development",
+    "featured": true,
+    "github": "https://github.com/username/e-commerce",
+    "demo": "https://demo-link.com/shop",
+    "completed": "2023-02"
+  },
+  {
+    "id": "smart-home-dashboard",
+    "title": "Smart Home IoT Dashboard",
+    "description": "IoT dashboard that monitors and controls smart home devices with real-time data visualization.",
+    "longDescription": "A web application that provides a unified interface for monitoring and controlling smart home devices. Features include real-time data visualization, device scheduling, and energy consumption analytics.",
+    "thumbnail": "https://picsum.photos/id/4/200/300",
+    "technologies": ["React", "Socket.io", "MQTT", "Chart.js", "Raspberry Pi"],
+    "category": "IoT",
+    "featured": false,
+    "github": "https://github.com/username/smart-home",
+    "demo": "https://demo-link.com/smart-home",
+    "completed": "2022-09"
+  }
+]

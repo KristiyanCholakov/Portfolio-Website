@@ -277,11 +277,10 @@ export default function Projects() {
         <AnimatePresence mode="wait">
           {filteredProjects.length > 0 ? (
             <motion.div
-              key="projects-grid"
+              key={`projects-grid-${activeCategory}-${activeTech}-${sortOrder}`}
               variants={staggerContainer}
               initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: '-50px' }}
+              animate="visible"
               className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
               exit={{ opacity: 0 }}
             >

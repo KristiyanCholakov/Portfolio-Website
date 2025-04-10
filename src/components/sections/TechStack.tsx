@@ -15,6 +15,7 @@ import {
   RefreshCw,
   LucideIcon,
 } from 'lucide-react'
+import techStackData from '@/data/tech-stack.json'
 
 // Type definitions
 interface Technology {
@@ -27,7 +28,7 @@ interface TechCategory {
   name: string
   icon: LucideIcon
   color: string
-  position: [number, number, number] // keeping for data compatibility
+  position: [number, number, number]
   technologies: Technology[]
 }
 
@@ -42,81 +43,24 @@ interface CodeIcon {
   delay: number
 }
 
-// Tech stack data structure - same as before
-const techCategories: TechCategory[] = [
-  {
-    name: 'Frontend',
-    icon: Globe,
-    color: '#38bdf8', // accent color
-    position: [0, 0, 0],
-    technologies: [
-      { name: 'React', logo: '/tech-stack-logos/react.svg', level: 90 },
-      { name: 'Next.js', logo: '/tech-stack-logos/nextdotjs.svg', level: 85 },
-      { name: 'TypeScript', logo: '/tech-stack-logos/typescript.svg', level: 80 },
-      { name: 'Tailwind CSS', logo: '/tech-stack-logos/tailwindcss.svg', level: 85 },
-      { name: 'Framer Motion', logo: '/tech-stack-logos/framer.svg', level: 75 },
-    ],
-  },
-  {
-    name: 'Backend',
-    icon: Server,
-    color: '#38bdf8',
-    position: [-8, 0, -5],
-    technologies: [
-      { name: 'Node.js', logo: '/tech-stack-logos/nodedotjs.svg', level: 80 },
-      { name: 'Express', logo: '/tech-stack-logos/express.svg', level: 75 },
-      { name: 'Django', logo: '/tech-stack-logos/django.svg', level: 70 },
-      { name: 'Flask', logo: '/tech-stack-logos/flask.svg', level: 75 },
-    ],
-  },
-  {
-    name: 'Data Science',
-    icon: BarChart,
-    color: '#38bdf8',
-    position: [8, 0, -5],
-    technologies: [
-      { name: 'Python', logo: '/tech-stack-logos/python.svg', level: 90 },
-      { name: 'NumPy', logo: '/tech-stack-logos/numpy.svg', level: 85 },
-      { name: 'Pandas', logo: '/tech-stack-logos/pandas.svg', level: 80 },
-      { name: 'Scikit-learn', logo: '/tech-stack-logos/scikitlearn.svg', level: 80 },
-    ],
-  },
-  {
-    name: 'AI & ML',
-    icon: Cpu,
-    color: '#38bdf8',
-    position: [0, 8, -5],
-    technologies: [
-      { name: 'TensorFlow', logo: '/tech-stack-logos/tensorflow.svg', level: 75 },
-      { name: 'PyTorch', logo: '/tech-stack-logos/pytorch.svg', level: 70 },
-      { name: 'OpenCV', logo: '/tech-stack-logos/opencv.svg', level: 80 },
-    ],
-  },
-  {
-    name: 'Database',
-    icon: Database,
-    color: '#38bdf8',
-    position: [0, -8, -5],
-    technologies: [
-      { name: 'MongoDB', logo: '/tech-stack-logos/mongodb.svg', level: 80 },
-      { name: 'PostgreSQL', logo: '/tech-stack-logos/postgresql.svg', level: 75 },
-      { name: 'MySQL', logo: '/tech-stack-logos/mysql.svg', level: 70 },
-    ],
-  },
-  {
-    name: 'DevOps',
-    icon: Cloud,
-    color: '#38bdf8',
-    position: [-5, 5, 5],
-    technologies: [
-      { name: 'Docker', logo: '/tech-stack-logos/docker.svg', level: 70 },
-      { name: 'Git', logo: '/tech-stack-logos/git.svg', level: 85 },
-      { name: 'GitHub Actions', logo: '/tech-stack-logos/github.svg', level: 75 },
-    ],
-  },
-]
+// Map icon strings from JSON to actual components
+const iconMap: Record<string, LucideIcon> = {
+  Globe,
+  Server,
+  BarChart,
+  Cpu,
+  Database,
+  Cloud,
+}
 
-// Background decorative elements - same as before
+// Process tech categories from JSON with proper type casting for position
+const techCategories: TechCategory[] = techStackData.map(category => ({
+  ...category,
+  icon: iconMap[category.icon as keyof typeof iconMap],
+  position: (category.position as number[]).slice(0, 3) as [number, number, number],
+}))
+
+// Background decorative elements
 const codeIcons: CodeIcon[] = [
   { Icon: Code, top: '10%', left: '5%', size: 24, duration: 35, delay: 0 },
   { Icon: Database, top: '25%', right: '7%', size: 28, duration: 40, delay: 2 },
@@ -143,9 +87,9 @@ const TechNode = ({
   return (
     <motion.div
       className="relative"
-      initial={{ scale: 0.8, opacity: 0 }}
+      initial={{ scale: 0.9, opacity: 0 }}
       animate={{
-        scale: isHovered ? 1.1 : 1,
+        scale: isHovered ? 1.05 : 1,
         opacity: 1,
         y: isHovered ? -5 : 0,
       }}
@@ -159,27 +103,38 @@ const TechNode = ({
       onHoverEnd={() => setHover(null)}
     >
       <div
-        className={`bg-surface/80 border-accent/20 border ${isHovered ? 'shadow-accent/20 shadow-lg' : ''} flex flex-col items-center rounded-full p-2 transition-all duration-300`}
+        className={`bg-surface/80 border-accent/20 border ${
+          isHovered ? 'shadow-accent/20 shadow-lg' : ''
+        } flex h-44 w-32 flex-col items-center rounded-lg p-3 transition-all duration-300`}
+        style={{ borderTop: isHovered ? '3px solid #38bdf8' : '1px solid rgba(56,189,248,0.2)' }}
       >
-        <div className="bg-surface relative flex h-12 w-12 items-center justify-center overflow-hidden rounded-full sm:h-16 sm:w-16">
+        {/* Logo section - rectangular container */}
+        <div className="bg-surface/50 my-2 flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg">
           <Image
             src={tech.logo}
             alt={tech.name}
             width={48}
             height={48}
-            className="h-8 w-8 object-contain sm:h-10 sm:w-10"
+            className="h-12 w-12 object-contain"
           />
         </div>
 
+        {/* Name section */}
         <div
-          className={`mt-2 rounded-full px-2 py-1 text-center text-xs font-medium ${isHovered ? 'bg-accent text-white' : 'text-accent'}`}
+          className={`mt-2 mb-auto font-medium ${isHovered ? 'text-accent' : 'text-text-primary'}`}
         >
           {tech.name}
         </div>
 
         {/* Level indicator */}
-        <div className="bg-surface/60 mt-1 h-1.5 w-16 overflow-hidden rounded-full">
-          <div className="bg-accent h-full rounded-full" style={{ width: `${tech.level}%` }} />
+        <div className="mt-2 w-full">
+          <div className="mb-1 flex items-center justify-between">
+            <span className="text-text-muted text-xs">Proficiency</span>
+            <span className="text-accent text-xs font-medium">{tech.level}%</span>
+          </div>
+          <div className="bg-surface/60 h-1.5 w-full overflow-hidden rounded-full">
+            <div className="bg-accent h-full rounded-full" style={{ width: `${tech.level}%` }} />
+          </div>
         </div>
       </div>
     </motion.div>
@@ -204,12 +159,13 @@ const CategoryCluster = ({
       viewport={{ once: true, margin: '-100px' }}
       transition={{ duration: 0.5 }}
     >
-      <div className="bg-accent mb-4 flex items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-bold text-white">
+      <div className="bg-accent mb-6 flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-bold text-white">
         <category.icon size={18} />
         {category.name}
       </div>
 
-      <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5">
+      {/* Centered tech nodes with flex */}
+      <div className="flex flex-wrap justify-center gap-5">
         {category.technologies.map(tech => (
           <TechNode
             key={tech.name}
@@ -238,7 +194,7 @@ const TechNetwork = () => {
   return (
     <div className="relative" ref={networkRef}>
       {/* Category filter buttons */}
-      <div className="mb-6 flex flex-wrap justify-center gap-2">
+      <div className="mb-8 flex flex-wrap justify-center gap-2">
         <button
           className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
             activeCategory === null
@@ -269,8 +225,8 @@ const TechNetwork = () => {
       </div>
 
       {/* Network visualization */}
-      <div className="bg-surface/20 border-accent/10 rounded-xl border p-4 backdrop-blur-sm">
-        <div className="space-y-8">
+      <div className="bg-surface/20 border-accent/10 rounded-xl border p-6 backdrop-blur-sm">
+        <div className="space-y-12">
           {displayedCategories.map(category => (
             <CategoryCluster
               key={category.name}
@@ -344,7 +300,7 @@ export default function TechStack() {
           </p>
         </motion.div>
 
-        {/* Brief introduction */}
+        {/* Brief introduction - removed filtering/hovering explanation */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -352,13 +308,9 @@ export default function TechStack() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-surface/60 border-accent/10 mb-10 rounded-lg border p-6 text-center backdrop-blur-sm md:px-10"
         >
-          <p className="text-text-primary mb-2">
+          <p className="text-text-primary">
             My technology ecosystem spans multiple domains - from web development to artificial
             intelligence. Below is a visualization of the technologies I work with regularly.
-          </p>
-          <p className="text-text-muted text-sm">
-            <span className="text-accent">Filter</span> by category or
-            <span className="text-accent"> hover</span> over items to explore my tech stack.
           </p>
         </motion.div>
 

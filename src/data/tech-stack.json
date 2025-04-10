@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Frontend",
+    "icon": "Globe",
+    "color": "#38bdf8",
+    "position": [0, 0, 0],
+    "technologies": [
+      { "name": "React", "logo": "/tech-stack-logos/react.svg", "level": 90 },
+      { "name": "Next.js", "logo": "/tech-stack-logos/nextdotjs.svg", "level": 85 },
+      { "name": "TypeScript", "logo": "/tech-stack-logos/typescript.svg", "level": 80 },
+      { "name": "Tailwind CSS", "logo": "/tech-stack-logos/tailwindcss.svg", "level": 85 },
+      { "name": "Framer Motion", "logo": "/tech-stack-logos/framer.svg", "level": 75 }
+    ]
+  },
+  {
+    "name": "Backend",
+    "icon": "Server",
+    "color": "#38bdf8",
+    "position": [-8, 0, -5],
+    "technologies": [
+      { "name": "Node.js", "logo": "/tech-stack-logos/nodedotjs.svg", "level": 80 },
+      { "name": "Express", "logo": "/tech-stack-logos/express.svg", "level": 75 },
+      { "name": "Django", "logo": "/tech-stack-logos/django.svg", "level": 70 },
+      { "name": "Flask", "logo": "/tech-stack-logos/flask.svg", "level": 75 }
+    ]
+  },
+  {
+    "name": "Data Science",
+    "icon": "BarChart",
+    "color": "#38bdf8",
+    "position": [8, 0, -5],
+    "technologies": [
+      { "name": "Python", "logo": "/tech-stack-logos/python.svg", "level": 90 },
+      { "name": "NumPy", "logo": "/tech-stack-logos/numpy.svg", "level": 85 },
+      { "name": "Pandas", "logo": "/tech-stack-logos/pandas.svg", "level": 80 },
+      { "name": "Scikit-learn", "logo": "/tech-stack-logos/scikitlearn.svg", "level": 80 }
+    ]
+  },
+  {
+    "name": "AI & ML",
+    "icon": "Cpu",
+    "color": "#38bdf8",
+    "position": [0, 8, -5],
+    "technologies": [
+      { "name": "TensorFlow", "logo": "/tech-stack-logos/tensorflow.svg", "level": 75 },
+      { "name": "PyTorch", "logo": "/tech-stack-logos/pytorch.svg", "level": 70 },
+      { "name": "OpenCV", "logo": "/tech-stack-logos/opencv.svg", "level": 80 }
+    ]
+  },
+  {
+    "name": "Database",
+    "icon": "Database",
+    "color": "#38bdf8",
+    "position": [0, -8, -5],
+    "technologies": [
+      { "name": "MongoDB", "logo": "/tech-stack-logos/mongodb.svg", "level": 80 },
+      { "name": "PostgreSQL", "logo": "/tech-stack-logos/postgresql.svg", "level": 75 },
+      { "name": "MySQL", "logo": "/tech-stack-logos/mysql.svg", "level": 70 }
+    ]
+  },
+  {
+    "name": "DevOps",
+    "icon": "Cloud",
+    "color": "#38bdf8",
+    "position": [-5, 5, 5],
+    "technologies": [
+      { "name": "Docker", "logo": "/tech-stack-logos/docker.svg", "level": 70 },
+      { "name": "Git", "logo": "/tech-stack-logos/git.svg", "level": 85 },
+      { "name": "GitHub Actions", "logo": "/tech-stack-logos/github.svg", "level": 75 }
+    ]
+  }
+]

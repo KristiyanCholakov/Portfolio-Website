@@ -86,7 +86,15 @@ const projectIcons = [
     delay: 0,
     animationType: 'float',
   },
-  { Icon: Cpu, right: '15%', top: '40%', size: 28, duration: 18, delay: 2, animationType: 'pulse' },
+  {
+    Icon: Cpu,
+    right: '15%',
+    top: '40%',
+    size: 28,
+    duration: 18,
+    delay: 2,
+    animationType: 'pulse',
+  },
   {
     Icon: Server,
     left: '12%',
@@ -359,7 +367,6 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Rest of component remains the same */}
         {/* Filters and Sorting */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
@@ -368,8 +375,99 @@ export default function Projects() {
           transition={{ duration: 0.5, delay: 0.2 }}
           className="bg-surface/60 border-accent/10 mb-8 rounded-lg border backdrop-blur-sm"
         >
-          {/* Filter content */}
-          {/* ... */}
+          <div className="p-4 sm:p-6">
+            <div className="flex flex-wrap gap-4">
+              {/* Category filters */}
+              <div className="flex flex-col space-y-2">
+                <label className="text-text-muted text-xs font-medium">Category</label>
+                <div className="flex flex-wrap gap-2">
+                  {categories.map(category => (
+                    <button
+                      key={category}
+                      onClick={() => setActiveCategory(category)}
+                      className={`rounded-full border px-3 py-1 text-xs transition-all ${
+                        activeCategory === category
+                          ? 'bg-accent border-accent text-white'
+                          : 'border-accent/20 text-text-muted hover:border-accent/50'
+                      }`}
+                    >
+                      {category}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Technology filters */}
+              <div className="flex flex-col space-y-2">
+                <label className="text-text-muted text-xs font-medium">Technology</label>
+                <div className="flex flex-wrap gap-2">
+                  {technologies.slice(0, 8).map(tech => (
+                    <button
+                      key={tech}
+                      onClick={() => setActiveTech(tech)}
+                      className={`rounded-full border px-3 py-1 text-xs transition-all ${
+                        activeTech === tech
+                          ? 'bg-accent border-accent text-white'
+                          : 'border-accent/20 text-text-muted hover:border-accent/50'
+                      }`}
+                    >
+                      {tech}
+                    </button>
+                  ))}
+                  {technologies.length > 8 && (
+                    <div className="text-text-muted px-2 py-1 text-xs">
+                      +{technologies.length - 8} more
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Sort order */}
+              <div className="ml-auto flex items-end">
+                <button
+                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                  className="border-accent/20 text-text-muted hover:text-accent hover:border-accent/50 flex items-center gap-1 rounded-md border px-3 py-1 text-xs transition-all"
+                >
+                  {sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />}
+                  {sortOrder === 'asc' ? 'Oldest first' : 'Newest first'}
+                </button>
+              </div>
+            </div>
+
+            {/* Active filters display */}
+            {(activeCategory !== 'All' || activeTech !== 'All') && (
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <span className="text-text-muted text-xs">Active filters:</span>
+                {activeCategory !== 'All' && (
+                  <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
+                    <Filter size={10} />
+                    {activeCategory}
+                    <button onClick={() => setActiveCategory('All')}>
+                      <X size={10} />
+                    </button>
+                  </div>
+                )}
+                {activeTech !== 'All' && (
+                  <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
+                    <Code size={10} />
+                    {activeTech}
+                    <button onClick={() => setActiveTech('All')}>
+                      <X size={10} />
+                    </button>
+                  </div>
+                )}
+                <button
+                  onClick={() => {
+                    setActiveCategory('All')
+                    setActiveTech('All')
+                  }}
+                  className="text-text-muted hover:text-accent text-xs underline"
+                >
+                  Reset all
+                </button>
+              </div>
+            )}
+          </div>
         </motion.div>
 
         {/* Projects grid */}
@@ -395,8 +493,25 @@ export default function Projects() {
               exit={{ opacity: 0 }}
               className="bg-surface/60 border-accent/10 mt-8 rounded-lg border p-10 text-center backdrop-blur-sm"
             >
-              {/* No projects content */}
-              {/* ... */}
+              <div className="text-accent bg-accent/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
+                <Filter size={24} />
+              </div>
+              <h3 className="text-text-primary mb-2 text-lg font-medium">
+                No projects match your filters
+              </h3>
+              <p className="text-text-muted mx-auto max-w-md">
+                Try adjusting your filter criteria or browse all projects by clicking the Reset
+                button.
+              </p>
+              <button
+                onClick={() => {
+                  setActiveCategory('All')
+                  setActiveTech('All')
+                }}
+                className="text-accent mt-4 text-sm underline"
+              >
+                View all projects
+              </button>
             </motion.div>
           )}
         </AnimatePresence>

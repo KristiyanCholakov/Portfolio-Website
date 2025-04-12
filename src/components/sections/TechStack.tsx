@@ -1,7 +1,7 @@
 'use client'
 
 import { useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 import TypingText from '@/components/ui/TypingText'
 import {
@@ -43,6 +43,20 @@ interface CodeIcon {
   delay: number
 }
 
+// Binary digit interface for Matrix background
+interface BinaryDigit {
+  id: string
+  value: string
+  x: number
+  y: number
+  size: number
+  speed: number
+  opacity: number
+  delay: number
+  timeCreated: number
+  animationDuration: number
+}
+
 // Map icon strings from JSON to actual components
 const iconMap: Record<string, LucideIcon> = {
   Globe,
@@ -60,15 +74,200 @@ const techCategories: TechCategory[] = techStackData.map(category => ({
   position: (category.position as number[]).slice(0, 3) as [number, number, number],
 }))
 
-// Background decorative elements
-const codeIcons: CodeIcon[] = [
-  { Icon: Code, top: '10%', left: '5%', size: 24, duration: 35, delay: 0 },
-  { Icon: Database, top: '25%', right: '7%', size: 28, duration: 40, delay: 2 },
-  { Icon: Cpu, top: '40%', left: '12%', size: 20, duration: 30, delay: 1 },
-  { Icon: Globe, bottom: '30%', right: '15%', size: 22, duration: 38, delay: 0.5 },
-  { Icon: Server, bottom: '20%', left: '7%', size: 18, duration: 42, delay: 1.5 },
-  { Icon: BarChart, top: '15%', right: '20%', size: 22, duration: 36, delay: 0.7 },
-]
+// Matrix background component
+const MatrixBackground = () => {
+  const [binaryDigits, setBinaryDigits] = useState<BinaryDigit[]>([])
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [containerHeight, setContainerHeight] = useState(0)
+  const animationRunningRef = useRef(true)
+
+  // Function to create a new digit
+  const createDigit = (width: number): BinaryDigit => {
+    const speed = Math.random() * 1.2 + 2.5 // 2.5-3.7 seconds (slower)
+    // Calculate total animation duration (speed factor * multiplier + buffer time)
+    const animationDuration = speed * 5 // No extra buffer time needed
+
+    return {
+      id: Math.random().toString(36).substring(2, 9), // More unique ID
+      value: Math.random() > 0.5 ? '1' : '0',
+      x: Math.random() * width,
+      y: -50, // Start slightly above the container
+      size: Math.random() * 18 + 16, // 16-34px - much larger digits
+      speed,
+      opacity: Math.random() * 0.3 + 0.1, // 0.1-0.4 opacity
+      delay: 0,
+      timeCreated: Date.now(),
+      animationDuration,
+    }
+  }
+
+  // Update container height when ref changes or on resize
+  useEffect(() => {
+    const updateContainerDimensions = () => {
+      if (containerRef.current) {
+        setContainerHeight(containerRef.current.getBoundingClientRect().height)
+      }
+    }
+
+    updateContainerDimensions()
+
+    // Debounced resize handler
+    let resizeTimer: NodeJS.Timeout
+    const handleResize = () => {
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        updateContainerDimensions()
+      }, 250)
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      clearTimeout(resizeTimer)
+    }
+  }, [])
+
+  // Generate initial digits
+  useEffect(() => {
+    if (!containerRef.current || containerHeight === 0) return
+
+    const { width } = containerRef.current.getBoundingClientRect()
+    const newDigits: BinaryDigit[] = []
+
+    // Significantly fewer digits for better performance but larger size
+    const count = Math.floor((width * containerHeight) / 40000) // Even fewer digits
+
+    // Create initial set of digits at random positions
+    for (let i = 0; i < count; i++) {
+      const digit = createDigit(width)
+      // Distribute initial y positions throughout the container height
+      digit.y = Math.random() * containerHeight * 1.2 * -1
+      // Add staggered delays for initial set
+      digit.delay = Math.random() * 8
+      newDigits.push(digit)
+    }
+
+    setBinaryDigits(newDigits)
+
+    // Stop animation when component unmounts
+    return () => {
+      animationRunningRef.current = false
+    }
+  }, [containerHeight])
+
+  // Continuously add new digits and remove completed ones
+  useEffect(() => {
+    if (!containerRef.current || containerHeight === 0) return
+
+    const { width } = containerRef.current.getBoundingClientRect()
+
+    // Set up the animation loop
+    const addNewDigits = () => {
+      if (!animationRunningRef.current) return
+
+      setBinaryDigits(currentDigits => {
+        const now = Date.now()
+
+        // Filter out digits that have reached approximately 70% of their animation
+        // This will remove them once they start to fade out (optimization)
+        const activeDigits = currentDigits.filter(digit => {
+          const elapsedTime = (now - digit.timeCreated) / 1000 // in seconds
+          // Keep digits only until they start to fade (70% of animation duration)
+          return elapsedTime < digit.animationDuration * 0.7 + digit.delay
+        })
+
+        // Add new digits to replace those that were removed
+        // Aim to maintain roughly the same number of digits
+        const targetCount = Math.max(6, Math.floor((width * containerHeight) / 60000)) // Even fewer but larger digits
+        const newCount = Math.max(0, targetCount - activeDigits.length)
+
+        // Always add at least one new digit periodically for continuous effect
+        const minimumNewDigits = Math.random() > 0.7 ? 1 : 0
+        const digitsToAdd = Math.max(minimumNewDigits, newCount)
+
+        const newDigits = [...activeDigits]
+
+        // Add new digits if needed
+        for (let i = 0; i < digitsToAdd; i++) {
+          newDigits.push(createDigit(width))
+        }
+
+        return newDigits
+      })
+
+      // Schedule the next update
+      setTimeout(addNewDigits, 600) // Balance between performance and smoothness
+    }
+
+    // Start the animation loop
+    addNewDigits()
+
+    // Cleanup
+    return () => {
+      animationRunningRef.current = false
+    }
+  }, [containerHeight])
+
+  return (
+    <div
+      ref={containerRef}
+      className="pointer-events-none absolute inset-0 overflow-hidden"
+      style={{ zIndex: 0 }}
+    >
+      <AnimatePresence mode="popLayout">
+        {binaryDigits.map(digit => (
+          <motion.div
+            key={digit.id}
+            className="text-accent absolute font-mono select-none"
+            style={{
+              left: `${digit.x}px`,
+              top: `${digit.y}px`,
+              fontSize: `${digit.size}px`,
+              opacity: 0, // Start invisible and animate in
+              willChange: 'transform, opacity', // Performance optimization
+            }}
+            initial={{ y: digit.y, opacity: 0 }}
+            animate={{
+              y: containerHeight + 50,
+              opacity: [0, digit.opacity, digit.opacity, 0],
+            }}
+            exit={{
+              opacity: 0,
+              transition: {
+                duration: 0.3, // Faster exit animation
+                ease: 'easeOut',
+              },
+            }}
+            transition={{
+              y: {
+                duration: digit.speed * 5,
+                ease: 'linear',
+                delay: digit.delay,
+              },
+              opacity: {
+                duration: digit.speed * 5,
+                ease: 'linear',
+                delay: digit.delay,
+                times: [0, 0.1, 0.7, 1], // Fade in at start, stay visible until 70% through, then fade out
+              },
+            }}
+          >
+            {digit.value}
+          </motion.div>
+        ))}
+      </AnimatePresence>
+
+      {/* Add a subtle gradient overlay */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(circle at 50% 50%, rgba(56,189,248,0.05), transparent 80%)',
+          mixBlendMode: 'overlay',
+        }}
+      />
+    </div>
+  )
+}
 
 // TechNode component for 2D visualization
 const TechNode = ({
@@ -247,34 +446,8 @@ export default function TechStack() {
       id="tech-stack"
       className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8"
     >
-      {/* Background elements */}
-      <div
-        className="absolute inset-0 opacity-20"
-        style={{
-          background: 'radial-gradient(circle at 50% 50%, rgba(56,189,248,0.15), transparent 70%)',
-        }}
-      />
-
-      {/* Decorative coding icons in background */}
-      {codeIcons.map(({ Icon, top, left, right, bottom, size, duration, delay }, index) => (
-        <motion.div
-          key={index}
-          className="text-accent/10 absolute hidden lg:block"
-          style={{ top, left, right, bottom }}
-          animate={{
-            y: ['-5px', '5px', '-5px'],
-            rotate: ['-3deg', '3deg', '-3deg'],
-          }}
-          transition={{
-            duration,
-            repeat: Infinity,
-            ease: 'easeInOut',
-            delay,
-          }}
-        >
-          <Icon size={size} />
-        </motion.div>
-      ))}
+      {/* Matrix-style background */}
+      <MatrixBackground />
 
       <div className="relative z-10 mx-auto max-w-6xl">
         {/* Section header */}

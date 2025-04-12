@@ -23,7 +23,7 @@ const Footer = () => {
   ]
 
   return (
-    <footer className="border-accent/10 bg-surface/30 relative mt-20 overflow-hidden border-t backdrop-blur-sm">
+    <footer className="border-accent/10 bg-surface/30 relative overflow-hidden border-t backdrop-blur-sm">
       {/* Background gradient */}
       <div
         className="pointer-events-none absolute inset-0 opacity-20"

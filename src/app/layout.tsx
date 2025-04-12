@@ -6,6 +6,7 @@ import About from '@/components/sections/About'
 import Projects from '@/components/sections/Projects'
 import TechStack from '@/components/sections/TechStack'
 import Footer from '@/components/sections/Footer'
+import Contact from '@/components/sections/Contact'
 
 export const metadata: Metadata = {
   title: 'Kristiyan Cholakov',
@@ -25,6 +26,7 @@ export default function RootLayout({
         <About />
         <Projects />
         <TechStack />
+        <Contact />
         <Footer />
       </body>
     </html>

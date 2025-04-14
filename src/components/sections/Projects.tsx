@@ -525,11 +525,15 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
     <motion.div
       variants={fadeInUp}
       custom={index}
-      whileHover={{ y: -8, transition: { duration: 0.2 } }}
-      className="group relative overflow-hidden rounded-xl"
+      whileHover={{ 
+        y: -8, 
+        boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(56, 189, 248, 0.1)",
+        transition: { duration: 0.2 } 
+      }}
+      className="group relative overflow-hidden rounded-xl shadow-sm transition-all"
     >
       {/* Card inner container with gradient border */}
-      <div className="relative">
+      <div className="relative rounded-xl overflow-hidden">
         {/* Animated gradient border */}
         <div className="border-accent/10 from-accent/20 to-highlight/20 absolute -inset-[1px] rounded-xl bg-gradient-to-tr opacity-70 transition-all duration-300 group-hover:opacity-100" />
 

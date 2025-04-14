@@ -21,6 +21,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import TypingText from '@/components/ui/TypingText'
 import projectsData from '@/data/projects.json'
+import ScrollArrow from '@/components/ui/ScrollArrow'
 
 // Types
 interface Project {
@@ -515,6 +516,11 @@ export default function Projects() {
             </motion.div>
           )}
         </AnimatePresence>
+      </div>
+      
+      {/* Add ScrollArrow at the end */}
+      <div className="mt-16 text-center">
+        <ScrollArrow targetSection="tech-stack" label="Discover my tech stack" />
       </div>
     </section>
   )

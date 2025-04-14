@@ -16,6 +16,7 @@ import {
   LucideIcon,
 } from 'lucide-react'
 import techStackData from '@/data/tech-stack.json'
+import ScrollArrow from '@/components/ui/ScrollArrow'
 
 // Type definitions
 interface Technology {
@@ -527,6 +528,11 @@ export default function TechStack() {
             </motion.div>
           ))}
         </motion.div>
+
+        {/* Add ScrollArrow */}
+        <div className="mt-16 text-center">
+          <ScrollArrow targetSection="contact" label="Get in touch" />
+        </div>
       </div>
     </section>
   )

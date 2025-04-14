@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import TypingText from '@/components/ui/TypingText'
 import { useRef, useEffect, useState } from 'react'
+import ScrollArrow from '@/components/ui/ScrollArrow'
 
 export default function Hero() {
   const [particlesCount, setParticlesCount] = useState(50)
@@ -492,6 +493,11 @@ export default function Hero() {
             className="inline-block"
           />
         </motion.p>
+      </div>
+
+      {/* Add ScrollArrow at the end of the component, just before the closing tag */}
+      <div className="absolute bottom-12 left-0 right-0 z-10">
+        <ScrollArrow targetSection="about" label="Discover more about me" />
       </div>
     </section>
   )

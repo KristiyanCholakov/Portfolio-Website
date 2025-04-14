@@ -19,6 +19,7 @@ import {
 } from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
 import { scrollToSection } from '@/utils/navigation'
+import ScrollArrow from '@/components/ui/ScrollArrow'
 
 // Highlights with icons
 const highlights = [
@@ -351,22 +352,7 @@ export default function About() {
         </motion.div>
 
         {/* Scroll CTA */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-        >
-          <p className="text-text-muted mb-2 text-sm">Explore my projects</p>
-          <motion.div
-            animate={{ y: [0, 5, 0] }}
-            transition={{ duration: 1.5, repeat: Infinity, repeatType: 'loop' }}
-            className="text-accent inline-block"
-          >
-            <ChevronDown size={24} />
-          </motion.div>
-        </motion.div>
+        <ScrollArrow targetSection="projects" label="Explore my projects" />
       </div>
     </section>
   )

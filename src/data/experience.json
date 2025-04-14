@@ -1,0 +1,74 @@
+[
+  {
+    "id": "job1",
+    "role": "Senior AI Developer",
+    "company": "TechVision AI",
+    "location": "London, UK",
+    "period": "May 2022 - Present",
+    "type": "Full-time",
+    "description": "Leading AI integration in enterprise applications with a focus on computer vision and NLP solutions.",
+    "responsibilities": [
+      "Developing computer vision models for healthcare applications",
+      "Creating and optimizing NLP pipelines for text analysis",
+      "Leading a team of 4 junior developers and mentoring interns",
+      "Implementing ML Ops practices and CI/CD pipelines for ML models"
+    ],
+    "technologies": ["Python", "TensorFlow", "PyTorch", "Docker", "Kubernetes", "AWS"],
+    "color": "#38bdf8",
+    "icon": "Monitor"
+  },
+  {
+    "id": "job2",
+    "role": "Full Stack Developer",
+    "company": "WebSolutions Inc.",
+    "location": "Remote",
+    "period": "March 2020 - April 2022",
+    "type": "Full-time",
+    "description": "Designed and built scalable web applications with modern JavaScript frameworks and cloud infrastructure.",
+    "responsibilities": [
+      "Developing responsive user interfaces with React and Next.js",
+      "Building RESTful APIs and GraphQL endpoints",
+      "Implementing authentication and authorization systems",
+      "Optimizing application performance and handling deployments"
+    ],
+    "technologies": ["TypeScript", "React", "Next.js", "Node.js", "MongoDB", "AWS Lambda"],
+    "color": "#38bdf8",
+    "icon": "Code"
+  },
+  {
+    "id": "job3",
+    "role": "Backend Engineer",
+    "company": "DataSystems Corp",
+    "location": "Berlin, Germany",
+    "period": "June 2019 - February 2020",
+    "type": "Contract",
+    "description": "Developed robust backend services and database solutions for high-traffic applications.",
+    "responsibilities": [
+      "Building and maintaining microservices architecture",
+      "Designing database schemas and optimizing queries",
+      "Implementing real-time data processing pipelines",
+      "Writing comprehensive test suites for backend services"
+    ],
+    "technologies": ["Java", "Spring Boot", "PostgreSQL", "Redis", "Kafka", "Docker"],
+    "color": "#38bdf8",
+    "icon": "Server"
+  },
+  {
+    "id": "job4",
+    "role": "Research Intern",
+    "company": "AI Research Lab",
+    "location": "Cambridge, UK",
+    "period": "June 2018 - September 2018",
+    "type": "Internship",
+    "description": "Conducted research on innovative AI applications and assisted in implementing experimental algorithms.",
+    "responsibilities": [
+      "Researching state-of-the-art ML algorithms and techniques",
+      "Implementing experimental ML models for data analysis",
+      "Preparing research documentation and technical reports",
+      "Collaborating with senior researchers on publications"
+    ],
+    "technologies": ["Python", "Jupyter", "Scikit-learn", "Pandas", "NumPy", "Matplotlib"],
+    "color": "#38bdf8",
+    "icon": "Share2"
+  }
+]

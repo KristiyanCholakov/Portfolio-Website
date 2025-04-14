@@ -35,8 +35,16 @@ export default function Contact() {
   }, [])
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/KristiyanCholakov' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/kristiyan-cholakov' },
+    {
+      name: 'GitHub',
+      icon: Github,
+      href: 'https://github.com/KristiyanCholakov',
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      href: 'https://linkedin.com/in/kristiyan-cholakov',
+    },
     { name: 'Email', icon: Mail, href: 'mailto:krischolakov@icloud.com' },
   ]
 

@@ -11,13 +11,24 @@ import { scrollToSection } from '@/utils/navigation'
 const navItems = [
   { href: '/', label: 'Home' },
   { href: '#about', label: 'About' },
+  { href: '#education', label: 'Education' },
+  { href: '#experience', label: 'Experience' },
   { href: '#projects', label: 'Projects' },
+  { href: '#tech-stack', label: 'Tech Stack' },
   { href: '#contact', label: 'Contact' },
 ]
 
 const socialLinks = [
-  { href: 'https://github.com/KristiyanCholakov', icon: Github, label: 'GitHub' },
-  { href: 'https://linkedin.com/in/kristiyan-cholakov', icon: Linkedin, label: 'LinkedIn' },
+  {
+    href: 'https://github.com/KristiyanCholakov',
+    icon: Github,
+    label: 'GitHub',
+  },
+  {
+    href: 'https://linkedin.com/in/kristiyan-cholakov',
+    icon: Linkedin,
+    label: 'LinkedIn',
+  },
 ]
 
 const linkVariants = {

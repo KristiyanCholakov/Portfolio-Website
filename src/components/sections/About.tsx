@@ -80,10 +80,38 @@ const codeIcons = [
   { Icon: Code, top: '10%', left: '5%', size: 24, duration: 35, delay: 0 },
   { Icon: Braces, top: '25%', right: '7%', size: 28, duration: 40, delay: 2 },
   { Icon: Terminal, top: '40%', left: '12%', size: 20, duration: 30, delay: 1 },
-  { Icon: FileCode, bottom: '30%', right: '15%', size: 22, duration: 38, delay: 0.5 },
-  { Icon: Database, bottom: '20%', left: '7%', size: 18, duration: 42, delay: 1.5 },
-  { Icon: GitBranch, top: '15%', right: '20%', size: 22, duration: 36, delay: 0.7 },
-  { Icon: Hash, bottom: '40%', left: '20%', size: 26, duration: 33, delay: 2.2 },
+  {
+    Icon: FileCode,
+    bottom: '30%',
+    right: '15%',
+    size: 22,
+    duration: 38,
+    delay: 0.5,
+  },
+  {
+    Icon: Database,
+    bottom: '20%',
+    left: '7%',
+    size: 18,
+    duration: 42,
+    delay: 1.5,
+  },
+  {
+    Icon: GitBranch,
+    top: '15%',
+    right: '20%',
+    size: 22,
+    duration: 36,
+    delay: 0.7,
+  },
+  {
+    Icon: Hash,
+    bottom: '40%',
+    left: '20%',
+    size: 26,
+    duration: 33,
+    delay: 2.2,
+  },
   { Icon: Bot, top: '30%', left: '25%', size: 20, duration: 37, delay: 1.2 },
 ]
 
@@ -200,7 +228,10 @@ export default function About() {
                   variants={fadeInUp}
                   custom={i}
                   className="border-accent/30 bg-surface text-accent inline-block rounded-full border px-3 py-1 text-xs font-medium"
-                  whileHover={{ scale: 1.05, backgroundColor: 'rgba(56,189,248,0.2)' }}
+                  whileHover={{
+                    scale: 1.05,
+                    backgroundColor: 'rgba(56,189,248,0.2)',
+                  }}
                 >
                   {tech}
                 </motion.span>
@@ -245,7 +276,11 @@ export default function About() {
                   <motion.div
                     className="bg-accent/20 absolute -inset-1 -z-10 rounded-full blur-sm"
                     animate={{ opacity: [0.4, 0.8, 0.4] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                      ease: 'easeInOut',
+                    }}
                   />
                 </motion.div>
               </Link>
@@ -272,7 +307,10 @@ export default function About() {
                 viewport={{ once: true }}
                 transition={{ delay: 0.2 + idx * 0.1, duration: 0.5 }}
                 className="border-accent/10 relative overflow-hidden rounded-lg border p-5"
-                whileHover={{ y: -5, boxShadow: '0 10px 30px -15px rgba(56,189,248,0.3)' }}
+                whileHover={{
+                  y: -5,
+                  boxShadow: '0 10px 30px -15px rgba(56,189,248,0.3)',
+                }}
               >
                 <div className="mb-4 flex items-center gap-3">
                   <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-full">
@@ -352,7 +390,7 @@ export default function About() {
         </motion.div>
 
         {/* Scroll CTA */}
-        <ScrollArrow targetSection="projects" label="Explore my projects" />
+        <ScrollArrow targetSection="education" label="View my education" />
       </div>
     </section>
   )

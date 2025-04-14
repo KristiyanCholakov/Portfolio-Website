@@ -9,8 +9,16 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const socialLinks = [
-    { name: 'GitHub', icon: Github, href: 'https://github.com/KristiyanCholakov' },
-    { name: 'LinkedIn', icon: Linkedin, href: 'https://linkedin.com/in/kristiyan-cholakov' },
+    {
+      name: 'GitHub',
+      icon: Github,
+      href: 'https://github.com/KristiyanCholakov',
+    },
+    {
+      name: 'LinkedIn',
+      icon: Linkedin,
+      href: 'https://linkedin.com/in/kristiyan-cholakov',
+    },
     { name: 'Email', icon: Mail, href: 'mailto:krischolakov@icloud.com' },
   ]
 
@@ -23,7 +31,10 @@ export default function Footer() {
   ]
 
   return (
-    <footer id="footer" className="border-accent/5 bg-surface/30 relative mt-auto border-t backdrop-blur-sm">
+    <footer
+      id="footer"
+      className="border-accent/5 bg-surface/30 relative mt-auto border-t backdrop-blur-sm"
+    >
       {/* Background gradient */}
       <div
         className="pointer-events-none absolute inset-0 opacity-20"

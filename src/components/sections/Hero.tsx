@@ -496,7 +496,7 @@ export default function Hero() {
       </div>
 
       {/* Add ScrollArrow at the end of the component, just before the closing tag */}
-      <div className="absolute bottom-12 left-0 right-0 z-10">
+      <div className="absolute right-0 bottom-12 left-0 z-10">
         <ScrollArrow targetSection="about" label="Discover more about me" />
       </div>
     </section>

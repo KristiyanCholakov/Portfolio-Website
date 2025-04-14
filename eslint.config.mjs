@@ -12,8 +12,10 @@ const compat = new FlatCompat({
 const { default: eslintPluginPrettier } = await import('eslint-plugin-prettier')
 
 export default [
+  // Apply legacy ESLint configs via FlatCompat
   ...compat.extends('next/core-web-vitals', 'next'),
 
+  // TypeScript-specific settings
   {
     files: ['**/*.ts', '**/*.tsx'],
     languageOptions: {
@@ -26,11 +28,10 @@ export default [
     },
   },
 
+  // Prettier + TailwindCSS plugin integration
   {
     plugins: {
-      prettier: {
-        rules: eslintPluginPrettier.rules,
-      },
+      prettier: eslintPluginPrettier,
     },
     rules: {
       'prettier/prettier': [

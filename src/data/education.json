@@ -1,0 +1,50 @@
+[
+  {
+    "id": "msc",
+    "degree": "MSc Computer Science",
+    "institution": "Nottingham Trent University",
+    "location": "Nottingham, UK",
+    "period": "September 2022 - July 2023",
+    "distinction": true,
+    "focus": "Artificial Intelligence and Data Science",
+    "description": "Graduated with Distinction, focusing on AI, Machine Learning, and Advanced Data Analytics.",
+    "achievements": [
+      "Research thesis on Computer Vision applications in healthcare",
+      "Excellence award for innovative AI projects",
+      "Specialized in Neural Networks and Deep Learning"
+    ],
+    "color": "#38bdf8"
+  },
+  {
+    "id": "bsc",
+    "degree": "BSc Computer Science",
+    "institution": "University of London",
+    "location": "London, UK",
+    "period": "September 2018 - June 2022",
+    "distinction": false,
+    "focus": "Software Engineering",
+    "description": "Foundational studies in software engineering with a focus on web technologies and system architecture.",
+    "achievements": [
+      "Developed multiple full-stack applications",
+      "Finalist in university hackathon",
+      "Team lead for capstone project"
+    ],
+    "color": "#38bdf8"
+  },
+  {
+    "id": "cert",
+    "degree": "Professional Certification",
+    "institution": "Google & Microsoft",
+    "location": "Online",
+    "period": "January 2020 - Present",
+    "distinction": false,
+    "focus": "Cloud Computing & ML",
+    "description": "Industry certifications in cloud technologies and machine learning.",
+    "achievements": [
+      "Google Cloud Professional Data Engineer",
+      "Microsoft Azure AI Fundamentals",
+      "TensorFlow Developer Certification"
+    ],
+    "color": "#38bdf8"
+  }
+]

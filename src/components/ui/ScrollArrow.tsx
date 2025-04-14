@@ -10,7 +10,7 @@ interface ScrollArrowProps {
 export default function ScrollArrow({ targetSection, label = 'Explore more' }: ScrollArrowProps) {
   return (
     <motion.div
-      className="text-center mt-8 cursor-pointer"
+      className="mt-8 cursor-pointer text-center"
       initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
@@ -28,4 +28,4 @@ export default function ScrollArrow({ targetSection, label = 'Explore more' }: S
       </motion.div>
     </motion.div>
   )
-} 
+}

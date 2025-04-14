@@ -306,7 +306,9 @@ const TechNode = ({
         className={`bg-surface/80 border-accent/20 border ${
           isHovered ? 'shadow-accent/20 shadow-lg' : ''
         } flex h-44 w-32 flex-col items-center rounded-lg p-3 transition-all duration-300`}
-        style={{ borderTop: isHovered ? '3px solid #38bdf8' : '1px solid rgba(56,189,248,0.2)' }}
+        style={{
+          borderTop: isHovered ? '3px solid #38bdf8' : '1px solid rgba(56,189,248,0.2)',
+        }}
       >
         {/* Logo section - rectangular container */}
         <div className="bg-surface/50 my-2 flex h-20 w-20 items-center justify-center overflow-hidden rounded-lg">

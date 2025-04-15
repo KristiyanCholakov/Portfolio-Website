@@ -211,7 +211,7 @@ export default function Projects() {
   const technologies = useMemo(() => {
     const techs = new Set<string>()
     projectsData.forEach((project: Project) => {
-      project.technologies.forEach(tech => techs.add(tech))
+      project.technologies.forEach((tech) => techs.add(tech))
     })
     return ['All', ...Array.from(techs)]
   }, [])
@@ -222,12 +222,12 @@ export default function Projects() {
 
     // Apply category filter
     if (activeCategory !== 'All') {
-      filtered = filtered.filter(project => project.category === activeCategory)
+      filtered = filtered.filter((project) => project.category === activeCategory)
     }
 
     // Apply tech filter
     if (activeTech !== 'All') {
-      filtered = filtered.filter(project => project.technologies.includes(activeTech))
+      filtered = filtered.filter((project) => project.technologies.includes(activeTech))
     }
 
     // Apply sorting
@@ -382,7 +382,7 @@ export default function Projects() {
               <div className="flex flex-col space-y-2">
                 <label className="text-text-muted text-xs font-medium">Category</label>
                 <div className="flex flex-wrap gap-2">
-                  {categories.map(category => (
+                  {categories.map((category) => (
                     <button
                       key={category}
                       onClick={() => setActiveCategory(category)}
@@ -402,7 +402,7 @@ export default function Projects() {
               <div className="flex flex-col space-y-2">
                 <label className="text-text-muted text-xs font-medium">Technology</label>
                 <div className="flex flex-wrap gap-2">
-                  {technologies.slice(0, 8).map(tech => (
+                  {technologies.slice(0, 8).map((tech) => (
                     <button
                       key={tech}
                       onClick={() => setActiveTech(tech)}
@@ -576,7 +576,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
 
             {/* Tech stack */}
             <div className="mb-5 flex flex-wrap gap-2">
-              {project.technologies.map(tech => (
+              {project.technologies.map((tech) => (
                 <span
                   key={tech}
                   className="border-accent/20 bg-accent/5 text-accent rounded-full border px-2 py-0.5 text-xs"

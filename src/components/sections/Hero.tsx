@@ -109,7 +109,7 @@ export default function Hero() {
       const baseMaxDistance = canvas.width * 0.12
 
       // Reset connections
-      particles.forEach(p => (p.connections = []))
+      particles.forEach((p) => (p.connections = []))
 
       // Find connections with varied distances by type
       for (let i = 0; i < particles.length; i++) {
@@ -165,7 +165,7 @@ export default function Hero() {
         // Use data nodes as pulse origins when possible
         const dataNodes = particles
           .map((p, i) => ({ index: i, type: p.type }))
-          .filter(p => p.type === 'data')
+          .filter((p) => p.type === 'data')
 
         const origin =
           dataNodes.length > 0
@@ -194,7 +194,7 @@ export default function Hero() {
 
       // Mouse interaction - create subtle attraction or effect
       if (isMouseInCanvas) {
-        particles.forEach(p => {
+        particles.forEach((p) => {
           const dx = mousePosition.x - p.x
           const dy = mousePosition.y - p.y
           const distance = Math.sqrt(dx * dx + dy * dy)
@@ -265,7 +265,7 @@ export default function Hero() {
               pulseOpacity = 0.5 * timeFactor
             } else if (
               particles[pulse.origin].connections.some(
-                k => particles[k].connections.includes(i) || particles[k].connections.includes(j)
+                (k) => particles[k].connections.includes(i) || particles[k].connections.includes(j)
               )
             ) {
               // Secondary connections (2 hops away)
@@ -338,7 +338,7 @@ export default function Hero() {
             particleSize = p.size + 1.5 * timeFactor
             particleColor = pulse.color.replace('alpha', String(particleAlpha))
           } else if (
-            particles[pulse.origin].connections.some(k => particles[k].connections.includes(i))
+            particles[pulse.origin].connections.some((k) => particles[k].connections.includes(i))
           ) {
             // Secondary effect (2 hops away)
             particleAlpha = Math.max(particleAlpha, 0.5 * timeFactor)
@@ -370,7 +370,7 @@ export default function Hero() {
       })
 
       // Remove completed pulses
-      activePulses = activePulses.filter(pulse => now - pulse.time <= pulse.duration)
+      activePulses = activePulses.filter((pulse) => now - pulse.time <= pulse.duration)
 
       animationId = requestAnimationFrame(animate)
     }

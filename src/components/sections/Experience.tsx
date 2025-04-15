@@ -40,7 +40,7 @@ const iconMap = {
 }
 
 // Process experience data to include icon components
-const experience = experienceData.map(item => ({
+const experience = experienceData.map((item) => ({
   ...item,
   icon: iconMap[item.icon as keyof typeof iconMap],
 }))
@@ -202,7 +202,7 @@ export default function Experience() {
         </div>
 
         {/* Glowing accent dots - using client-side state instead of inline random values */}
-        {glowingDots.map(dot => (
+        {glowingDots.map((dot) => (
           <motion.div
             key={dot.id}
             className="bg-accent/70 absolute rounded-full blur-lg"
@@ -320,7 +320,7 @@ export default function Experience() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {experience.map(job => (
+            {experience.map((job) => (
               <motion.div
                 key={job.id}
                 initial={{ opacity: 0, y: 20 }}

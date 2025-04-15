@@ -67,7 +67,7 @@ export default function Footer() {
               Building innovative solutions at the intersection of technology and creativity.
             </p>
             <div className="mt-auto flex space-x-3">
-              {socialLinks.map(link => (
+              {socialLinks.map((link) => (
                 <motion.a
                   key={link.name}
                   href={link.href}
@@ -94,7 +94,7 @@ export default function Footer() {
               Navigation
             </h3>
             <ul className="space-y-2">
-              {navLinks.map(link => (
+              {navLinks.map((link) => (
                 <li key={link.name}>
                   <button
                     onClick={() => scrollToSection(link.sectionId)}

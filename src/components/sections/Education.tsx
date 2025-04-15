@@ -211,7 +211,7 @@ export default function Education() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {education.map(edu => (
+            {education.map((edu) => (
               <motion.div
                 key={edu.id}
                 initial={{ opacity: 0, y: 20 }}

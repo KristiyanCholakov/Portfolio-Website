@@ -149,7 +149,7 @@ export default function Contact() {
               <div className="flex flex-1 flex-col justify-between p-8">
                 <div>
                   <div className="mb-6 flex space-x-4">
-                    {socialLinks.map(link => (
+                    {socialLinks.map((link) => (
                       <motion.a
                         key={link.name}
                         href={link.href}
@@ -171,7 +171,7 @@ export default function Contact() {
                       Email me directly
                     </h4>
                     <div className="space-y-3">
-                      {emailAddresses.map(email => (
+                      {emailAddresses.map((email) => (
                         <motion.a
                           key={email.type}
                           href={email.href}

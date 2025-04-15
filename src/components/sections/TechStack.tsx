@@ -69,7 +69,7 @@ const iconMap: Record<string, LucideIcon> = {
 }
 
 // Process tech categories from JSON with proper type casting for position
-const techCategories: TechCategory[] = techStackData.map(category => ({
+const techCategories: TechCategory[] = techStackData.map((category) => ({
   ...category,
   icon: iconMap[category.icon as keyof typeof iconMap],
   position: (category.position as number[]).slice(0, 3) as [number, number, number],
@@ -77,40 +77,72 @@ const techCategories: TechCategory[] = techStackData.map(category => ({
 
 // Matrix background component
 const MatrixBackground = () => {
-  const [binaryDigits, setBinaryDigits] = useState<BinaryDigit[]>([])
+  const canvasRef = useRef<HTMLCanvasElement>(null)
   const containerRef = useRef<HTMLDivElement>(null)
-  const [containerHeight, setContainerHeight] = useState(0)
-  const animationRunningRef = useRef(true)
+  const animationFrameRef = useRef<number>(0)
+  const [containerDimensions, setContainerDimensions] = useState({ width: 0, height: 0 })
 
-  // Function to create a new digit
-  const createDigit = (width: number): BinaryDigit => {
-    const speed = Math.random() * 1.2 + 2.5 // 2.5-3.7 seconds (slower)
-    // Calculate total animation duration (speed factor * multiplier + buffer time)
-    const animationDuration = speed * 5 // No extra buffer time needed
+  // Class to manage binary digits
+  class BinaryDigit {
+    x: number
+    y: number
+    value: string
+    size: number
+    speed: number
+    opacity: number
+    maxOpacity: number
 
-    return {
-      id: Math.random().toString(36).substring(2, 9), // More unique ID
-      value: Math.random() > 0.5 ? '1' : '0',
-      x: Math.random() * width,
-      y: -50, // Start slightly above the container
-      size: Math.random() * 18 + 16, // 16-34px - much larger digits
-      speed,
-      opacity: Math.random() * 0.3 + 0.1, // 0.1-0.4 opacity
-      delay: 0,
-      timeCreated: Date.now(),
-      animationDuration,
+    constructor(width: number) {
+      this.x = Math.random() * width
+      this.y = -50
+      this.value = Math.random() > 0.5 ? '1' : '0'
+      this.size = Math.random() * 18 + 16 // 16-34px
+      this.speed = Math.random() * 1.2 + 2.5 // 2.5-3.7 seconds (slower)
+      this.maxOpacity = Math.random() * 0.3 + 0.1 // 0.1-0.4 opacity
+      this.opacity = 0
+    }
+
+    update(height: number, deltaTime: number) {
+      // Update position
+      this.y += this.speed * 60 * (deltaTime / 1000)
+
+      // Update opacity - fade in at start, stay visible, then fade out
+      const progress = this.y / height
+      if (progress < 0.1) {
+        // Fade in
+        this.opacity = Math.min(this.maxOpacity, (progress / 0.1) * this.maxOpacity)
+      } else if (progress > 0.7) {
+        // Fade out
+        this.opacity = Math.max(0, this.maxOpacity * (1 - (progress - 0.7) / 0.3))
+      } else {
+        // Stay visible
+        this.opacity = this.maxOpacity
+      }
+
+      return this.y < height + 50 // Return whether digit is still visible
+    }
+
+    draw(ctx: CanvasRenderingContext2D) {
+      if (this.opacity <= 0) return
+
+      ctx.font = `${this.size}px monospace`
+      ctx.fillStyle = `rgba(56, 189, 248, ${this.opacity})`
+      ctx.fillText(this.value, this.x, this.y)
     }
   }
 
-  // Update container height when ref changes or on resize
+  // Array to store binary digits
+  const digitsRef = useRef<BinaryDigit[]>([])
+  const lastFrameTimeRef = useRef<number>(0)
+
+  // Update container dimensions on resize
   useEffect(() => {
     const updateContainerDimensions = () => {
       if (containerRef.current) {
-        setContainerHeight(containerRef.current.getBoundingClientRect().height)
+        const { width, height } = containerRef.current.getBoundingClientRect()
+        setContainerDimensions({ width, height })
       }
     }
-
-    updateContainerDimensions()
 
     // Debounced resize handler
     let resizeTimer: NodeJS.Timeout
@@ -121,93 +153,89 @@ const MatrixBackground = () => {
       }, 250)
     }
 
+    updateContainerDimensions()
     window.addEventListener('resize', handleResize)
+
     return () => {
       window.removeEventListener('resize', handleResize)
       clearTimeout(resizeTimer)
     }
   }, [])
 
-  // Generate initial digits
+  // Initialize digits when dimensions are set
   useEffect(() => {
-    if (!containerRef.current || containerHeight === 0) return
+    if (containerDimensions.width === 0 || containerDimensions.height === 0) return
 
-    const { width } = containerRef.current.getBoundingClientRect()
-    const newDigits: BinaryDigit[] = []
+    // Create initial set of digits
+    const count = Math.floor((containerDimensions.width * containerDimensions.height) / 60000)
+    const initialDigits: BinaryDigit[] = []
 
-    // Significantly fewer digits for better performance but larger size
-    const count = Math.floor((width * containerHeight) / 40000) // Even fewer digits
-
-    // Create initial set of digits at random positions
     for (let i = 0; i < count; i++) {
-      const digit = createDigit(width)
-      // Distribute initial y positions throughout the container height
-      digit.y = Math.random() * containerHeight * 1.2 * -1
-      // Add staggered delays for initial set
-      digit.delay = Math.random() * 8
-      newDigits.push(digit)
+      const digit = new BinaryDigit(containerDimensions.width)
+      // Distribute initial y positions
+      digit.y = Math.random() * containerDimensions.height * 1.2 * -1
+      initialDigits.push(digit)
     }
 
-    setBinaryDigits(newDigits)
+    digitsRef.current = initialDigits
+  }, [containerDimensions])
 
-    // Stop animation when component unmounts
-    return () => {
-      animationRunningRef.current = false
-    }
-  }, [containerHeight])
-
-  // Continuously add new digits and remove completed ones
+  // Animation loop
   useEffect(() => {
-    if (!containerRef.current || containerHeight === 0) return
+    if (!canvasRef.current || containerDimensions.width === 0 || containerDimensions.height === 0)
+      return
 
-    const { width } = containerRef.current.getBoundingClientRect()
+    const canvas = canvasRef.current
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
 
-    // Set up the animation loop
-    const addNewDigits = () => {
-      if (!animationRunningRef.current) return
+    // Set canvas size
+    canvas.width = containerDimensions.width
+    canvas.height = containerDimensions.height
 
-      setBinaryDigits(currentDigits => {
-        const now = Date.now()
+    let frameCount = 0
+    let lastDigitAddedFrame = 0
 
-        // Filter out digits that have reached approximately 70% of their animation
-        // This will remove them once they start to fade out (optimization)
-        const activeDigits = currentDigits.filter(digit => {
-          const elapsedTime = (now - digit.timeCreated) / 1000 // in seconds
-          // Keep digits only until they start to fade (70% of animation duration)
-          return elapsedTime < digit.animationDuration * 0.7 + digit.delay
-        })
+    const animate = (timestamp: number) => {
+      // Calculate delta time for smooth animation regardless of frame rate
+      const deltaTime = lastFrameTimeRef.current ? timestamp - lastFrameTimeRef.current : 16.67
+      lastFrameTimeRef.current = timestamp
 
-        // Add new digits to replace those that were removed
-        // Aim to maintain roughly the same number of digits
-        const targetCount = Math.max(6, Math.floor((width * containerHeight) / 60000)) // Even fewer but larger digits
-        const newCount = Math.max(0, targetCount - activeDigits.length)
+      // Clear canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-        // Always add at least one new digit periodically for continuous effect
-        const minimumNewDigits = Math.random() > 0.7 ? 1 : 0
-        const digitsToAdd = Math.max(minimumNewDigits, newCount)
+      // Update and draw digits
+      digitsRef.current = digitsRef.current.filter((digit) =>
+        digit.update(containerDimensions.height, deltaTime)
+      )
 
-        const newDigits = [...activeDigits]
+      digitsRef.current.forEach((digit) => digit.draw(ctx))
 
-        // Add new digits if needed
-        for (let i = 0; i < digitsToAdd; i++) {
-          newDigits.push(createDigit(width))
-        }
+      // Add new digits occasionally
+      frameCount++
+      const shouldAddNewDigit =
+        frameCount - lastDigitAddedFrame > 40 && // Add new digit every ~40 frames
+        Math.random() > 0.7 && // Random chance
+        digitsRef.current.length <
+          Math.max(20, Math.floor((containerDimensions.width * containerDimensions.height) / 40000))
 
-        return newDigits
-      })
+      if (shouldAddNewDigit) {
+        digitsRef.current.push(new BinaryDigit(containerDimensions.width))
+        lastDigitAddedFrame = frameCount
+      }
 
-      // Schedule the next update
-      setTimeout(addNewDigits, 600) // Balance between performance and smoothness
+      // Continue animation loop
+      animationFrameRef.current = requestAnimationFrame(animate)
     }
 
-    // Start the animation loop
-    addNewDigits()
+    // Start animation
+    animationFrameRef.current = requestAnimationFrame(animate)
 
     // Cleanup
     return () => {
-      animationRunningRef.current = false
+      cancelAnimationFrame(animationFrameRef.current)
     }
-  }, [containerHeight])
+  }, [containerDimensions])
 
   return (
     <div
@@ -215,48 +243,7 @@ const MatrixBackground = () => {
       className="pointer-events-none absolute inset-0 overflow-hidden"
       style={{ zIndex: 0 }}
     >
-      <AnimatePresence mode="popLayout">
-        {binaryDigits.map(digit => (
-          <motion.div
-            key={digit.id}
-            className="text-accent absolute font-mono select-none"
-            style={{
-              left: `${digit.x}px`,
-              top: `${digit.y}px`,
-              fontSize: `${digit.size}px`,
-              opacity: 0, // Start invisible and animate in
-              willChange: 'transform, opacity', // Performance optimization
-            }}
-            initial={{ y: digit.y, opacity: 0 }}
-            animate={{
-              y: containerHeight + 50,
-              opacity: [0, digit.opacity, digit.opacity, 0],
-            }}
-            exit={{
-              opacity: 0,
-              transition: {
-                duration: 0.3, // Faster exit animation
-                ease: 'easeOut',
-              },
-            }}
-            transition={{
-              y: {
-                duration: digit.speed * 5,
-                ease: 'linear',
-                delay: digit.delay,
-              },
-              opacity: {
-                duration: digit.speed * 5,
-                ease: 'linear',
-                delay: digit.delay,
-                times: [0, 0.1, 0.7, 1], // Fade in at start, stay visible until 70% through, then fade out
-              },
-            }}
-          >
-            {digit.value}
-          </motion.div>
-        ))}
-      </AnimatePresence>
+      <canvas ref={canvasRef} className="absolute inset-0" />
 
       {/* Add a subtle gradient overlay */}
       <div
@@ -368,7 +355,7 @@ const CategoryCluster = ({
 
       {/* Centered tech nodes with flex */}
       <div className="flex flex-wrap justify-center gap-5">
-        {category.technologies.map(tech => (
+        {category.technologies.map((tech) => (
           <TechNode
             key={tech.name}
             tech={tech}
@@ -390,7 +377,7 @@ const TechNetwork = () => {
 
   // Filter categories based on active selection
   const displayedCategories = activeCategory
-    ? techCategories.filter(cat => cat.name === activeCategory)
+    ? techCategories.filter((cat) => cat.name === activeCategory)
     : techCategories
 
   return (
@@ -408,7 +395,7 @@ const TechNetwork = () => {
           All
         </button>
 
-        {techCategories.map(category => (
+        {techCategories.map((category) => (
           <button
             key={category.name}
             className={`flex items-center gap-1 rounded-full px-3 py-1.5 text-sm transition-colors ${
@@ -429,7 +416,7 @@ const TechNetwork = () => {
       {/* Network visualization */}
       <div className="bg-surface/20 border-accent/10 rounded-xl border p-6 backdrop-blur-sm">
         <div className="space-y-12">
-          {displayedCategories.map(category => (
+          {displayedCategories.map((category) => (
             <CategoryCluster
               key={category.name}
               category={category}

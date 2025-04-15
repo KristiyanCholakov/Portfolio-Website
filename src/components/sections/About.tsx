@@ -20,6 +20,7 @@ import {
 import TypingText from '@/components/ui/TypingText'
 import { scrollToSection } from '@/utils/navigation'
 import ScrollArrow from '@/components/ui/ScrollArrow'
+import { useState, useEffect } from 'react'
 
 // Highlights with icons
 const highlights = [
@@ -141,34 +142,52 @@ const staggerContainer = {
 }
 
 export default function About() {
+  // Add state to track if content is ready to be shown
+  const [isContentReady, setIsContentReady] = useState(false)
+
+  // Use effect to set content as ready after a short delay
+  useEffect(() => {
+    // Small delay to ensure all elements are properly loaded
+    const timer = setTimeout(() => {
+      setIsContentReady(true)
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <section id="about" className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-      {/* Background elements */}
+      {/* Background elements - always visible but with controlled opacity */}
       <div
-        className="absolute inset-0 opacity-20"
+        className="absolute inset-0 transition-opacity duration-700"
         style={{
           background: 'radial-gradient(circle at 50% 50%, rgba(56,189,248,0.15), transparent 70%)',
+          opacity: isContentReady ? 0.2 : 0,
         }}
       />
 
-      {/* Decorative coding icons in background */}
-      {codeIcons.map(({ Icon, top, left, right, bottom, size, duration, delay }, index) => (
-        <motion.div
-          key={index}
-          className="text-accent/10 absolute hidden lg:block"
-          style={{ top, left, right, bottom }}
-          animate={{ rotate: 360 }}
-          initial={{ rotate: 0 }}
-          transition={{
-            duration,
-            repeat: Infinity,
-            ease: 'linear',
-            delay,
-          }}
-        >
-          <Icon size={size} />
-        </motion.div>
-      ))}
+      {/* Decorative coding icons in background - controlled visibility */}
+      <div
+        className={`transition-opacity duration-700 ${isContentReady ? 'opacity-100' : 'opacity-0'}`}
+      >
+        {codeIcons.map(({ Icon, top, left, right, bottom, size, duration, delay }, index) => (
+          <motion.div
+            key={index}
+            className="text-accent/10 absolute hidden lg:block"
+            style={{ top, left, right, bottom }}
+            animate={{ rotate: 360 }}
+            initial={{ rotate: 0 }}
+            transition={{
+              duration,
+              repeat: Infinity,
+              ease: 'linear',
+              delay,
+            }}
+          >
+            <Icon size={size} />
+          </motion.div>
+        ))}
+      </div>
 
       <div className="relative z-10 mx-auto max-w-5xl">
         {/* Section header */}
@@ -248,7 +267,7 @@ export default function About() {
             >
               <Link
                 href="#tech-stack"
-                onClick={e => {
+                onClick={(e) => {
                   e.preventDefault()
                   scrollToSection('tech-stack')
                 }}
@@ -296,8 +315,6 @@ export default function About() {
           viewport={{ once: true, margin: '-100px' }}
           transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
-          <div className="from-accent/10 absolute -inset-10 bg-gradient-to-b to-transparent opacity-30 blur-3xl" />
-
           <div className="border-accent/10 bg-surface/50 relative grid grid-cols-1 gap-6 rounded-xl border p-6 backdrop-blur-sm md:grid-cols-3">
             {skillCategories.map((category, idx) => (
               <motion.div
@@ -343,8 +360,11 @@ export default function About() {
                   ))}
                 </div>
 
-                {/* Decorative elements */}
-                <div className="text-accent/5 absolute -right-4 -bottom-4 opacity-50">
+                {/* Decorative elements with controlled opacity */}
+                <div
+                  className="text-accent/5 absolute -right-4 -bottom-4 transition-opacity duration-700"
+                  style={{ opacity: isContentReady ? 0.5 : 0 }}
+                >
                   <category.icon size={80} />
                 </div>
               </motion.div>
@@ -354,39 +374,43 @@ export default function About() {
 
         {/* Highlights/Key Facts */}
         <motion.div
-          variants={staggerContainer}
-          initial="hidden"
-          whileInView="visible"
+          className="relative mb-16"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
           viewport={{ once: true, margin: '-100px' }}
-          className="mb-16 grid grid-cols-1 gap-8 sm:grid-cols-3"
+          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
         >
-          {highlights.map((item, index) => (
-            <motion.div
-              key={item.title}
-              custom={index}
-              variants={fadeInUp}
-              className="bg-surface border-accent/10 hover:shadow-accent/10 group rounded-lg border p-6 shadow-lg transition-all duration-300"
-              whileHover={{ y: -5 }}
-            >
+          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
+            {highlights.map((item, index) => (
               <motion.div
-                className="mb-3 text-3xl"
-                whileHover={{ scale: 1.2 }}
-                transition={{ type: 'spring', stiffness: 300 }}
+                key={item.title}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
+                className="bg-surface border-accent/10 hover:shadow-accent/10 group rounded-lg border p-6 shadow-lg"
+                whileHover={{ y: -5 }}
               >
-                {item.icon}
-              </motion.div>
-              <h3 className="text-accent mb-2 text-lg font-bold">{item.title}</h3>
-              <p className="text-text-muted text-sm">{item.description}</p>
+                <motion.div
+                  className="mb-3 text-3xl"
+                  whileHover={{ scale: 1.2 }}
+                  transition={{ type: 'spring', stiffness: 300 }}
+                >
+                  {item.icon}
+                </motion.div>
+                <h3 className="text-accent mb-2 text-lg font-bold">{item.title}</h3>
+                <p className="text-text-muted text-sm">{item.description}</p>
 
-              {/* Subtle indicator line */}
-              <motion.div
-                className="bg-accent mt-4 h-0.5 w-0"
-                initial={{ width: 0 }}
-                whileHover={{ width: '100%' }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.div>
-          ))}
+                {/* Subtle indicator line */}
+                <motion.div
+                  className="bg-accent mt-4 h-0.5 w-0"
+                  initial={{ width: 0 }}
+                  whileHover={{ width: '100%' }}
+                  transition={{ duration: 0.3 }}
+                />
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
 
         {/* Scroll CTA */}

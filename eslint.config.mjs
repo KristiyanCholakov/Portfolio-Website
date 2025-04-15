@@ -1,6 +1,8 @@
 import { dirname } from 'path'
 import { fileURLToPath } from 'url'
 import { FlatCompat } from '@eslint/eslintrc'
+import eslintPluginPrettier from 'eslint-plugin-prettier'
+import prettierConfig from './.prettierrc.js' // Assuming you create this
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -9,10 +11,8 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 })
 
-const { default: eslintPluginPrettier } = await import('eslint-plugin-prettier')
-
 export default [
-  // Apply legacy ESLint configs via FlatCompat
+  // Extend legacy ESLint configs via FlatCompat (e.g. Next.js)
   ...compat.extends('next/core-web-vitals', 'next'),
 
   // TypeScript-specific settings
@@ -28,26 +28,14 @@ export default [
     },
   },
 
-  // Prettier + TailwindCSS plugin integration
+  // Prettier integration
   {
+    files: ['**/*.{js,jsx,ts,tsx}'],
     plugins: {
       prettier: eslintPluginPrettier,
     },
     rules: {
-      'prettier/prettier': [
-        'error',
-        {
-          semi: false,
-          singleQuote: true,
-          trailingComma: 'es5',
-          arrowParens: 'avoid',
-          bracketSpacing: true,
-          printWidth: 100,
-          tabWidth: 2,
-          plugins: ['prettier-plugin-tailwindcss'],
-          tailwindConfig: './tailwind.config.ts',
-        },
-      ],
+      'prettier/prettier': ['error', prettierConfig],
     },
   },
 ]

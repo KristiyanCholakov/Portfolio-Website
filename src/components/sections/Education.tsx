@@ -217,10 +217,10 @@ export default function Education() {
                   <motion.div
                     key={edu.id}
                     initial={{ opacity: 0, position: 'absolute', inset: 0 }}
-                    animate={{ 
-                      opacity: activeId === edu.id ? 1 : 0, 
+                    animate={{
+                      opacity: activeId === edu.id ? 1 : 0,
                       position: activeId === edu.id ? 'relative' : 'absolute',
-                      display: activeId === edu.id ? 'block' : 'none'
+                      display: activeId === edu.id ? 'block' : 'none',
                     }}
                     exit={{ opacity: 0, position: 'absolute', inset: 0 }}
                     transition={{ duration: 0.3 }}

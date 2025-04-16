@@ -25,6 +25,8 @@ export default function Footer() {
   const navLinks = [
     { name: 'Home', sectionId: 'top' },
     { name: 'About', sectionId: 'about' },
+    { name: 'Education', sectionId: 'education' },
+    { name: 'Experience', sectionId: 'experience' },
     { name: 'Projects', sectionId: 'projects' },
     { name: 'Tech Stack', sectionId: 'tech-stack' },
     { name: 'Contact', sectionId: 'contact' },
@@ -90,10 +92,11 @@ export default function Footer() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            <h3 className="text-text-primary mb-4 text-sm font-semibold tracking-wider uppercase">
+            <h3 className="text-text-primary mb-2 text-sm font-semibold tracking-wider uppercase">
               Navigation
             </h3>
-            <ul className="space-y-2">
+            <hr className="border-accent/10 mb-4 border-t" />
+            <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
               {navLinks.map((link) => (
                 <li key={link.name}>
                   <button

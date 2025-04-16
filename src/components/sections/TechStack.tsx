@@ -414,18 +414,36 @@ const TechNetwork = () => {
       </div>
 
       {/* Network visualization */}
-      <div className="bg-surface/20 border-accent/10 rounded-xl border p-6 backdrop-blur-sm">
-        <div className="space-y-12">
-          {displayedCategories.map((category) => (
-            <CategoryCluster
-              key={category.name}
-              category={category}
-              hover={hover}
-              setHover={setHover}
-            />
-          ))}
-        </div>
-      </div>
+      <motion.div
+        key={activeCategory || 'all'} // Key changes to trigger animation when filter changes
+        initial={{ scale: 0.98, opacity: 0.8 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{
+          type: 'spring',
+          stiffness: 300,
+          damping: 25,
+          duration: 0.4,
+        }}
+        className="bg-surface/20 border-accent/10 rounded-xl border p-6 backdrop-blur-sm"
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={activeCategory || 'all'}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="space-y-12"
+            layout
+          >
+            {displayedCategories.map((category) => (
+              <motion.div key={category.name} layout>
+                <CategoryCluster category={category} hover={hover} setHover={setHover} />
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </motion.div>
     </div>
   )
 }

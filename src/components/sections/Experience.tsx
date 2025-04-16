@@ -302,20 +302,20 @@ export default function Experience() {
                             color: activeJob === job.id ? job.color : undefined,
                           }}
                         />
-                        <div className="ml-3 font-medium truncate">{job.role}</div>
+                        <div className="ml-3 truncate font-medium">{job.role}</div>
                       </div>
-                      
+
                       {/* Company name row */}
                       <div className="mt-1.5 pl-7">
-                        <div className="text-xs opacity-80 font-medium">{job.company}</div>
+                        <div className="text-xs font-medium opacity-80">{job.company}</div>
                       </div>
 
                       {/* Period row */}
                       <div className="mt-2 pl-7">
-                        <div 
-                          className={`text-xs inline-block rounded-full px-2 py-0.5 ${
-                            activeJob === job.id 
-                              ? 'bg-accent/10 text-accent' 
+                        <div
+                          className={`inline-block rounded-full px-2 py-0.5 text-xs ${
+                            activeJob === job.id
+                              ? 'bg-accent/10 text-accent'
                               : 'bg-surface/80 text-text-muted'
                           }`}
                         >

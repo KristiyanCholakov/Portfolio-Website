@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { Lightbulb, GraduationCap, Award, BookOpen, Calendar, MapPin } from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
 import ScrollArrow from '@/components/ui/ScrollArrow'
@@ -211,80 +211,85 @@ export default function Education() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.1 }}
           >
-            {education.map((edu) => (
-              <motion.div
-                key={edu.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{
-                  opacity: activeId === edu.id ? 1 : 0,
-                  y: activeId === edu.id ? 0 : 20,
-                  display: activeId === edu.id ? 'block' : 'none',
-                }}
-                transition={{ duration: 0.4 }}
-                className="border-accent/10 relative overflow-hidden rounded-lg border"
-              >
-                {/* Top colored bar */}
-                <div className="h-2 w-full" style={{ backgroundColor: edu.color }} />
+            <div className="border-accent/10 relative h-full overflow-hidden rounded-xl border">
+              <AnimatePresence mode="wait">
+                {education.map((edu) => (
+                  <motion.div
+                    key={edu.id}
+                    initial={{ opacity: 0, position: 'absolute', inset: 0 }}
+                    animate={{ 
+                      opacity: activeId === edu.id ? 1 : 0, 
+                      position: activeId === edu.id ? 'relative' : 'absolute',
+                      display: activeId === edu.id ? 'block' : 'none'
+                    }}
+                    exit={{ opacity: 0, position: 'absolute', inset: 0 }}
+                    transition={{ duration: 0.3 }}
+                    className="h-full"
+                  >
+                    {/* Top colored bar */}
+                    <div className="h-2 w-full" style={{ backgroundColor: edu.color }} />
 
-                <div className="bg-surface/80 p-6 backdrop-blur-sm">
-                  <div className="mb-4 flex items-start justify-between">
-                    <div>
-                      <h3 className="text-text-primary text-xl font-bold">{edu.degree}</h3>
-                      <p className="text-text-muted text-sm">{edu.focus}</p>
-                    </div>
-                    {edu.distinction && (
-                      <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
-                        <Award size={14} />
-                        Distinction
+                    <div className="bg-surface/80 p-6">
+                      <div className="mb-4 flex items-start justify-between">
+                        <div>
+                          <h3 className="text-text-primary text-xl font-bold">{edu.degree}</h3>
+                          <p className="text-text-muted text-sm">{edu.focus}</p>
+                        </div>
+                        {edu.distinction && (
+                          <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
+                            <Award size={14} />
+                            Distinction
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
 
-                  <div className="mb-5 flex flex-wrap gap-4 text-sm">
-                    <div className="text-text-muted flex items-center">
-                      <BookOpen size={16} className="text-accent mr-1" />
-                      {edu.institution}
-                    </div>
-                    <div className="text-text-muted flex items-center">
-                      <MapPin size={16} className="text-accent mr-1" />
-                      {edu.location}
-                    </div>
-                    <div className="text-text-muted flex items-center">
-                      <Calendar size={16} className="text-accent mr-1" />
-                      {edu.period}
-                    </div>
-                  </div>
+                      <div className="mb-5 flex flex-wrap gap-4 text-sm">
+                        <div className="text-text-muted flex items-center">
+                          <BookOpen size={16} className="text-accent mr-1" />
+                          {edu.institution}
+                        </div>
+                        <div className="text-text-muted flex items-center">
+                          <MapPin size={16} className="text-accent mr-1" />
+                          {edu.location}
+                        </div>
+                        <div className="text-text-muted flex items-center">
+                          <Calendar size={16} className="text-accent mr-1" />
+                          {edu.period}
+                        </div>
+                      </div>
 
-                  <p className="text-text-primary mb-5">{edu.description}</p>
+                      <p className="text-text-primary mb-5">{edu.description}</p>
 
-                  {/* Key achievements with animated bullets */}
-                  <div>
-                    <h4 className="text-accent mb-3 flex items-center text-sm font-semibold">
-                      <Lightbulb size={16} className="mr-2" />
-                      KEY ACHIEVEMENTS
-                    </h4>
-                    <motion.ul
-                      variants={staggerVariants}
-                      initial="hidden"
-                      whileInView="visible"
-                      viewport={{ once: true }}
-                      className="space-y-2 text-sm"
-                    >
-                      {edu.achievements.map((achievement, i) => (
-                        <motion.li
-                          key={i}
-                          variants={itemVariants}
-                          className="text-text-muted border-accent/10 bg-surface/40 relative rounded-md border py-2 pr-4 pl-8"
+                      {/* Key achievements with animated bullets */}
+                      <div>
+                        <h4 className="text-accent mb-3 flex items-center text-sm font-semibold">
+                          <Lightbulb size={16} className="mr-2" />
+                          KEY ACHIEVEMENTS
+                        </h4>
+                        <motion.ul
+                          variants={staggerVariants}
+                          initial="hidden"
+                          whileInView="visible"
+                          viewport={{ once: true }}
+                          className="space-y-2 text-sm"
                         >
-                          <span className="bg-accent absolute top-1/2 left-3 h-2 w-2 -translate-y-1/2 rounded-full" />
-                          {achievement}
-                        </motion.li>
-                      ))}
-                    </motion.ul>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
+                          {edu.achievements.map((achievement, i) => (
+                            <motion.li
+                              key={i}
+                              variants={itemVariants}
+                              className="text-text-muted border-accent/10 bg-surface/40 relative rounded-md border py-2 pr-4 pl-8"
+                            >
+                              <span className="bg-accent absolute top-1/2 left-3 h-2 w-2 -translate-y-1/2 rounded-full" />
+                              {achievement}
+                            </motion.li>
+                          ))}
+                        </motion.ul>
+                      </div>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
           </motion.div>
         </div>
 

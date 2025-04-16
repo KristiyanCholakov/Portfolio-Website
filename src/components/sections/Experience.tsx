@@ -331,13 +331,13 @@ export default function Experience() {
 
           {/* Job details panel */}
           <motion.div
-            className="lg:col-span-7"
+            className="overflow-hidden rounded-xl backdrop-blur-sm lg:col-span-7"
             initial={{ opacity: 0, x: 20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="border-accent/10 relative h-full rounded-xl border">
+            <div className="border-accent/10 relative h-full overflow-hidden rounded-xl border">
               <AnimatePresence mode="wait">
                 {experience.map(
                   (job) =>
@@ -350,99 +350,108 @@ export default function Experience() {
                         transition={{ duration: 0.3 }}
                         className="h-full"
                       >
-                        {/* Job header with colored accent */}
-                        <div
-                          className="px-6 py-5"
-                          style={{
-                            background: `linear-gradient(to right, ${job.color}10, transparent)`,
-                            borderBottom: `1px solid ${job.color}30`,
-                          }}
-                        >
-                          <div className="flex flex-wrap justify-between gap-4">
-                            <div>
-                              <div className="flex items-center gap-2">
-                                <h3 className="text-text-primary text-xl font-bold">{job.role}</h3>
-                                <div
-                                  className="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                                  style={{
-                                    backgroundColor: `${job.color}15`,
-                                    color: job.color,
-                                  }}
-                                >
-                                  {job.type}
+                        {/* Blured background div */}
+                        <div className="h-full overflow-hidden">
+                          {/* Job header with colored accent */}
+                          <div
+                            className="px-6 py-5"
+                            style={{
+                              background: `linear-gradient(to right, ${job.color}10, transparent)`,
+                              borderBottom: `1px solid ${job.color}30`,
+                            }}
+                          >
+                            <div className="flex flex-wrap justify-between gap-4">
+                              <div>
+                                <div className="flex items-center gap-2">
+                                  <h3 className="text-text-primary text-xl font-bold">
+                                    {job.role}
+                                  </h3>
+                                  <div
+                                    className="rounded-full px-2.5 py-0.5 text-xs font-medium"
+                                    style={{
+                                      backgroundColor: `${job.color}15`,
+                                      color: job.color,
+                                    }}
+                                  >
+                                    {job.type}
+                                  </div>
                                 </div>
+                                <p className="text-accent flex items-center gap-1.5 text-lg font-medium">
+                                  <Briefcase size={16} /> {job.company}
+                                </p>
                               </div>
-                              <p className="text-accent flex items-center gap-1.5 text-lg font-medium">
-                                <Briefcase size={16} /> {job.company}
+
+                              <div className="text-right">
+                                <div className="text-text-muted flex items-center justify-end gap-1.5">
+                                  <Clock size={14} className="text-accent" />
+                                  <span>{job.period}</span>
+                                </div>
+                                <div className="text-text-muted mt-1 text-sm">{job.location}</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Job content with terminal-inspired design */}
+                          <div className="bg-surface/40 p-6">
+                            <div className="border-accent/5 mb-6 rounded-lg border bg-black/40 p-4">
+                              <p className="text-text-primary font-mono text-sm">
+                                {job.description}
                               </p>
                             </div>
 
-                            <div className="text-right">
-                              <div className="text-text-muted flex items-center justify-end gap-1.5">
-                                <Clock size={14} className="text-accent" />
-                                <span>{job.period}</span>
+                            {/* Responsibilities */}
+                            <div className="mb-6">
+                              <h4 className="text-accent mb-3 font-mono text-sm font-semibold tracking-wider">
+                                RESPONSIBILITIES
+                              </h4>
+                              <ul className="space-y-2">
+                                {job.responsibilities.map((item, i) => (
+                                  <motion.li
+                                    key={i}
+                                    initial={{ opacity: 0, x: -10 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: 0.1 * i, duration: 0.3 }}
+                                    className="text-text-muted flex items-start gap-2 text-sm"
+                                  >
+                                    <CheckCircle
+                                      size={16}
+                                      className="mt-0.5 shrink-0"
+                                      style={{ color: job.color }}
+                                    />
+                                    <span>{item}</span>
+                                  </motion.li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            {/* Technologies */}
+                            <div>
+                              <h4 className="text-accent mb-3 font-mono text-sm font-semibold tracking-wider">
+                                TECH STACK
+                              </h4>
+                              <div className="flex flex-wrap gap-2">
+                                {job.technologies.map((tech, i) => (
+                                  <motion.div
+                                    key={tech}
+                                    initial={{ opacity: 0, scale: 0.9 }}
+                                    animate={{ opacity: 1, scale: 1 }}
+                                    transition={{ delay: 0.05 * i, duration: 0.3 }}
+                                    className="border-accent/10 flex items-center gap-1.5 rounded-md border bg-black/20 px-3 py-1 text-sm"
+                                  >
+                                    <Code
+                                      size={14}
+                                      className="text-accent"
+                                      style={{ color: job.color }}
+                                    />
+                                    {tech}
+                                  </motion.div>
+                                ))}
                               </div>
-                              <div className="text-text-muted mt-1 text-sm">{job.location}</div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Job content with terminal-inspired design */}
-                        <div className="bg-surface/40 p-6 backdrop-blur-sm">
-                          <div className="border-accent/5 mb-6 rounded-lg border bg-black/40 p-4">
-                            <p className="text-text-primary font-mono text-sm">{job.description}</p>
-                          </div>
-
-                          {/* Responsibilities */}
-                          <div className="mb-6">
-                            <h4 className="text-accent mb-3 font-mono text-sm font-semibold tracking-wider">
-                              RESPONSIBILITIES
-                            </h4>
-                            <ul className="space-y-2">
-                              {job.responsibilities.map((item, i) => (
-                                <motion.li
-                                  key={i}
-                                  initial={{ opacity: 0, x: -10 }}
-                                  animate={{ opacity: 1, x: 0 }}
-                                  transition={{ delay: 0.1 * i, duration: 0.3 }}
-                                  className="text-text-muted flex items-start gap-2 text-sm"
-                                >
-                                  <CheckCircle
-                                    size={16}
-                                    className="mt-0.5 shrink-0"
-                                    style={{ color: job.color }}
-                                  />
-                                  <span>{item}</span>
-                                </motion.li>
-                              ))}
-                            </ul>
-                          </div>
-
-                          {/* Technologies */}
-                          <div>
-                            <h4 className="text-accent mb-3 font-mono text-sm font-semibold tracking-wider">
-                              TECH STACK
-                            </h4>
-                            <div className="flex flex-wrap gap-2">
-                              {job.technologies.map((tech, i) => (
-                                <motion.div
-                                  key={tech}
-                                  initial={{ opacity: 0, scale: 0.9 }}
-                                  animate={{ opacity: 1, scale: 1 }}
-                                  transition={{ delay: 0.05 * i, duration: 0.3 }}
-                                  className="border-accent/10 flex items-center gap-1.5 rounded-md border bg-black/20 px-3 py-1 text-sm"
-                                >
-                                  <Code
-                                    size={14}
-                                    className="text-accent"
-                                    style={{ color: job.color }}
-                                  />
-                                  {tech}
-                                </motion.div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
+                        {/* Job details */}
                       </motion.div>
                     )
                 )}

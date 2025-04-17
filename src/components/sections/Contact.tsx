@@ -69,17 +69,42 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormStatus('loading')
-    setTimeout(() => {
-      const success = Math.random() > 0.2
-      if (success) {
+
+    try {
+      // Get form data
+      const formData = new FormData(e.target as HTMLFormElement)
+      const formValues = {
+        name: formData.get('name'),
+        email: formData.get('email'),
+        message: formData.get('message'),
+      }
+
+      // Send the form data to the API endpoint
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formValues),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
         setFormStatus('success')
         setFormMessage("Message sent successfully! I'll get back to you soon.")
         if (formRef.current) formRef.current.reset()
       } else {
         setFormStatus('error')
-        setFormMessage('Something went wrong. Please try again or contact me directly via email.')
+        setFormMessage(
+          data.error || 'Something went wrong. Please try again or contact me directly via email.'
+        )
       }
-    }, 1500)
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setFormStatus('error')
+      setFormMessage('Failed to send message. Please try again or contact me directly via email.')
+    }
   }
 
   return (

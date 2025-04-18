@@ -1,49 +1,53 @@
 [
   {
-    "id": "msc",
-    "degree": "MSc Computer Science",
-    "institution": "Nottingham Trent University",
-    "location": "Nottingham, UK",
-    "period": "September 2022 - July 2023",
+    "id": "ntu",
+    "degree": "Bachelor of Engineering - B.Eng, Computer Science",
+    "institution": "Nanyang Technological University Singapore",
+    "location": "Singapore",
+    "period": "August 2021 - January 2025",
     "distinction": true,
-    "focus": "Artificial Intelligence and Data Science",
-    "description": "Graduated with Distinction, focusing on AI, Machine Learning, and Advanced Data Analytics.",
+    "focus": "Artificial Intelligence and Data Science, Minor in Mathematics",
+    "description": "Graduated with Highest Distinction (First Class Honours) through NTU’s Accelerated Bachelor Program. Completed the degree in 3.5 years with a structured focus on mastering core CS, AI, and DS principles, and applying them through advanced research and projects.",
     "achievements": [
-      "Research thesis on Computer Vision applications in healthcare",
-      "Excellence award for innovative AI projects",
-      "Specialized in Neural Networks and Deep Learning"
+      "Honours Degree with Highest Distinction (First Class Honours) | GPA: 4.59/5.00",
+      "Double Specialization in Artificial Intelligence and Data Science, Minor in Mathematics",
+      "Selected for URECA research program and URECA-FYP, focusing on advanced machine learning models",
+      "Completed degree in 3.5 years by overloading semesters",
+      "Developed leadership, teamwork, and communication skills through collaborative research"
     ],
     "color": "#38bdf8"
   },
   {
-    "id": "bsc",
-    "degree": "BSc Computer Science",
-    "institution": "University of London",
-    "location": "London, UK",
-    "period": "September 2018 - June 2022",
-    "distinction": false,
-    "focus": "Software Engineering",
-    "description": "Foundational studies in software engineering with a focus on web technologies and system architecture.",
+    "id": "softuni",
+    "degree": "Python Web Developer Diploma",
+    "institution": "Software University (SoftUni)",
+    "location": "Sofia, Bulgaria (Remote)",
+    "period": "October 2018 - May 2020",
+    "distinction": true,
+    "focus": "Full-Stack Web Development with Python and Django",
+    "description": "Completed an intensive and project-oriented web development program focused on building real-world Python and Django web applications, including RESTful APIs, database management, and frontend integration.",
     "achievements": [
-      "Developed multiple full-stack applications",
-      "Finalist in university hackathon",
-      "Team lead for capstone project"
+      "Built full-stack Django applications with PostgreSQL and REST APIs",
+      "Excelled in backend logic, testing, and deployment",
+      "Achieved top academic performance with 6.00/6.00 GPA",
+      "Delivered production-ready apps with frontend integration and robust backend"
     ],
     "color": "#38bdf8"
   },
   {
-    "id": "cert",
-    "degree": "Professional Certification",
-    "institution": "Google & Microsoft",
-    "location": "Online",
-    "period": "January 2020 - Present",
-    "distinction": false,
-    "focus": "Cloud Computing & ML",
-    "description": "Industry certifications in cloud technologies and machine learning.",
+    "id": "hs",
+    "degree": "High School Diploma, Mathematics and Computer Science",
+    "institution": "First Private Mathematical High School",
+    "location": "Sofia, Bulgaria",
+    "period": "September 2016 - May 2021",
+    "distinction": true,
+    "focus": "Mathematics, Informatics, and Programming",
+    "description": "Specialized in mathematics and informatics under the Bulgarian curriculum. Participated in competitive programming and mathematics contests, and served in the student council, developing both technical and leadership skills.",
     "achievements": [
-      "Google Cloud Professional Data Engineer",
-      "Microsoft Azure AI Fundamentals",
-      "TensorFlow Developer Certification"
+      "Graduated with 5.97/6.00 GPA",
+      "Excelled in mathematics competitions and problem-solving",
+      "Took advanced programming courses in web development and C++",
+      "Active member of the student council, enhancing leadership and organization skills"
     ],
     "color": "#38bdf8"
   }

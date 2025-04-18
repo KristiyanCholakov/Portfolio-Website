@@ -68,7 +68,7 @@ const codeLines = [
 ]
 
 export default function Education() {
-  const [activeId, setActiveId] = useState('msc')
+  const [activeId, setActiveId] = useState('ntu')
 
   return (
     <section

@@ -27,51 +27,63 @@ const highlights = [
   {
     icon: '🎓',
     title: 'Education',
-    description: 'MSc Computer Science with Distinction, Nottingham Trent University',
+    description: 'B.Eng. Computer Science, Nanyang Technological University (NTU), Singapore',
   },
   {
     icon: '🧠',
     title: 'Specialization',
-    description: 'Artificial Intelligence and Data Science',
+    description: 'Artificial Intelligence and Data Science with Minor in Mathematics',
   },
   {
     icon: '💻',
     title: 'Skills',
-    description: 'Web Development, Machine Learning, Computer Vision',
+    description: 'Machine Learning, Data Analysis, Software Development',
   },
 ]
 
 // Main technologies
-const mainTech = ['Python', 'TypeScript', 'React', 'Next.js', 'TensorFlow']
+const mainTech = [
+  'Python',
+  'PyTorch',
+  'TensorFlow',
+  'Flask',
+  'Django',
+  'TypeScript',
+  'Next.js',
+  'Kotlin',
+  'Java',
+]
 
 // Skills data for visualization
 const skillCategories = [
   {
-    name: 'Web Development',
+    name: 'Software Development',
     icon: Globe,
     skills: [
-      { name: 'React', level: 90 },
-      { name: 'Next.js', level: 85 },
-      { name: 'TypeScript', level: 80 },
-      { name: 'CSS/Tailwind', level: 85 },
+      { name: 'Full-Stack Web Development', level: 95 },
+      { name: 'Mobile App Development', level: 95 },
+      { name: 'Backend API Design & Integration', level: 90 },
+      { name: 'Cross-Platform Applications', level: 85 },
     ],
   },
   {
     name: 'Machine Learning',
     icon: Cpu,
     skills: [
-      { name: 'TensorFlow', level: 75 },
-      { name: 'Computer Vision', level: 80 },
-      { name: 'NLP', level: 70 },
+      { name: 'Deep Learning', level: 95 },
+      { name: 'Computer Vision', level: 90 },
+      { name: 'Natural Language Processing (NLP)', level: 90 },
+      { name: 'Model Design & Deployment', level: 90 },
     ],
   },
   {
     name: 'Data Science',
     icon: BarChart,
     skills: [
-      { name: 'Python', level: 90 },
-      { name: 'Data Visualization', level: 85 },
-      { name: 'Statistical Analysis', level: 80 },
+      { name: 'Data Visualization', level: 95 },
+      { name: 'Exploratory Data Analysis (EDA)', level: 95 },
+      { name: 'Database & Data Design', level: 90 },
+      { name: 'Statistical Modeling & Inference', level: 90 },
     ],
   },
 ]
@@ -223,14 +235,19 @@ export default function About() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <p className="text-text-primary leading-relaxed">
-              I&#39;m a Computer Science graduate with a specialization in Artificial Intelligence
-              and Data Science. My academic journey has equipped me with a strong foundation in both
-              theoretical concepts and practical applications of cutting-edge technologies.
+              As a recent graduate in Computer Science from Nanyang Technological University (NTU),
+              Singapore, with a specialization in Artificial Intelligence (AI) and Data Science
+              (DS), I am passionate about leveraging cutting-edge technologies to solve complex
+              problems. My academic journey was enriched by a minor in Mathematics and a range of
+              impactful projects that honed my technical expertise and analytical skills.
             </p>
             <p className="text-text-muted leading-relaxed">
-              My passion lies in developing innovative solutions that combine web technologies with
-              AI capabilities. I enjoy working with Python for data science and machine learning
-              tasks, while leveraging React and Next.js for building sophisticated user interfaces.
+              Over the past four years, I have cultivated a deep interest in Machine Learning (ML)
+              and Data Science, focusing my studies and practical efforts on these fields. Beyond my
+              technical pursuits, I am dedicated to teamwork, leadership, and innovation. I thrive
+              in collaborative environments, identifying critical components of projects,
+              efficiently delegating tasks, and integrating diverse technologies to deliver
+              innovative solutions.
             </p>
 
             {/* Main technologies tags */}

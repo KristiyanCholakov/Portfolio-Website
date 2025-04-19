@@ -2,7 +2,16 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Lightbulb, GraduationCap, Award, BookOpen, Calendar, MapPin } from 'lucide-react'
+import {
+  Lightbulb,
+  GraduationCap,
+  Award,
+  BookOpen,
+  Calendar,
+  MapPin,
+  School,
+  Code,
+} from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
 import ScrollArrow from '@/components/ui/ScrollArrow'
 import educationData from '@/data/education.json'
@@ -19,6 +28,20 @@ type EducationItem = {
   description: string
   achievements: string[]
   color: string
+}
+
+// Get the appropriate icon component based on education ID
+const getEducationIcon = (id: string) => {
+  switch (id) {
+    case 'ntu':
+      return GraduationCap
+    case 'softuni':
+      return Code
+    case 'hs':
+      return School
+    default:
+      return GraduationCap
+  }
 }
 
 // Use imported education data
@@ -166,40 +189,43 @@ export default function Education() {
             </h3>
 
             <div className="relative space-y-2">
-              {education.map((edu, index) => (
-                <div key={edu.id} className="relative">
-                  <button
-                    onClick={() => setActiveId(edu.id)}
-                    className={`relative z-10 flex w-full items-start rounded-md p-3 text-left transition-colors ${
-                      activeId === edu.id
-                        ? 'bg-accent/10 text-accent'
-                        : 'text-text-muted hover:bg-surface/80 hover:text-text-primary'
-                    }`}
-                  >
-                    <div
-                      className={`mr-3 flex h-7 w-7 items-center justify-center rounded-full ${
+              {education.map((edu, index) => {
+                const IconComponent = getEducationIcon(edu.id)
+                return (
+                  <div key={edu.id} className="relative">
+                    <button
+                      onClick={() => setActiveId(edu.id)}
+                      className={`relative z-10 flex w-full items-start rounded-md p-3 text-left transition-colors ${
                         activeId === edu.id
-                          ? 'bg-accent text-white'
-                          : 'border-accent/20 text-text-muted border'
+                          ? 'bg-accent/10 text-accent'
+                          : 'text-text-muted hover:bg-surface/80 hover:text-text-primary'
                       }`}
                     >
-                      {index + 1}
-                    </div>
-                    <div>
-                      <div className="font-medium">{edu.degree}</div>
-                      <div className="text-xs opacity-70">{edu.period}</div>
-                    </div>
-                  </button>
+                      <div
+                        className={`mr-3 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full ${
+                          activeId === edu.id
+                            ? 'bg-accent text-white'
+                            : 'border-accent/20 text-text-muted border'
+                        }`}
+                      >
+                        <IconComponent size={16} />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="font-medium break-words">{edu.degree}</div>
+                        <div className="text-xs opacity-70">{edu.period}</div>
+                      </div>
+                    </button>
 
-                  {/* Connect timeline items with vertical line */}
-                  {index < education.length - 1 && (
-                    <div
-                      className="bg-accent/20 absolute top-10 left-5 ml-[-1px] h-[calc(100%-15px)] w-0.5"
-                      aria-hidden="true"
-                    />
-                  )}
-                </div>
-              ))}
+                    {/* Connect timeline items with vertical line */}
+                    {index < education.length - 1 && (
+                      <div
+                        className="bg-accent/20 absolute top-10 left-5 ml-[-1px] h-[calc(100%-15px)] w-0.5"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </div>
+                )
+              })}
             </div>
           </motion.div>
 
@@ -213,81 +239,87 @@ export default function Education() {
           >
             <div className="border-accent/10 relative h-full overflow-hidden rounded-xl border">
               <AnimatePresence mode="wait">
-                {education.map((edu) => (
-                  <motion.div
-                    key={edu.id}
-                    initial={{ opacity: 0, position: 'absolute', inset: 0 }}
-                    animate={{
-                      opacity: activeId === edu.id ? 1 : 0,
-                      position: activeId === edu.id ? 'relative' : 'absolute',
-                      display: activeId === edu.id ? 'block' : 'none',
-                    }}
-                    exit={{ opacity: 0, position: 'absolute', inset: 0 }}
-                    transition={{ duration: 0.3 }}
-                    className="h-full"
-                  >
-                    {/* Top colored bar */}
-                    <div className="h-2 w-full" style={{ backgroundColor: edu.color }} />
+                {education.map((edu) => {
+                  const IconComponent = getEducationIcon(edu.id)
+                  return (
+                    <motion.div
+                      key={edu.id}
+                      initial={{ opacity: 0, position: 'absolute', inset: 0 }}
+                      animate={{
+                        opacity: activeId === edu.id ? 1 : 0,
+                        position: activeId === edu.id ? 'relative' : 'absolute',
+                        display: activeId === edu.id ? 'block' : 'none',
+                      }}
+                      exit={{ opacity: 0, position: 'absolute', inset: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="h-full"
+                    >
+                      {/* Top colored bar */}
+                      <div className="h-2 w-full" style={{ backgroundColor: edu.color }} />
 
-                    <div className="bg-surface/80 p-6">
-                      <div className="mb-4 flex items-start justify-between">
-                        <div>
-                          <h3 className="text-text-primary text-xl font-bold">{edu.degree}</h3>
-                          <p className="text-text-muted text-sm">{edu.focus}</p>
-                        </div>
-                        {edu.distinction && (
-                          <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
-                            <Award size={14} />
-                            Distinction
+                      <div className="bg-surface/80 p-6">
+                        <div className="mb-4 flex items-start justify-between">
+                          <div className="flex items-start gap-2">
+                            <IconComponent className="text-accent mt-1" size={20} />
+                            <div>
+                              <h3 className="text-text-primary text-xl font-bold">{edu.degree}</h3>
+                              <p className="text-text-muted text-sm">{edu.focus}</p>
+                            </div>
                           </div>
-                        )}
-                      </div>
-
-                      <div className="mb-5 flex flex-wrap gap-4 text-sm">
-                        <div className="text-text-muted flex items-center">
-                          <BookOpen size={16} className="text-accent mr-1" />
-                          {edu.institution}
+                          {edu.distinction && (
+                            <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs font-medium">
+                              <Award size={14} />
+                              Distinction
+                            </div>
+                          )}
                         </div>
-                        <div className="text-text-muted flex items-center">
-                          <MapPin size={16} className="text-accent mr-1" />
-                          {edu.location}
+
+                        <div className="mb-5 flex flex-wrap gap-4 text-sm">
+                          <div className="text-text-muted flex items-center">
+                            <BookOpen size={16} className="text-accent mr-1" />
+                            {edu.institution}
+                          </div>
+                          <div className="text-text-muted flex items-center">
+                            <MapPin size={16} className="text-accent mr-1" />
+                            {edu.location}
+                          </div>
+                          <div className="text-text-muted flex items-center">
+                            <Calendar size={16} className="text-accent mr-1" />
+                            {edu.period}
+                          </div>
                         </div>
-                        <div className="text-text-muted flex items-center">
-                          <Calendar size={16} className="text-accent mr-1" />
-                          {edu.period}
+
+                        <p className="text-text-primary mb-5">{edu.description}</p>
+
+                        {/* Key achievements with animated bullets */}
+                        <div>
+                          <h4 className="text-accent mb-3 flex items-center text-sm font-semibold">
+                            <Lightbulb size={16} className="mr-2" />
+                            KEY ACHIEVEMENTS
+                          </h4>
+                          <motion.ul
+                            variants={staggerVariants}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true }}
+                            className="space-y-2 text-sm"
+                          >
+                            {edu.achievements.map((achievement, i) => (
+                              <motion.li
+                                key={i}
+                                variants={itemVariants}
+                                className="text-text-muted border-accent/10 bg-surface/40 relative rounded-md border py-2 pr-4 pl-8"
+                              >
+                                <span className="bg-accent absolute top-1/2 left-3 h-2 w-2 -translate-y-1/2 rounded-full" />
+                                {achievement}
+                              </motion.li>
+                            ))}
+                          </motion.ul>
                         </div>
                       </div>
-
-                      <p className="text-text-primary mb-5">{edu.description}</p>
-
-                      {/* Key achievements with animated bullets */}
-                      <div>
-                        <h4 className="text-accent mb-3 flex items-center text-sm font-semibold">
-                          <Lightbulb size={16} className="mr-2" />
-                          KEY ACHIEVEMENTS
-                        </h4>
-                        <motion.ul
-                          variants={staggerVariants}
-                          initial="hidden"
-                          whileInView="visible"
-                          viewport={{ once: true }}
-                          className="space-y-2 text-sm"
-                        >
-                          {edu.achievements.map((achievement, i) => (
-                            <motion.li
-                              key={i}
-                              variants={itemVariants}
-                              className="text-text-muted border-accent/10 bg-surface/40 relative rounded-md border py-2 pr-4 pl-8"
-                            >
-                              <span className="bg-accent absolute top-1/2 left-3 h-2 w-2 -translate-y-1/2 rounded-full" />
-                              {achievement}
-                            </motion.li>
-                          ))}
-                        </motion.ul>
-                      </div>
-                    </div>
-                  </motion.div>
-                ))}
+                    </motion.div>
+                  )
+                })}
               </AnimatePresence>
             </div>
           </motion.div>

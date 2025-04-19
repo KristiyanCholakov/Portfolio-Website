@@ -7,7 +7,7 @@
     "period": "August 2021 - January 2025",
     "distinction": true,
     "focus": "Artificial Intelligence and Data Science, Minor in Mathematics",
-    "description": "Graduated with Highest Distinction (First Class Honours) through NTU’s Accelerated Bachelor Program. Completed the degree in 3.5 years with a structured focus on mastering core CS, AI, and DS principles, and applying them through advanced research and projects.",
+    "description": "Graduated with Highest Distinction (First Class Honours) through NTU's Accelerated Bachelor Program. Completed the degree in 3.5 years with a structured focus on mastering core CS, AI, and DS principles, and applying them through advanced research and projects.",
     "achievements": [
       "Honours Degree with Highest Distinction (First Class Honours) | GPA: 4.59/5.00",
       "Double Specialization in Artificial Intelligence and Data Science, Minor in Mathematics",
@@ -15,7 +15,8 @@
       "Completed degree in 3.5 years by overloading semesters",
       "Developed leadership, teamwork, and communication skills through collaborative research"
     ],
-    "color": "#38bdf8"
+    "color": "#38bdf8",
+    "icon": "GraduationCap"
   },
   {
     "id": "softuni",
@@ -32,7 +33,8 @@
       "Achieved top academic performance with 6.00/6.00 GPA",
       "Delivered production-ready apps with frontend integration and robust backend"
     ],
-    "color": "#38bdf8"
+    "color": "#38bdf8",
+    "icon": "Code"
   },
   {
     "id": "hs",
@@ -49,6 +51,7 @@
       "Took advanced programming courses in web development and C++",
       "Active member of the student council, enhancing leadership and organization skills"
     ],
-    "color": "#38bdf8"
+    "color": "#38bdf8",
+    "icon": "School"
   }
 ]

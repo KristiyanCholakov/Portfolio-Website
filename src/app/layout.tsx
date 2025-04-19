@@ -15,42 +15,6 @@ export const metadata: Metadata = {
   title: "Kristiyan Cholakov's Portfolio",
   description:
     'Professional portfolio of Kristiyan Cholakov - AI Developer & Software Engineer specializing in Web Development, Machine Learning, and Computer Vision.',
-  // -- Favicon & Touch Icons --
-  icons: {
-    icon: '/favicon.svg', // primary SVG
-    shortcut: '/favicon.ico', // classic .ico
-    apple: '/apple-touch-icon.png', // iOS home‑screen
-    other: [
-      {
-        rel: 'icon',
-        url: '/favicon-96x96.png',
-        sizes: '96x96',
-        type: 'image/png',
-      },
-      {
-        rel: 'icon',
-        url: '/favicon-32x32.png',
-        sizes: '32x32',
-        type: 'image/png',
-      },
-      {
-        rel: 'icon',
-        url: '/favicon-16x16.png',
-        sizes: '16x16',
-        type: 'image/png',
-      },
-    ],
-  },
-  // -- PWA Manifest --
-  manifest: '/site.webmanifest',
-  // -- Apple Web App Meta --
-  appleWebApp: {
-    title: 'KC',
-    capable: true, // if you want standalone iOS behavior
-    statusBarStyle: 'default',
-  },
-  // -- (Optional) theme-color for mobile address‑bar styling --
-  themeColor: '#2a2a2a',
 }
 
 export default function RootLayout({

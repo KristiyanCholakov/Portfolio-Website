@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.dev/svgjs" width="200" height="200"><svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+    <!-- Background -->
+    <rect width="200" height="200" rx="10" fill="#2a2a2a"></rect>
+
+    <!-- Neural‑network links -->
+    <line x1="30" y1="40" x2="100" y2="100" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="160" y1="30" x2="100" y2="100" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="180" y1="120" x2="100" y2="100" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="120" y1="170" x2="100" y2="100" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="50" y1="150" x2="80" y2="130" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="80" y1="130" x2="100" y2="100" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="140" y1="140" x2="120" y2="170" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="150" y1="80" x2="180" y2="120" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="160" y1="30" x2="150" y2="80" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="30" y1="40" x2="40" y2="90" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="40" y1="90" x2="50" y2="150" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+    <line x1="80" y1="130" x2="50" y2="150" stroke="#71717a" stroke-opacity="0.3" stroke-width="1"></line>
+
+    <!-- Neural‑network nodes -->
+    <circle cx="30" cy="40" r="3" fill="#71717a"></circle>
+    <circle cx="160" cy="30" r="3" fill="#71717a"></circle>
+    <circle cx="180" cy="120" r="3" fill="#71717a"></circle>
+    <circle cx="120" cy="170" r="3" fill="#71717a"></circle>
+    <circle cx="50" cy="150" r="3" fill="#71717a"></circle>
+    <circle cx="100" cy="100" r="3" fill="#71717a"></circle>
+    <circle cx="80" cy="130" r="3" fill="#71717a"></circle>
+    <circle cx="140" cy="140" r="3" fill="#71717a"></circle>
+    <circle cx="40" cy="90" r="3" fill="#71717a"></circle>
+    <circle cx="150" cy="80" r="3" fill="#71717a"></circle>
+
+    <!-- Perfectly centered stacked logo text -->
+    <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-family="'JetBrains Mono', monospace" font-weight="700" font-size="64" letter-spacing="2" svgjs:data="{&quot;leading&quot;:&quot;1.3&quot;}">
+        <tspan fill="#38bdf8"><tspan fill="#e4e4e7">&lt;</tspan>KC<tspan fill="#e4e4e7">&gt;</tspan></tspan>
+    </text>
+</svg><style>@media (prefers-color-scheme: light) { :root { filter: none; } }
+@media (prefers-color-scheme: dark) { :root { filter: none; } }
+</style></svg>

@@ -9,7 +9,8 @@ import {
   Terminal,
   Monitor,
   Server,
-  Share2,
+  Equal,
+  Database,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import TypingText from '@/components/ui/TypingText'
@@ -36,7 +37,8 @@ const iconMap = {
   Monitor,
   Code,
   Server,
-  Share2,
+  Equal,
+  Database,
 }
 
 // Process experience data to include icon components

@@ -1,74 +1,136 @@
 [
   {
     "id": "job1",
-    "role": "Senior AI Developer",
-    "company": "TechVision AI",
-    "location": "London, UK",
-    "period": "May 2022 - Present",
-    "type": "Full-time",
-    "description": "Leading AI integration in enterprise applications with a focus on computer vision and NLP solutions.",
+    "role": "Data Engineer",
+    "company": "TÜV SÜD",
+    "location": "Singapore",
+    "period": "July 2023 - December 2023",
+    "type": "Internship",
+    "description": "Played an integral role in TÜV SÜD’s AI department, contributing to AI quality standards analysis, web application development, generative AI enhancements, and full‑stack development.",
     "responsibilities": [
-      "Developing computer vision models for healthcare applications",
-      "Creating and optimizing NLP pipelines for text analysis",
-      "Leading a team of 4 junior developers and mentoring interns",
-      "Implementing ML Ops practices and CI/CD pipelines for ML models"
+      "Studied and reviewed unreleased ISO AI quality standards; created comprehensive slide presentations for internal training",
+      "Developed, tested, and bug‑fixed the AI Readiness Analysis web application; designed and improved the user interface",
+      "Hosted and fine‑tuned Meta’s Llama 2 to generate industry‑specific evaluation questions for AI readiness",
+      "Managed project workflows in Microsoft Azure DevOps, including work items, user stories, timelines, and documentation",
+      "Implemented front‑end features with React.js and Next.js, and back‑end services with Node.js; secured authentication via OAuth"
     ],
-    "technologies": ["Python", "TensorFlow", "PyTorch", "Docker", "Kubernetes", "AWS"],
+    "technologies": [
+      "Python",
+      "React.js",
+      "Next.js",
+      "Node.js",
+      "Azure DevOps",
+      "Meta Llama 2",
+      "OAuth",
+      "Generative AI"
+    ],
     "color": "#38bdf8",
-    "icon": "Monitor"
+    "icon": "Database"
   },
   {
     "id": "job2",
-    "role": "Full Stack Developer",
-    "company": "WebSolutions Inc.",
-    "location": "Remote",
-    "period": "March 2020 - April 2022",
-    "type": "Full-time",
-    "description": "Designed and built scalable web applications with modern JavaScript frameworks and cloud infrastructure.",
+    "role": "Researcher",
+    "company": "Nanyang Technological University Singapore",
+    "location": "Singapore",
+    "period": "September 2022 - June 2023",
+    "type": "Part-time",
+    "description": "Advanced handwritten mathematical expression recognition (HMER) through a complexity‑driven model combination approach, incorporating multi‑GPU acceleration and real‑time symbol detection.",
     "responsibilities": [
-      "Developing responsive user interfaces with React and Next.js",
-      "Building RESTful APIs and GraphQL endpoints",
-      "Implementing authentication and authorization systems",
-      "Optimizing application performance and handling deployments"
+      "Conducted in‑depth analysis of state‑of‑the‑art HMER models and identified their limitations",
+      "Developed a complexity‑based model combination mechanism to dynamically apply the most effective pre‑trained model",
+      "Integrated YOLO for real‑time mathematical symbol detection and refined segmentation pipelines",
+      "Implemented multi‑GPU processing to accelerate deep learning architectures for faster recognition",
+      "Optimized model architectures to achieve a 65.21% recognition rate on the CROHME 2019 test dataset"
     ],
-    "technologies": ["TypeScript", "React", "Next.js", "Node.js", "MongoDB", "AWS Lambda"],
+    "technologies": [
+      "Python",
+      "PyTorch",
+      "YOLO",
+      "Multi‑GPU Processing",
+      "Deep Learning",
+      "Machine Learning"
+    ],
     "color": "#38bdf8",
     "icon": "Code"
   },
   {
     "id": "job3",
-    "role": "Backend Engineer",
-    "company": "DataSystems Corp",
-    "location": "Berlin, Germany",
-    "period": "June 2019 - February 2020",
-    "type": "Contract",
-    "description": "Developed robust backend services and database solutions for high-traffic applications.",
+    "role": "Private Math Tutor",
+    "company": "Freelance",
+    "location": "Bulgaria",
+    "period": "June 2020 - July 2021",
+    "type": "Freelance",
+    "description": "Provided one‑on‑one mathematics tutoring to younger students, tailoring lessons to individual needs and significantly improving exam performance.",
     "responsibilities": [
-      "Building and maintaining microservices architecture",
-      "Designing database schemas and optimizing queries",
-      "Implementing real-time data processing pipelines",
-      "Writing comprehensive test suites for backend services"
+      "Designed and delivered customized lesson plans in algebra, geometry, and calculus",
+      "Prepared students for regular exams and high school entrance assessments",
+      "Assessed student progress and adapted teaching strategies accordingly",
+      "Helped students achieve A grades and secure placements in desired schools"
     ],
-    "technologies": ["Java", "Spring Boot", "PostgreSQL", "Redis", "Kafka", "Docker"],
+    "technologies": [
+      "Mathematics",
+      "Curriculum Design",
+      "Student Assessment",
+      "Communication"
+    ],
+    "color": "#38bdf8",
+    "icon": "Equal"
+  },
+  {
+    "id": "job4",
+    "role": "Computer Maintenance Assistant",
+    "company": "CNsys PLC",
+    "location": "Sofia, Bulgaria",
+    "period": "June 2019 - August 2019",
+    "type": "Internship",
+    "description": "Supported technical operations through hardware repair, custom server builds, client support, and maintenance documentation.",
+    "responsibilities": [
+      "Diagnosed and repaired computer hardware components to ensure optimal functionality",
+      "Collaborated on building custom servers tailored to client requirements",
+      "Provided front‑office technical support and resolved client issues",
+      "Prepared detailed technical documentation and maintenance reports",
+      "Managed inventory of computer components and spare parts",
+      "Performed system upgrades and software installations"
+    ],
+    "technologies": [
+      "Hardware Repair",
+      "Server Configuration",
+      "Technical Support",
+      "Documentation",
+      "Inventory Management",
+      "System Upgrades"
+    ],
     "color": "#38bdf8",
     "icon": "Server"
   },
   {
-    "id": "job4",
-    "role": "Research Intern",
-    "company": "AI Research Lab",
-    "location": "Cambridge, UK",
+    "id": "job5",
+    "role": "Network Administrator",
+    "company": "Serta‑Group",
+    "location": "Kardzhali, Bulgaria",
     "period": "June 2018 - September 2018",
     "type": "Internship",
-    "description": "Conducted research on innovative AI applications and assisted in implementing experimental algorithms.",
+    "description": "Maintained and secured local networks, mitigated malware incidents, and developed custom tools and web solutions to support business operations.",
     "responsibilities": [
-      "Researching state-of-the-art ML algorithms and techniques",
-      "Implementing experimental ML models for data analysis",
-      "Preparing research documentation and technical reports",
-      "Collaborating with senior researchers on publications"
+      "Performed regular network maintenance and troubleshooting to ensure uptime",
+      "Mitigated a malware outbreak by restoring systems from backups and securing endpoints",
+      "Installed and repaired network hardware across factory and administrative sites",
+      "Managed resource sharing and weekly backups for data continuity",
+      "Developed custom Excel tools for financial document analysis and reporting",
+      "Created a static website for the Bulgarian branch using PHP, JavaScript, HTML, and CSS"
     ],
-    "technologies": ["Python", "Jupyter", "Scikit-learn", "Pandas", "NumPy", "Matplotlib"],
+    "technologies": [
+      "Network Administration",
+      "Malware Management",
+      "Backup Systems",
+      "Resource Management",
+      "Excel",
+      "PHP",
+      "JavaScript",
+      "HTML",
+      "CSS"
+    ],
     "color": "#38bdf8",
-    "icon": "Share2"
+    "icon": "Monitor"
   }
 ]

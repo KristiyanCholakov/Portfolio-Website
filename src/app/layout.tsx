@@ -11,6 +11,9 @@ import TechStack from '@/components/sections/TechStack'
 import Footer from '@/components/sections/Footer'
 import Contact from '@/components/sections/Contact'
 
+// Import Analytics for tracking activity on Vercel
+import { Analytics } from '@vercel/analytics/react'
+
 export const metadata: Metadata = {
   title: "Kristiyan Cholakov's Portfolio",
   description:
@@ -34,6 +37,7 @@ export default function RootLayout({
         <TechStack />
         <Contact />
         <Footer />
+        <Analytics />
       </body>
     </html>
   )

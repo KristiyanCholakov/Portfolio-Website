@@ -16,11 +16,14 @@ import {
   Server,
   Grid,
   Box,
+  Search,
+  ChevronDown,
 } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import TypingText from '@/components/ui/TypingText'
 import projectsData from '@/data/projects.json'
+import techStackData from '@/data/tech-stack.json'
 import ScrollArrow from '@/components/ui/ScrollArrow'
 
 // Types
@@ -38,32 +41,236 @@ interface Project {
   completed: string
 }
 
+interface Technology {
+  name: string
+  logo: string
+  level: number
+}
+
+interface TechCategory {
+  name: string
+  icon: string
+  color: string
+  position: number[]
+  technologies: Technology[]
+}
+
+// Inline FilterBar Component
+interface FilterBarProps {
+  categories: string[]
+  techCategories: TechCategory[]
+  activeCategory: string
+  setActiveCategory: (cat: string) => void
+  activeTechs: string[]
+  setActiveTechs: (techs: string[]) => void
+  sortOrder: 'asc' | 'desc'
+  setSortOrder: (order: 'asc' | 'desc') => void
+}
+
+const FilterBar = ({
+  categories,
+  techCategories,
+  activeCategory,
+  setActiveCategory,
+  activeTechs,
+  setActiveTechs,
+  sortOrder,
+  setSortOrder,
+}: FilterBarProps) => {
+  // Search input for technologies
+  const [techSearchQuery, setTechSearchQuery] = useState('')
+  // Track which category-group panels are open
+  const [groupOpen, setGroupOpen] = useState<Record<string, boolean>>(
+    techCategories.reduce((acc, grp) => ({ ...acc, [grp.name]: false }), {})
+  )
+
+  // Filter each category's tech list by the search query
+  const filteredCategories = useMemo(() => {
+    return techCategories
+      .map((grp) => {
+        const filteredNames = grp.technologies
+          .map((t) => t.name)
+          .filter((name) => name.toLowerCase().includes(techSearchQuery.toLowerCase()))
+        return { ...grp, technologies: filteredNames }
+      })
+      .filter((grp) => grp.technologies.length > 0)
+  }, [techCategories, techSearchQuery])
+
+  return (
+    <div className="bg-surface/60 border-accent/10 mb-8 rounded-lg border backdrop-blur-sm">
+      <div className="p-4 sm:p-6">
+        <div className="flex flex-col gap-6">
+          {/* Top row: Category filters and Sort order */}
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            {/* Category filters */}
+            <div className="flex flex-col space-y-2">
+              <label className="text-text-muted text-xs font-medium">Category</label>
+              <div className="flex flex-wrap gap-2">
+                {categories.map((cat) => (
+                  <button
+                    key={cat}
+                    onClick={() => setActiveCategory(cat)}
+                    className={`rounded-full border px-3 py-1 text-xs transition-all ${
+                      activeCategory === cat
+                        ? 'bg-accent border-accent text-white'
+                        : 'border-accent/20 text-text-muted hover:border-accent/50'
+                    }`}
+                  >
+                    {cat}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Sort order (moved to top row) */}
+            <div className="flex items-center gap-4">
+              <button
+                onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
+                className="border-accent/20 text-text-muted hover:border-accent flex items-center gap-1 rounded-md border bg-white/5 px-3 py-1 text-xs font-medium transition"
+              >
+                {sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />}
+                {sortOrder === 'asc' ? 'Oldest first' : 'Newest first'}
+              </button>
+
+              {/* Reset filters */}
+              {(activeCategory !== 'All' || activeTechs.length > 0) && (
+                <button
+                  onClick={() => {
+                    setActiveCategory('All')
+                    setActiveTechs([])
+                  }}
+                  className="text-text-muted hover:text-accent text-xs underline"
+                >
+                  Reset Filters
+                </button>
+              )}
+            </div>
+          </div>
+
+          {/* Bottom row: Technology groups - no scroll */}
+          <div className="flex w-full flex-col space-y-2">
+            <div className="flex items-center justify-between">
+              <label className="text-text-muted text-xs font-medium">Technologies</label>
+              <input
+                type="text"
+                placeholder="Search technologies..."
+                value={techSearchQuery}
+                onChange={(e) => setTechSearchQuery(e.target.value)}
+                className="border-accent/20 placeholder:text-accent/30 ml-auto w-48 rounded border bg-white/5 px-3 py-1 text-xs outline-none"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+              {filteredCategories.map((grp) => (
+                <div key={grp.name} className="flex flex-col">
+                  <button
+                    onClick={() =>
+                      setGroupOpen({
+                        ...groupOpen,
+                        [grp.name]: !groupOpen[grp.name],
+                      })
+                    }
+                    className="bg-surface/50 hover:bg-surface/70 flex w-full items-center justify-between rounded px-3 py-1 text-xs font-medium transition"
+                  >
+                    <span>{grp.name}</span>
+                    <motion.div
+                      animate={{ rotate: groupOpen[grp.name] ? 180 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ChevronDown size={12} />
+                    </motion.div>
+                  </button>
+                  <AnimatePresence initial={false}>
+                    {groupOpen[grp.name] && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        className="flex flex-wrap gap-2 px-2 py-1"
+                      >
+                        {grp.technologies.map((tech) => (
+                          <button
+                            key={tech}
+                            onClick={() => {
+                              const selected = activeTechs.includes(tech)
+                                ? activeTechs.filter((t) => t !== tech)
+                                : [...activeTechs, tech]
+                              setActiveTechs(selected)
+                            }}
+                            className={`rounded-full border px-3 py-1 text-xs transition-all ${
+                              activeTechs.includes(tech)
+                                ? 'bg-accent border-accent text-white'
+                                : 'border-accent/20 text-text-muted hover:border-accent/50'
+                            }`}
+                          >
+                            {tech}
+                          </button>
+                        ))}
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Active Filters Display */}
+          {(activeCategory !== 'All' || activeTechs.length > 0) && (
+            <div className="border-accent/10 mt-4 border-t pt-4">
+              <div className="flex items-center">
+                <span className="text-text-muted text-xs font-medium">Active Filters:</span>
+                <div className="ml-2 flex flex-wrap gap-2">
+                  {activeCategory !== 'All' && (
+                    <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs">
+                      <span>Category: {activeCategory}</span>
+                      <button
+                        onClick={() => setActiveCategory('All')}
+                        className="hover:bg-accent/20 ml-1 rounded-full p-0.5"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  )}
+                  {activeTechs.map((tech) => (
+                    <div
+                      key={tech}
+                      className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs"
+                    >
+                      <span>{tech}</span>
+                      <button
+                        onClick={() => setActiveTechs(activeTechs.filter((t) => t !== tech))}
+                        className="hover:bg-accent/20 ml-1 rounded-full p-0.5"
+                      >
+                        <X size={12} />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: {
-      delay: 0.1 * i,
-      duration: 0.5,
-      ease: 'easeOut',
-    },
+    transition: { delay: 0.1 * i, duration: 0.5, ease: 'easeOut' },
   }),
 }
 
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
+  visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } },
 }
 
-// New background elements - grid nodes with connections
+// Background elements (unchanged)
 const gridNodes = [
   { x: '10%', y: '15%', size: 6, pulseDelay: 0 },
   { x: '25%', y: '8%', size: 8, pulseDelay: 1.2 },
@@ -76,7 +283,6 @@ const gridNodes = [
   { x: '85%', y: '70%', size: 6, pulseDelay: 0.7 },
 ]
 
-// New project icons with different animation patterns
 const projectIcons = [
   {
     Icon: Layers,
@@ -126,10 +332,7 @@ const projectIcons = [
 ]
 
 const HexagonBackground = () => {
-  // Client-side only state for glowing hexagons
   const [hexagons, setHexagons] = useState<any[]>([])
-
-  // Generate hexagons only on the client side
   useEffect(() => {
     const rows = 12
     const cols = 20
@@ -151,7 +354,6 @@ const HexagonBackground = () => {
 
     setHexagons(generatedHexagons)
   }, [])
-
   return (
     <div className="absolute inset-0 overflow-hidden opacity-20">
       {hexagons.map((hex, i) => (
@@ -198,55 +400,32 @@ const HexagonBackground = () => {
 export default function Projects() {
   // State for filtering and sorting
   const [activeCategory, setActiveCategory] = useState<string>('All')
-  const [activeTech, setActiveTech] = useState<string>('All')
+  const [activeTechs, setActiveTechs] = useState<string[]>([])
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const [isGridView, setIsGridView] = useState(true)
 
-  // Extract unique categories and technologies
-  const categories = useMemo(() => {
-    const cats = ['All', ...new Set(projectsData.map((project: Project) => project.category))]
-    return cats
-  }, [])
+  const categories = ['All', 'Artificial Intelligence', 'Data Science', 'Software Development']
 
-  const technologies = useMemo(() => {
-    const techs = new Set<string>()
-    projectsData.forEach((project: Project) => {
-      project.technologies.forEach((tech) => techs.add(tech))
-    })
-    return ['All', ...Array.from(techs)]
-  }, [])
-
-  // Filter and sort projects
+  // Projects filter logic
   const filteredProjects = useMemo(() => {
-    let filtered = [...projectsData] as Project[]
-
-    // Apply category filter
+    let list = [...projectsData]
     if (activeCategory !== 'All') {
-      filtered = filtered.filter((project) => project.category === activeCategory)
+      list = list.filter((p) => p.category === activeCategory)
     }
-
-    // Apply tech filter
-    if (activeTech !== 'All') {
-      filtered = filtered.filter((project) => project.technologies.includes(activeTech))
+    if (activeTechs.length > 0) {
+      list = list.filter((p) => p.technologies.some((t) => activeTechs.includes(t)))
     }
-
-    // Apply sorting
-    filtered.sort((a, b) => {
-      const dateA = new Date(a.completed)
-      const dateB = new Date(b.completed)
-      return sortOrder === 'asc'
-        ? dateA.getTime() - dateB.getTime()
-        : dateB.getTime() - dateA.getTime()
+    list.sort((a, b) => {
+      const diff = new Date(a.completed).getTime() - new Date(b.completed).getTime()
+      return sortOrder === 'asc' ? diff : -diff
     })
-
-    return filtered
-  }, [activeCategory, activeTech, sortOrder])
+    return list
+  }, [activeCategory, activeTechs, sortOrder])
 
   return (
     <section id="projects" className="relative overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
-      {/* New Background elements */}
+      {/* Background & icons (unchanged) */}
       <div className="absolute inset-0 opacity-20">
-        {/* Different gradient pattern */}
         <div
           className="absolute inset-0"
           style={{
@@ -254,8 +433,6 @@ export default function Projects() {
               'linear-gradient(120deg, rgba(56,189,248,0.07) 0%, rgba(232,121,249,0.07) 50%, rgba(56,189,248,0.07) 100%)',
           }}
         />
-
-        {/* Hexagonal pattern overlay */}
         <HexagonBackground />
 
         {/* Grid nodes and connections */}
@@ -345,7 +522,7 @@ export default function Projects() {
       )}
 
       <div className="relative z-10 mx-auto max-w-6xl">
-        {/* Section header */}
+        {/* Header (unchanged) */}
         <motion.div
           initial={{ opacity: 0, y: -10 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -368,114 +545,23 @@ export default function Projects() {
           </p>
         </motion.div>
 
-        {/* Filters and Sorting */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.2 }}
-          className="bg-surface/60 border-accent/10 mb-8 rounded-lg border backdrop-blur-sm"
-        >
-          <div className="p-4 sm:p-6">
-            <div className="flex flex-wrap gap-4">
-              {/* Category filters */}
-              <div className="flex flex-col space-y-2">
-                <label className="text-text-muted text-xs font-medium">Category</label>
-                <div className="flex flex-wrap gap-2">
-                  {categories.map((category) => (
-                    <button
-                      key={category}
-                      onClick={() => setActiveCategory(category)}
-                      className={`rounded-full border px-3 py-1 text-xs transition-all ${
-                        activeCategory === category
-                          ? 'bg-accent border-accent text-white'
-                          : 'border-accent/20 text-text-muted hover:border-accent/50'
-                      }`}
-                    >
-                      {category}
-                    </button>
-                  ))}
-                </div>
-              </div>
+        {/* Updated Filter Bar */}
+        <FilterBar
+          categories={categories}
+          techCategories={techStackData}
+          activeCategory={activeCategory}
+          setActiveCategory={setActiveCategory}
+          activeTechs={activeTechs}
+          setActiveTechs={setActiveTechs}
+          sortOrder={sortOrder}
+          setSortOrder={setSortOrder}
+        />
 
-              {/* Technology filters */}
-              <div className="flex flex-col space-y-2">
-                <label className="text-text-muted text-xs font-medium">Technology</label>
-                <div className="flex flex-wrap gap-2">
-                  {technologies.slice(0, 8).map((tech) => (
-                    <button
-                      key={tech}
-                      onClick={() => setActiveTech(tech)}
-                      className={`rounded-full border px-3 py-1 text-xs transition-all ${
-                        activeTech === tech
-                          ? 'bg-accent border-accent text-white'
-                          : 'border-accent/20 text-text-muted hover:border-accent/50'
-                      }`}
-                    >
-                      {tech}
-                    </button>
-                  ))}
-                  {technologies.length > 8 && (
-                    <div className="text-text-muted px-2 py-1 text-xs">
-                      +{technologies.length - 8} more
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Sort order */}
-              <div className="ml-auto flex items-end">
-                <button
-                  onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                  className="border-accent/20 text-text-muted hover:text-accent hover:border-accent/50 flex items-center gap-1 rounded-md border px-3 py-1 text-xs transition-all"
-                >
-                  {sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />}
-                  {sortOrder === 'asc' ? 'Oldest first' : 'Newest first'}
-                </button>
-              </div>
-            </div>
-
-            {/* Active filters display */}
-            {(activeCategory !== 'All' || activeTech !== 'All') && (
-              <div className="mt-4 flex flex-wrap items-center gap-2">
-                <span className="text-text-muted text-xs">Active filters:</span>
-                {activeCategory !== 'All' && (
-                  <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
-                    <Filter size={10} />
-                    {activeCategory}
-                    <button onClick={() => setActiveCategory('All')}>
-                      <X size={10} />
-                    </button>
-                  </div>
-                )}
-                {activeTech !== 'All' && (
-                  <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-2 py-0.5 text-xs">
-                    <Code size={10} />
-                    {activeTech}
-                    <button onClick={() => setActiveTech('All')}>
-                      <X size={10} />
-                    </button>
-                  </div>
-                )}
-                <button
-                  onClick={() => {
-                    setActiveCategory('All')
-                    setActiveTech('All')
-                  }}
-                  className="text-text-muted hover:text-accent text-xs underline"
-                >
-                  Reset all
-                </button>
-              </div>
-            )}
-          </div>
-        </motion.div>
-
-        {/* Projects grid */}
+        {/* Projects Grid (unchanged) */}
         <AnimatePresence mode="wait">
           {filteredProjects.length > 0 ? (
             <motion.div
-              key={`projects-grid-${activeCategory}-${activeTech}-${sortOrder}`}
+              key={`projects-grid-${activeCategory}-${activeTechs.join(',')}-${sortOrder}`}
               variants={staggerContainer}
               initial="hidden"
               animate="visible"
@@ -501,13 +587,12 @@ export default function Projects() {
                 No projects match your filters
               </h3>
               <p className="text-text-muted mx-auto max-w-md">
-                Try adjusting your filter criteria or browse all projects by clicking the Reset
-                button.
+                Try adjusting your filter criteria or reset all filters.
               </p>
               <button
                 onClick={() => {
                   setActiveCategory('All')
-                  setActiveTech('All')
+                  setActiveTechs([])
                 }}
                 className="text-accent mt-4 text-sm underline"
               >
@@ -518,7 +603,7 @@ export default function Projects() {
         </AnimatePresence>
       </div>
 
-      {/* Add ScrollArrow at the end */}
+      {/* Scroll Arrow */}
       <div className="mt-16 text-center">
         <ScrollArrow targetSection="tech-stack" label="Discover my tech stack" />
       </div>
@@ -526,6 +611,7 @@ export default function Projects() {
   )
 }
 
+// ProjectCard (unchanged)
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.div

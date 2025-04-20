@@ -97,14 +97,14 @@ const FilterBar = ({
   }, [techCategories, techSearchQuery])
 
   return (
-    <div className="bg-surface/60 border-accent/10 mb-8 rounded-lg border backdrop-blur-sm">
+    <div className="bg-card/60 border-border mb-8 rounded-lg border backdrop-blur-sm">
       <div className="p-4 sm:p-6">
         <div className="flex flex-col gap-6">
           {/* Top row: Category filters and Sort order */}
           <div className="flex flex-wrap items-center justify-between gap-4">
             {/* Category filters */}
             <div className="flex flex-col space-y-2">
-              <label className="text-text-muted text-xs font-medium">Category</label>
+              <label className="text-muted-foreground text-xs font-medium">Category</label>
               <div className="flex flex-wrap gap-2">
                 {categories.map((cat) => (
                   <button
@@ -112,8 +112,8 @@ const FilterBar = ({
                     onClick={() => setActiveCategory(cat)}
                     className={`rounded-full border px-3 py-1 text-xs transition-all ${
                       activeCategory === cat
-                        ? 'bg-accent border-accent text-white'
-                        : 'border-accent/20 text-text-muted hover:border-accent/50'
+                        ? 'bg-accent border-accent text-accent-foreground'
+                        : 'border-border text-muted-foreground hover:border-accent/50'
                     }`}
                   >
                     {cat}
@@ -126,7 +126,7 @@ const FilterBar = ({
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc')}
-                className="border-accent/20 text-text-muted hover:border-accent flex items-center gap-1 rounded-md border bg-white/5 px-3 py-1 text-xs font-medium transition"
+                className="border-border text-muted-foreground hover:border-accent bg-background/5 flex items-center gap-1 rounded-md border px-3 py-1 text-xs font-medium transition"
               >
                 {sortOrder === 'asc' ? <SortAsc size={14} /> : <SortDesc size={14} />}
                 {sortOrder === 'asc' ? 'Oldest first' : 'Newest first'}
@@ -139,7 +139,7 @@ const FilterBar = ({
                     setActiveCategory('All')
                     setActiveTechs([])
                   }}
-                  className="text-text-muted hover:text-accent text-xs underline"
+                  className="text-muted-foreground hover:text-accent text-xs underline"
                 >
                   Reset Filters
                 </button>
@@ -150,13 +150,13 @@ const FilterBar = ({
           {/* Bottom row: Technology groups - no scroll */}
           <div className="flex w-full flex-col space-y-2">
             <div className="flex items-center justify-between">
-              <label className="text-text-muted text-xs font-medium">Technologies</label>
+              <label className="text-muted-foreground text-xs font-medium">Technologies</label>
               <input
                 type="text"
                 placeholder="Search technologies..."
                 value={techSearchQuery}
                 onChange={(e) => setTechSearchQuery(e.target.value)}
-                className="border-accent/20 placeholder:text-accent/30 ml-auto w-48 rounded border bg-white/5 px-3 py-1 text-xs outline-none"
+                className="border-border placeholder:text-muted-foreground/30 bg-background/5 ml-auto w-48 rounded border px-3 py-1 text-xs outline-none"
               />
             </div>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
@@ -169,7 +169,7 @@ const FilterBar = ({
                         [grp.name]: !groupOpen[grp.name],
                       })
                     }
-                    className="bg-surface/50 hover:bg-surface/70 flex w-full items-center justify-between rounded px-3 py-1 text-xs font-medium transition"
+                    className="bg-secondary hover:bg-secondary/70 flex w-full items-center justify-between rounded px-3 py-1 text-xs font-medium transition"
                   >
                     <span>{grp.name}</span>
                     <motion.div
@@ -199,8 +199,8 @@ const FilterBar = ({
                             }}
                             className={`rounded-full border px-3 py-1 text-xs transition-all ${
                               activeTechs.includes(tech)
-                                ? 'bg-accent border-accent text-white'
-                                : 'border-accent/20 text-text-muted hover:border-accent/50'
+                                ? 'bg-accent border-accent text-accent-foreground'
+                                : 'border-border text-muted-foreground hover:border-accent/50'
                             }`}
                           >
                             {tech}
@@ -216,9 +216,9 @@ const FilterBar = ({
 
           {/* Active Filters Display */}
           {(activeCategory !== 'All' || activeTechs.length > 0) && (
-            <div className="border-accent/10 mt-4 border-t pt-4">
+            <div className="border-border mt-4 border-t pt-4">
               <div className="flex items-center">
-                <span className="text-text-muted text-xs font-medium">Active Filters:</span>
+                <span className="text-muted-foreground text-xs font-medium">Active Filters:</span>
                 <div className="ml-2 flex flex-wrap gap-2">
                   {activeCategory !== 'All' && (
                     <div className="bg-accent/10 text-accent flex items-center gap-1 rounded-full px-3 py-1 text-xs">
@@ -397,12 +397,185 @@ const HexagonBackground = () => {
   )
 }
 
+// Project Modal component for displaying project details
+interface ProjectModalProps {
+  project: Project | null
+  isOpen: boolean
+  onClose: () => void
+}
+
+const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
+  // If no project or not open, don't render anything
+  if (!project || !isOpen) return null
+
+  // Function to ensure correct image path from public directory
+  const getImagePath = (path: string) => {
+    // If path already starts with a slash or http, return it as is
+    if (path.startsWith('/') || path.startsWith('http')) {
+      return path
+    }
+
+    // If path starts with './projects/' or 'projects/', normalize it
+    if (path.startsWith('./projects/')) {
+      return `/projects/${path.substring(11)}`
+    }
+    if (path.startsWith('projects/')) {
+      return `/projects/${path.substring(9)}`
+    }
+
+    // Default case, assume it's directly in the projects folder
+    return `/projects/${path}`
+  }
+
+  return (
+    <AnimatePresence>
+      {isOpen && (
+        <>
+          {/* Overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, transition: { duration: 0.3 } }}
+            className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
+            onClick={onClose}
+          />
+
+          {/* Modal */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{
+              opacity: 0,
+              scale: 0.95,
+              y: -40,
+              transition: {
+                duration: 0.4,
+                ease: 'easeInOut',
+              },
+            }}
+            transition={{ type: 'spring', damping: 25, stiffness: 300 }}
+            className="border-border bg-card fixed top-1/2 left-1/2 z-50 max-h-[90vh] w-[90vw] max-w-4xl -translate-x-1/2 -translate-y-1/2 overflow-auto rounded-xl border shadow-xl"
+          >
+            {/* Close button */}
+            <button
+              onClick={onClose}
+              className="text-muted-foreground hover:text-accent absolute top-4 right-4 z-10 rounded-full p-2 transition-colors"
+              aria-label="Close modal"
+            >
+              <X size={24} />
+            </button>
+
+            <div className="flex flex-col">
+              {/* Modal header with image */}
+              <div className="relative h-64 w-full sm:h-80">
+                <Image
+                  src={getImagePath(project.thumbnail)}
+                  alt={project.title}
+                  fill
+                  className="object-cover"
+                />
+                <div className="from-background/80 absolute inset-0 bg-gradient-to-t to-transparent" />
+
+                {/* Category badge */}
+                <div className="text-accent bg-card/80 absolute top-4 left-4 rounded-full px-3 py-1 text-sm backdrop-blur-sm">
+                  {project.category}
+                </div>
+
+                {/* Featured badge - adjusted position */}
+                {project.featured && (
+                  <div className="bg-accent text-accent-foreground absolute top-14 left-4 flex items-center gap-1 rounded-full px-3 py-1 text-sm">
+                    <Star size={14} className="fill-current" />
+                    Featured
+                  </div>
+                )}
+
+                {/* Title */}
+                <h3 className="text-foreground absolute right-6 bottom-6 left-6 text-3xl font-bold">
+                  {project.title}
+                </h3>
+              </div>
+
+              {/* Modal content */}
+              <div className="p-6 sm:p-8">
+                {/* Technologies */}
+                <div className="mb-6 flex flex-wrap gap-2">
+                  {project.technologies.map((tech) => (
+                    <span
+                      key={tech}
+                      className="border-accent/20 bg-accent/5 text-accent rounded-full border px-3 py-1 text-sm"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Description */}
+                <div className="mb-8">
+                  <h4 className="text-foreground mb-3 text-xl font-semibold">About this project</h4>
+                  {project.longDescription.split('\n\n').map((paragraph, idx) => (
+                    <p key={idx} className="text-muted-foreground mb-4 leading-relaxed">
+                      {paragraph}
+                    </p>
+                  ))}
+                </div>
+
+                {/* Links */}
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <a
+                    href={project.github}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-accent hover:bg-accent/80 text-accent-foreground flex items-center gap-2 rounded-md px-5 py-2 text-sm font-medium transition-colors"
+                  >
+                    <Github size={18} />
+                    View Code
+                  </a>
+                  {project.demo && (
+                    <a
+                      href={project.demo}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="border-accent text-accent hover:bg-accent/10 flex items-center gap-2 rounded-md border px-5 py-2 text-sm font-medium transition-colors"
+                    >
+                      <ExternalLink size={18} />
+                      Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </>
+      )}
+    </AnimatePresence>
+  )
+}
+
 export default function Projects() {
   // State for filtering and sorting
   const [activeCategory, setActiveCategory] = useState<string>('All')
   const [activeTechs, setActiveTechs] = useState<string[]>([])
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc')
   const [isGridView, setIsGridView] = useState(true)
+
+  // State for modal
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null)
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  // Function to open the modal with a specific project
+  const openProjectModal = (project: Project) => {
+    setSelectedProject(project)
+    setIsModalOpen(true)
+    // Prevent body scrolling when modal is open
+    document.body.style.overflow = 'hidden'
+  }
+
+  // Function to close the modal
+  const closeProjectModal = () => {
+    setIsModalOpen(false)
+    // Re-enable body scrolling
+    document.body.style.overflow = 'auto'
+  }
 
   const categories = ['All', 'Artificial Intelligence', 'Data Science', 'Software Development']
 
@@ -540,7 +713,7 @@ export default function Projects() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="bg-accent mx-auto mb-4 h-1"
           />
-          <p className="text-text-muted font-mono tracking-wider">
+          <p className="text-muted-foreground font-mono tracking-wider">
             <TypingText text="Turning ideas into working solutions" delay={50} />
           </p>
         </motion.div>
@@ -557,7 +730,7 @@ export default function Projects() {
           setSortOrder={setSortOrder}
         />
 
-        {/* Projects Grid (unchanged) */}
+        {/* Projects Grid */}
         <AnimatePresence mode="wait">
           {filteredProjects.length > 0 ? (
             <motion.div
@@ -569,7 +742,12 @@ export default function Projects() {
               exit={{ opacity: 0 }}
             >
               {filteredProjects.map((project, i) => (
-                <ProjectCard key={project.id} project={project} index={i} />
+                <ProjectCard
+                  key={project.id}
+                  project={project}
+                  index={i}
+                  onClick={() => openProjectModal(project)}
+                />
               ))}
             </motion.div>
           ) : (
@@ -578,15 +756,15 @@ export default function Projects() {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="bg-surface/60 border-accent/10 mt-8 rounded-lg border p-10 text-center backdrop-blur-sm"
+              className="bg-card/60 border-border mt-8 rounded-lg border p-10 text-center backdrop-blur-sm"
             >
               <div className="text-accent bg-accent/10 mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full">
                 <Filter size={24} />
               </div>
-              <h3 className="text-text-primary mb-2 text-lg font-medium">
+              <h3 className="text-foreground mb-2 text-lg font-medium">
                 No projects match your filters
               </h3>
-              <p className="text-text-muted mx-auto max-w-md">
+              <p className="text-muted-foreground mx-auto max-w-md">
                 Try adjusting your filter criteria or reset all filters.
               </p>
               <button
@@ -607,12 +785,23 @@ export default function Projects() {
       <div className="mt-16 text-center">
         <ScrollArrow targetSection="tech-stack" label="Discover my tech stack" />
       </div>
+
+      {/* Project detail modal */}
+      <ProjectModal project={selectedProject} isOpen={isModalOpen} onClose={closeProjectModal} />
     </section>
   )
 }
 
-// ProjectCard (unchanged)
-function ProjectCard({ project, index }: { project: Project; index: number }) {
+// ProjectCard with fixed dimensions
+function ProjectCard({
+  project,
+  index,
+  onClick,
+}: {
+  project: Project
+  index: number
+  onClick: () => void
+}) {
   // Function to ensure correct image path from public directory
   const getImagePath = (path: string) => {
     // If path already starts with a slash or http, return it as is
@@ -641,63 +830,70 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(56, 189, 248, 0.1)',
         transition: { duration: 0.2 },
       }}
-      className="group relative overflow-hidden rounded-xl shadow-sm transition-all"
+      onClick={onClick}
+      className="group relative h-[460px] cursor-pointer overflow-hidden rounded-xl shadow-sm transition-all"
     >
       {/* Card inner container with gradient border */}
-      <div className="relative overflow-hidden rounded-xl">
+      <div className="relative h-full overflow-hidden rounded-xl">
         {/* Animated gradient border */}
-        <div className="border-accent/10 from-accent/20 to-highlight/20 absolute -inset-[1px] rounded-xl bg-gradient-to-tr opacity-70 transition-all duration-300 group-hover:opacity-100" />
+        <div className="border-accent/10 from-accent/20 to-primary/20 absolute -inset-[1px] rounded-xl bg-gradient-to-tr opacity-70 transition-all duration-300 group-hover:opacity-100" />
 
         {/* Project content */}
-        <div className="bg-surface relative overflow-hidden rounded-xl">
-          {/* Project image */}
-          <div className="relative aspect-video overflow-hidden">
+        <div className="bg-card relative flex h-full flex-col overflow-hidden rounded-xl">
+          {/* Project image - Fixed height */}
+          <div className="relative h-[200px] w-full overflow-hidden">
             <Image
               src={getImagePath(project.thumbnail)}
               alt={project.title}
-              width={600}
-              height={340}
+              fill
               className="object-cover transition-transform duration-500 group-hover:scale-105"
             />
 
             {/* Category badge */}
-            <div className="bg-surface/80 text-accent absolute top-3 left-3 rounded-full px-2 py-1 text-xs backdrop-blur-sm">
+            <div className="bg-card/80 text-accent absolute top-3 left-3 rounded-full px-2 py-1 text-xs backdrop-blur-sm">
               {project.category}
             </div>
 
             {/* Featured badge */}
             {project.featured && (
-              <div className="bg-accent absolute top-3 right-3 flex items-center gap-1 rounded-full px-2 py-1 text-xs text-white">
-                <Star size={10} className="fill-white" />
+              <div className="bg-accent text-accent-foreground absolute top-3 right-3 flex items-center gap-1 rounded-full px-2 py-1 text-xs">
+                <Star size={10} className="fill-current" />
                 Featured
               </div>
             )}
           </div>
 
-          {/* Project details */}
-          <div className="p-6">
-            <h3 className="text-text-primary mb-2 text-xl font-bold">{project.title}</h3>
-            <p className="text-text-muted mb-5 line-clamp-2 text-sm">{project.description}</p>
+          {/* Project details - Flex grow to fill remaining space */}
+          <div className="flex flex-1 flex-col justify-between p-6">
+            <div>
+              <h3 className="text-foreground mb-2 line-clamp-2 text-xl font-bold">
+                {project.title}
+              </h3>
+              <p className="text-muted-foreground mb-5 line-clamp-2 text-sm">
+                {project.description}
+              </p>
 
-            {/* Tech stack */}
-            <div className="mb-5 flex flex-wrap gap-2">
-              {project.technologies.map((tech) => (
-                <span
-                  key={tech}
-                  className="border-accent/20 bg-accent/5 text-accent rounded-full border px-2 py-0.5 text-xs"
-                >
-                  {tech}
-                </span>
-              ))}
+              {/* Tech stack with overflow handling */}
+              <div className="mb-5 flex max-h-[60px] flex-wrap gap-2 overflow-hidden">
+                {project.technologies.map((tech) => (
+                  <span
+                    key={tech}
+                    className="border-accent/20 bg-accent/5 text-accent mb-1 rounded-full border px-2 py-0.5 text-xs"
+                  >
+                    {tech}
+                  </span>
+                ))}
+              </div>
             </div>
 
             {/* Action links */}
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 pt-2">
               <Link
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-text-muted hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                onClick={(e) => e.stopPropagation()}
               >
                 <Github size={16} />
                 <span>Code</span>
@@ -708,7 +904,8 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-text-muted hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                  className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <ExternalLink size={16} />
                   <span>Live Demo</span>
@@ -727,7 +924,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
         </div>
       </div>
 
-      {/* Decorative background elements */}
+      {/* Decorative background elements that extend to full card */}
       <motion.div
         className="from-accent/5 absolute -inset-40 z-[1] bg-gradient-to-br to-transparent opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
         style={{ mixBlendMode: 'soft-light' }}

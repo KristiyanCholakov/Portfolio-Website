@@ -613,6 +613,25 @@ export default function Projects() {
 
 // ProjectCard (unchanged)
 function ProjectCard({ project, index }: { project: Project; index: number }) {
+  // Function to ensure correct image path from public directory
+  const getImagePath = (path: string) => {
+    // If path already starts with a slash or http, return it as is
+    if (path.startsWith('/') || path.startsWith('http')) {
+      return path
+    }
+
+    // If path starts with './projects/' or 'projects/', normalize it
+    if (path.startsWith('./projects/')) {
+      return `/projects/${path.substring(11)}`
+    }
+    if (path.startsWith('projects/')) {
+      return `/projects/${path.substring(9)}`
+    }
+
+    // Default case, assume it's directly in the projects folder
+    return `/projects/${path}`
+  }
+
   return (
     <motion.div
       variants={fadeInUp}
@@ -634,7 +653,7 @@ function ProjectCard({ project, index }: { project: Project; index: number }) {
           {/* Project image */}
           <div className="relative aspect-video overflow-hidden">
             <Image
-              src={project.thumbnail}
+              src={getImagePath(project.thumbnail)}
               alt={project.title}
               width={600}
               height={340}

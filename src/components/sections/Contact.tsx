@@ -11,12 +11,20 @@ import {
   Mail,
   Clock,
   ExternalLink,
+  AlertCircle,
 } from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
+
+type FormErrors = {
+  name?: string
+  email?: string
+  message?: string
+}
 
 export default function Contact() {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [formMessage, setFormMessage] = useState('')
+  const [errors, setErrors] = useState<FormErrors>({})
   const formRef = useRef<HTMLFormElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -33,6 +41,17 @@ export default function Contact() {
   useEffect(() => {
     adjustTextareaHeight()
   }, [])
+
+  // Reset form status after a delay when success
+  useEffect(() => {
+    if (formStatus === 'success') {
+      const timer = setTimeout(() => {
+        setFormStatus('idle')
+        setFormMessage('')
+      }, 6000)
+      return () => clearTimeout(timer)
+    }
+  }, [formStatus])
 
   const socialLinks = [
     {
@@ -66,19 +85,48 @@ export default function Contact() {
     },
   ]
 
+  const validateForm = (data: { name: string; email: string; message: string }): FormErrors => {
+    const errors: FormErrors = {}
+
+    if (!data.name.trim()) {
+      errors.name = 'Name is required'
+    }
+
+    if (!data.email.trim()) {
+      errors.email = 'Email is required'
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
+      errors.email = 'Email is not valid'
+    }
+
+    if (!data.message.trim()) {
+      errors.message = 'Message is required'
+    }
+
+    return errors
+  }
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setErrors({})
+
+    // Get form data
+    const formData = new FormData(e.target as HTMLFormElement)
+    const formValues = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string,
+    }
+
+    // Client-side validation
+    const validationErrors = validateForm(formValues)
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors)
+      return
+    }
+
     setFormStatus('loading')
 
     try {
-      // Get form data
-      const formData = new FormData(e.target as HTMLFormElement)
-      const formValues = {
-        name: formData.get('name'),
-        email: formData.get('email'),
-        message: formData.get('message'),
-      }
-
       // Send the form data to the API endpoint
       const response = await fetch('/api/contact', {
         method: 'POST',
@@ -90,15 +138,27 @@ export default function Contact() {
 
       const data = await response.json()
 
-      if (response.ok) {
+      if (response.ok && data.success) {
         setFormStatus('success')
         setFormMessage("Message sent successfully! I'll get back to you soon.")
         if (formRef.current) formRef.current.reset()
+
+        // Reset textarea height
+        if (textareaRef.current) {
+          textareaRef.current.style.height = 'auto'
+        }
       } else {
         setFormStatus('error')
-        setFormMessage(
-          data.error || 'Something went wrong. Please try again or contact me directly via email.'
-        )
+
+        if (data.details) {
+          // Handle validation errors from server
+          setErrors(data.details)
+          setFormMessage('Please correct the errors in the form.')
+        } else {
+          setFormMessage(
+            data.error || 'Something went wrong. Please try again or contact me directly via email.'
+          )
+        }
       }
     } catch (error) {
       console.error('Error submitting form:', error)
@@ -259,9 +319,16 @@ export default function Contact() {
                     id="name"
                     name="name"
                     required
-                    className="bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full rounded-lg border p-3 text-sm transition-colors"
+                    className={`bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full rounded-lg border p-3 text-sm transition-colors ${
+                      errors.name ? 'border-red-400' : ''
+                    }`}
                     disabled={formStatus === 'loading'}
                   />
+                  {errors.name && (
+                    <p className="mt-1 flex items-center text-xs text-red-400">
+                      <AlertCircle size={12} className="mr-1" /> {errors.name}
+                    </p>
+                  )}
                 </div>
 
                 <div>
@@ -276,9 +343,16 @@ export default function Contact() {
                     id="email"
                     name="email"
                     required
-                    className="bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full rounded-lg border p-3 text-sm transition-colors"
+                    className={`bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full rounded-lg border p-3 text-sm transition-colors ${
+                      errors.email ? 'border-red-400' : ''
+                    }`}
                     disabled={formStatus === 'loading'}
                   />
+                  {errors.email && (
+                    <p className="mt-1 flex items-center text-xs text-red-400">
+                      <AlertCircle size={12} className="mr-1" /> {errors.email}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex min-h-[120px] flex-1 flex-col">
@@ -295,11 +369,18 @@ export default function Contact() {
                       name="message"
                       required
                       rows={3}
-                      className="bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full flex-1 resize-none overflow-auto rounded-lg border p-3 text-sm transition-colors"
+                      className={`bg-surface/50 border-accent/10 focus:border-accent focus:ring-accent/20 w-full flex-1 resize-none overflow-auto rounded-lg border p-3 text-sm transition-colors ${
+                        errors.message ? 'border-red-400' : ''
+                      }`}
                       disabled={formStatus === 'loading'}
                       onChange={adjustTextareaHeight}
                       onInput={adjustTextareaHeight}
                     ></textarea>
+                    {errors.message && (
+                      <p className="mt-1 flex items-center text-xs text-red-400">
+                        <AlertCircle size={12} className="mr-1" /> {errors.message}
+                      </p>
+                    )}
                   </div>
                 </div>
 

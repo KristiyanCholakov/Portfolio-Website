@@ -1,5 +1,13 @@
 import { NextResponse } from 'next/server'
 import nodemailer from 'nodemailer'
+import { z } from 'zod'
+
+// Email validation schema
+const contactSchema = z.object({
+  name: z.string().min(1, 'Name is required'),
+  email: z.string().email('Invalid email address'),
+  message: z.string().min(1, 'Message is required'),
+})
 
 // Create a transporter using SMTP
 const transporter = nodemailer.createTransport({
@@ -12,24 +20,52 @@ const transporter = nodemailer.createTransport({
   },
 })
 
+// Verify transporter connection at startup
+async function verifyTransporter() {
+  try {
+    await transporter.verify()
+    console.log('SMTP connection verified successfully')
+    return true
+  } catch (error) {
+    console.error('SMTP verification failed:', error)
+    return false
+  }
+}
+
 export async function POST(request: Request) {
   try {
     // Parse the request body
     const body = await request.json()
-    const { name, email, message } = body
 
-    // Validate required fields
-    if (!name || !email || !message) {
+    // Validate using Zod schema
+    const result = contactSchema.safeParse(body)
+    if (!result.success) {
+      const errors = result.error.flatten()
       return NextResponse.json(
-        { error: 'Name, email, and message are required fields' },
+        {
+          success: false,
+          error: 'Validation failed',
+          details: errors.fieldErrors,
+        },
         { status: 400 }
+      )
+    }
+
+    const { name, email, message } = result.data
+
+    // Verify connection before sending
+    const isConnectionValid = await verifyTransporter()
+    if (!isConnectionValid) {
+      return NextResponse.json(
+        { success: false, error: 'Email service temporarily unavailable' },
+        { status: 503 }
       )
     }
 
     // Create email options
     const mailOptions = {
       from: process.env.EMAIL_FROM || 'Portfolio Contact Form <no-reply@example.com>',
-      to: 'krischolakov@icloud.com',
+      to: process.env.EMAIL_TO || 'krischolakov@icloud.com',
       subject: `Portfolio Contact: Message from ${name}`,
       replyTo: email,
       text: ` 
@@ -56,16 +92,40 @@ ${message}
       `,
     }
 
-    // Send the email
-    await transporter.sendMail(mailOptions)
+    // Send the email and get info
+    const info = await transporter.sendMail(mailOptions)
+    console.log('Message sent successfully:', info.messageId)
 
-    // Return success response
-    return NextResponse.json({ success: true })
-  } catch (error) {
+    // Return success response with message ID
+    return NextResponse.json({
+      success: true,
+      message: 'Email sent successfully',
+      messageId: info.messageId,
+    })
+  } catch (error: any) {
     console.error('Error sending contact form email:', error)
-    return NextResponse.json(
-      { error: 'Failed to send email. Please try again later.' },
-      { status: 500 }
-    )
+
+    // More specific error messages based on common nodemailer errors
+    const errorMessage = error.code
+      ? getErrorMessageByCode(error.code)
+      : 'Failed to send email. Please try again later.'
+
+    return NextResponse.json({ success: false, error: errorMessage }, { status: 500 })
+  }
+}
+
+// Helper function to provide friendlier error messages
+function getErrorMessageByCode(code: string): string {
+  switch (code) {
+    case 'EAUTH':
+      return 'Authentication error. Please contact the administrator.'
+    case 'ESOCKET':
+      return 'Network error. Please check your connection and try again.'
+    case 'ECONNECTION':
+      return 'Connection error. Email service may be unavailable.'
+    case 'ETIMEDOUT':
+      return 'Connection timed out. Please try again later.'
+    default:
+      return 'Failed to send email. Please try again later.'
   }
 }

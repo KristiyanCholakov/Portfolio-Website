@@ -66,7 +66,6 @@ export default function Contact() {
       icon: Linkedin,
       href: 'https://linkedin.com/in/kristiyan-cholakov',
     },
-    { name: 'Email', icon: Mail, href: 'mailto:krischolakov@icloud.com' },
   ]
 
   const emailTypes = [

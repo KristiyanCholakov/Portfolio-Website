@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Image from 'next/image'
-import { Github, Linkedin, Mail } from 'lucide-react'
+import { Github, Linkedin } from 'lucide-react'
 import { scrollToSection } from '@/utils/navigation'
 
 export default function Footer() {
@@ -19,7 +19,6 @@ export default function Footer() {
       icon: Linkedin,
       href: 'https://linkedin.com/in/kristiyan-cholakov',
     },
-    { name: 'Email', icon: Mail, href: 'mailto:krischolakov@icloud.com' },
   ]
 
   const navLinks = [

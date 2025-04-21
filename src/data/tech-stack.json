@@ -10,7 +10,6 @@
       { "name": "OpenCV", "logo": "/tech-stack-logos/opencv.svg", "level": 80 },
       { "name": "Keras", "logo": "/tech-stack-logos/keras.svg", "level": 70 },
       { "name": "Hugging Face", "logo": "/tech-stack-logos/huggingface.svg", "level": 65 },
-      { "name": "scikit-learn", "logo": "/tech-stack-logos/scikitlearn.svg", "level": 80 },
       { "name": "OpenAI API", "logo": "/tech-stack-logos/openai.svg", "level": 70 }
     ]
   },

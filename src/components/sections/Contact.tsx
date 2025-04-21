@@ -19,12 +19,14 @@ type FormErrors = {
   name?: string
   email?: string
   message?: string
+  emailType?: string
 }
 
 export default function Contact() {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle')
   const [formMessage, setFormMessage] = useState('')
   const [errors, setErrors] = useState<FormErrors>({})
+  const [selectedEmailType, setSelectedEmailType] = useState('professional')
   const formRef = useRef<HTMLFormElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
@@ -67,25 +69,30 @@ export default function Contact() {
     { name: 'Email', icon: Mail, href: 'mailto:krischolakov@icloud.com' },
   ]
 
-  const emailAddresses = [
+  const emailTypes = [
     {
+      id: 'professional',
       type: 'Professional',
-      address: 'contact@kristiyancholakov.com',
-      href: 'mailto:contact@kristiyancholakov.com',
+      description: 'For business inquiries and professional opportunities',
     },
     {
+      id: 'personal',
       type: 'Personal',
-      address: 'krischolakov@icloud.com',
-      href: 'mailto:krischolakov@icloud.com',
+      description: 'For personal matters and general conversations',
     },
     {
+      id: 'educational',
       type: 'Educational',
-      address: 'kristiya001@e.ntu.edu.sg',
-      href: 'mailto:kristiya001@e.ntu.edu.sg',
+      description: 'For academic and educational-related communications',
     },
   ]
 
-  const validateForm = (data: { name: string; email: string; message: string }): FormErrors => {
+  const validateForm = (data: {
+    name: string
+    email: string
+    message: string
+    emailType: string
+  }): FormErrors => {
     const errors: FormErrors = {}
 
     if (!data.name.trim()) {
@@ -102,6 +109,10 @@ export default function Contact() {
       errors.message = 'Message is required'
     }
 
+    if (!data.emailType) {
+      errors.emailType = 'Please select a recipient'
+    }
+
     return errors
   }
 
@@ -115,6 +126,7 @@ export default function Contact() {
       name: formData.get('name') as string,
       email: formData.get('email') as string,
       message: formData.get('message') as string,
+      emailType: selectedEmailType,
     }
 
     // Client-side validation
@@ -253,22 +265,40 @@ export default function Contact() {
                   <div className="bg-surface/30 border-accent/10 rounded-xl border p-5">
                     <h4 className="text-text-primary mb-3 flex items-center text-sm font-bold">
                       <Mail size={15} className="text-accent mr-2" />
-                      Email me directly
+                      Contact preferences
                     </h4>
+                    <p className="text-text-muted mb-4 text-xs">
+                      Select the appropriate category for your message. I&#39;ll receive your
+                      message at the corresponding email address.
+                    </p>
                     <div className="space-y-3">
-                      {emailAddresses.map((email) => (
-                        <motion.a
-                          key={email.type}
-                          href={email.href}
+                      {emailTypes.map((email) => (
+                        <motion.div
+                          key={email.id}
                           whileHover={{ x: 3 }}
-                          className="bg-surface/40 border-accent/5 hover:border-accent/20 flex items-center justify-between rounded-lg border p-2.5 transition-colors"
+                          className={`${
+                            selectedEmailType === email.id
+                              ? 'bg-accent/10 border-accent/30'
+                              : 'bg-surface/40 border-accent/5 hover:border-accent/20'
+                          } flex cursor-pointer items-center justify-between rounded-lg border p-2.5 transition-colors`}
+                          onClick={() => setSelectedEmailType(email.id)}
                         >
                           <div>
-                            <p className="text-text-primary text-sm font-medium">{email.address}</p>
-                            <span className="text-text-muted text-xs">{email.type}</span>
+                            <p className="text-text-primary text-sm font-medium">{email.type}</p>
+                            <span className="text-text-muted text-xs">{email.description}</span>
                           </div>
-                          <ExternalLink size={14} className="text-accent opacity-70" />
-                        </motion.a>
+                          <div
+                            className={`h-4 w-4 rounded-full border ${
+                              selectedEmailType === email.id
+                                ? 'border-accent bg-accent/50'
+                                : 'border-accent/30'
+                            }`}
+                          >
+                            {selectedEmailType === email.id && (
+                              <div className="bg-accent h-full w-full scale-50 rounded-full" />
+                            )}
+                          </div>
+                        </motion.div>
                       ))}
                     </div>
                   </div>

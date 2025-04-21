@@ -37,10 +37,57 @@
       "scikit-learn",
       "Selenium"
     ],
-    "category": "Data Science",
+    "category": "Artificial Intelligence",
     "featured": false,
     "github": "https://github.com/KristiyanCholakov/LinkedIn-Games-Agents",
     "demo": "https://www.youtube.com/watch?v=XvmLhvoARe0",
     "completed": "2025-04"
+  },
+  {
+    "id": "data-viz-climate-change",
+    "title": "The Power of Visualizing Our Planet: From Data to Saving the Environment",
+    "description": "An interactive data visualization project illustrating the impact of climate change through animated plots, geospatial maps, and 3D charts.",
+    "longDescription": "This project creates engaging and interactive visual narratives to explore the relationship between human activity and environmental impact. It covers human progress versus environmental degradation, the causes of climate change, global consequences, and pathways to a sustainable future through a sequence of dynamic visualizations.\n\nBuilt with Python and Jupyter Notebook, the project features novel custom SVG‑based animated plots for sea level rise and Antarctic ice mass; a 4‑axis correlation plot showing industrial growth versus environmental decline; custom split bubble world maps for fossil fuel dependency; a 3D segmented water column chart of ocean temperature changes; and a bubble time plot mapping major climate events to their human impacts. Data sourcing and geospatial processing leverage pandas, NumPy, Matplotlib, Seaborn, Plotly, GeoPandas, and GeoPy.",
+    "thumbnail": "./projects/data-viz-climate-change.png",
+    "technologies": [
+      "Python",
+      "pandas",
+      "NumPy",
+      "Matplotlib",
+      "Seaborn",
+      "Plotly",
+      "GeoPandas",
+      "GeoPy",
+      "Jupyter Notebook"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4024-Data-Viz-Climate-Change",
+    "demo": "https://youtu.be/64C3F0kX-IU",
+    "completed": "2023-12"
+  },
+  {
+    "id": "sentiment-analysis-ablation-study",
+    "title": "Sentiment Analysis Ablation Study",
+    "description": "An ablation study evaluating various sentiment analysis approaches on the Rotten Tomatoes review dataset, comparing embedding strategies, RNN and transformer architectures, and ensemble techniques.",
+    "longDescription": "This group project implements a sentiment classification pipeline using the Rotten Tomatoes movie review dataset. It includes Jupyter Notebooks to compare Word2Vec and GloVe embeddings with extensive preprocessing for out‑of‑vocabulary mitigation, evaluate RNN‑based architectures (with last state, max pooling, average pooling, and attention pooling), fine‑tune transformer models, and build an ensemble of multiple models.\n\nKey outcomes include a significant reduction of OOV words through preprocessing, improved accuracy from attention‑based and bidirectional RNN variants, custom transformer models achieving around 79% test accuracy, and fine‑tuned pretrained models (e.g., ELECTRA) surpassing 90%. An ensemble of these architectures further enhanced robustness and generalization.",
+    "thumbnail": "./projects/sentiment-analysis-ablation-study.png",
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "PyTorch",
+      "Keras",
+      "Transformers",
+      "gensim",
+      "NLTK",
+      "NumPy",
+      "pandas",
+      "Matplotlib"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4002-Sentiment-Analysis",
+    "demo": "",
+    "completed": "2023-11"
   }
 ]

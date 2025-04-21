@@ -7,6 +7,7 @@ const contactSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   email: z.string().email('Invalid email address'),
   message: z.string().min(1, 'Message is required'),
+  emailType: z.string().min(1, 'Email type is required'),
 })
 
 // Create a transporter using SMTP
@@ -32,6 +33,20 @@ async function verifyTransporter() {
   }
 }
 
+// Get recipient email based on the selected type
+function getRecipientEmail(emailType: string): string {
+  switch (emailType.toLowerCase()) {
+    case 'professional':
+      return process.env.EMAIL_TO_PROFESSIONAL || ''
+    case 'personal':
+      return process.env.EMAIL_TO_PERSONAL || ''
+    case 'educational':
+      return process.env.EMAIL_TO_EDUCATIONAL || ''
+    default:
+      return process.env.EMAIL_TO_PROFESSIONAL || '' // Default to professional
+  }
+}
+
 export async function POST(request: Request) {
   try {
     // Parse the request body
@@ -51,7 +66,16 @@ export async function POST(request: Request) {
       )
     }
 
-    const { name, email, message } = result.data
+    const { name, email, message, emailType } = result.data
+
+    // Get the appropriate recipient email
+    const recipientEmail = getRecipientEmail(emailType)
+    if (!recipientEmail) {
+      return NextResponse.json(
+        { success: false, error: 'Recipient email not configured' },
+        { status: 500 }
+      )
+    }
 
     // Verify connection before sending
     const isConnectionValid = await verifyTransporter()
@@ -65,12 +89,13 @@ export async function POST(request: Request) {
     // Create email options
     const mailOptions = {
       from: process.env.EMAIL_FROM || 'Portfolio Contact Form <no-reply@example.com>',
-      to: process.env.EMAIL_TO || 'krischolakov@icloud.com',
-      subject: `Portfolio Contact: Message from ${name}`,
+      to: recipientEmail,
+      subject: `Portfolio Contact (${emailType}): Message from ${name}`,
       replyTo: email,
       text: ` 
 Name: ${name}
 Email: ${email}
+Category: ${emailType}
 
 Message:
 ${message}
@@ -83,6 +108,7 @@ ${message}
   <div style="margin: 20px 0; padding: 15px; background-color: #f5f5f5; border-left: 4px solid #38bdf8;">
     <p><strong>Name:</strong> ${name}</p>
     <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Category:</strong> ${emailType}</p>
     <p><strong>Message:</strong></p>
     <div style="white-space: pre-wrap;">${message}</div>
   </div>

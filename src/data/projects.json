@@ -16,7 +16,7 @@
       "Prettier",
       "TypeScript"
     ],
-    "category": "Web Development",
+    "category": "Software Development",
     "featured": true,
     "github": "https://github.com/KristiyanCholakov/Portfolio-Website",
     "demo": "https://kristiyancholakov.com",
@@ -88,6 +88,192 @@
     "featured": false,
     "github": "https://github.com/KristiyanCholakov/SC4002-Sentiment-Analysis",
     "demo": "",
-    "completed": "2023-11"
+    "completed": "2024-11"
+  },
+  {
+    "id": "image-segmentation-3d-stereo-vision",
+    "title": "Image Segmentation & 3D Stereo Vision",
+    "description": "A MATLAB lab project comparing document image segmentation techniques and stereo disparity methods for 3D reconstruction.",
+    "longDescription": "This lab implements and evaluates multiple image segmentation techniques—Otsu’s global thresholding, Niblack’s local thresholding with Bayesian optimization, Sauvola’s adaptive thresholding, and Gabor filter feature extraction with K‑Means clustering—to isolate text from degraded document images. It also explores 3D stereo vision by computing disparity maps from stereo image pairs using SSD, NCC/ZNCC, and SAD similarity metrics to infer depth information.\n\nDeveloped entirely in MATLAB using the Image Processing Toolbox and Statistics and Machine Learning Toolbox, with Bayesian optimization for parameter tuning, the project generates quantitative and visual results for each method. All source scripts, image datasets, and a detailed report are included for reproducibility and further analysis.",
+    "thumbnail": "./projects/image-segmentation-3d-stereo-vision.png",
+    "technologies": [
+      "MATLAB",
+      "Image Processing Toolbox",
+      "Statistics and Machine Learning Toolbox"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4061-Lab-2",
+    "demo": "",
+    "completed": "2024-11"
+  },
+  {
+    "id": "point-processing-spatial-frequency-filtering",
+    "title": "Point Processing, Spatial & Frequency Filtering",
+    "description": "MATLAB implementations of point processing, spatial filtering, and frequency filtering techniques for image enhancement and restoration.",
+    "longDescription": "This lab project introduces fundamental image processing techniques in MATLAB, covering contrast stretching, histogram equalization, linear spatial (Gaussian) filtering, median filtering, noise interference suppression in the frequency domain, perspective distortion correction of planar surfaces, and perceptron algorithms.\n\nAll experiments are scripted in a single MATLAB file (`lab1_code.m`) organized into sections, with input images stored in an `images/` folder. A detailed PDF report (`lab1_report.pdf`) provides theoretical background, code analysis, and comparative results. The project uses MATLAB’s Image Processing Toolbox and Statistics and Machine Learning Toolbox to perform quantitative and visual assessments of each technique.",
+    "thumbnail": "./projects/point-processing-spatial-frequency-filtering.png",
+    "technologies": [
+      "MATLAB",
+      "Image Processing Toolbox",
+      "Statistics and Machine Learning Toolbox"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4061-Lab-1",
+    "demo": "",
+    "completed": "2024-09"
+  },
+  {
+    "id": "moblima",
+    "title": "MOBLIMA: OOP Movie Booking System",
+    "description": "An object‑oriented cinema booking application with user authentication, age‑based restrictions, dynamic ticket pricing, and administrative controls.",
+    "longDescription": "MOBLIMA is a group project from the SC2002 Object‑Oriented Design and Programming course, providing a full-featured movie booking system. End users can register, log in, browse available movies, and book tickets; the system enforces age restrictions based on movie ratings (PG, NC16, M18) and computes ticket prices dynamically according to format (2D, 3D, 4DX, IMAX), user profile (adult, student, senior), and time factors (weekday vs. weekend). Administrators have elevated privileges to manage movies, schedules, and pricing parameters.\n\nArchitected with SOLID principles, the application leverages Java’s object‑oriented features to ensure maintainability and extensibility. Interfaces and classes adhere to the Single Responsibility, Open‑Closed, and Interface Segregation principles; encapsulation and abstraction hide implementation details. A comprehensive UML class diagram and detailed JavaDoc accompany the code, and rigorous testing validates authentication, pricing logic, age enforcement, and admin operations.",
+    "thumbnail": "./projects/moblima.png",
+    "technologies": [
+      "Java",
+      "HTML",
+      "JavaScript",
+      "CSS"
+    ],
+    "category": "Software Development",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC2002-MOBLIMA",
+    "demo": "https://youtu.be/FUokMTk_E2I",
+    "completed": "2022-11"
+  },
+  {
+    "id": "cart-pole-dqn",
+    "title": "Deep Q‑Network Cart‑Pole Balancing",
+    "description": "A reinforcement learning agent implemented with TensorFlow that learns to balance a pole on a moving cart in the OpenAI Gym CartPole‑v1 environment.",
+    "longDescription": "This project applies deep reinforcement learning to the classic cart‑pole control problem. A Deep Q‑Network with two hidden layers is trained via an epsilon‑greedy policy and experience replay to learn optimal balancing strategies through interaction with the OpenAI Gym environment. Training performance is visualized using reward curves over multiple episodes, and the trained agent’s behavior is demonstrated through video renderings, offering an end‑to‑end workflow from environment setup and model design to evaluation and visualization.",
+    "thumbnail": "./projects/cart-pole-dqn.gif",
+    "technologies": [
+      "Python",
+      "TensorFlow",
+      "OpenAI Gym",
+      "NumPy",
+      "Matplotlib",
+      "Jupyter Notebook"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC3000-Pole-Balancing",
+    "demo": "",
+    "completed": "2023-04"
+  },
+  {
+    "id": "network-traffic-analysis",
+    "title": "Network Traffic Analyzer",
+    "description": "A data‑driven network traffic analysis tool that processes raw packet logs to reveal communication patterns, protocol distributions, geolocations, and potential security threats.",
+    "longDescription": "This project analyzes network traffic logs to uncover insights into usage patterns, bottlenecks, and security anomalies. It identifies top talkers and listeners, breaks down transport and application protocols, visualizes traffic intensity over time, and maps network activity geospatially. It also flags suspicious behaviors—such as port scanning—to support proactive network defense.\n\nImplemented in Python within Jupyter Notebooks, the workflow leverages pandas and NumPy for data processing, Matplotlib and Folium for dynamic visualizations, scapy for packet parsing, and GeoPandas for geolocation mapping. The end‑to‑end pipeline—from raw log ingestion through interactive report generation—provides a comprehensive framework for network monitoring and optimization.",
+    "thumbnail": "./projects/network-traffic-analysis.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "pandas",
+      "NumPy",
+      "Matplotlib",
+      "Folium",
+      "scapy",
+      "GeoPandas"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC2008-Network-Traffic-Analysis",
+    "demo": "",
+    "completed": "2022-10"
+  },
+  {
+    "id": "softuni-trivia",
+    "title": "SoftUni Django Trivia Game",
+    "description": "A Django‑based web trivia game with user authentication, dynamic lifelines, and question management, built as a final exam project for SoftUni.",
+    "longDescription": "Developed for SoftUni’s Django course exam in 2019, this web trivia application offers users an engaging platform to test their general knowledge. Players can register, log in, and progress through rounds of questions using helpful in‑game aids—fifty‑fifty, right answer, and answer removal—to enhance gameplay. Administrators can restart sessions to manage ongoing games.\n\nThe system features full CRUD operations for trivia questions with role‑based access control, records and displays each user’s game history, and maintains a consistent UI/UX through shared templates and a CSS framework. Architected in modular Django apps (accounts, game, games, questions, common) and backed by SQLite, it demonstrates best practices in web application design and deployment.",
+    "thumbnail": "./projects/softuni-trivia.png",
+    "technologies": [
+      "Python",
+      "Django",
+      "SQLite",
+      "HTML",
+      "CSS"
+    ],
+    "category": "Software Development",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SoftUni-Trivia",
+    "demo": "",
+    "completed": "2019-06"
+  },
+  {
+    "id": "sql-query-evolution-analyzer",
+    "title": "SQL Query Evolution Analyzer",
+    "description": "A user-friendly tool for comparing SQL queries by visualizing execution plan differences and generating plain‑English explanations to aid optimization.",
+    "longDescription": "This application streamlines query optimization for users of all skill levels by generating and displaying Query Execution Plans (QEPs) for both original and modified SQL statements, automatically detecting and highlighting structural and cost-related differences, and offering clear, natural‑language summaries of the changes. It features a modern, dark‑themed GUI built with Tkinter and CustomTkinter, with Graphviz‑powered plan diagrams and a history manager for saving and recalling past analyses. The tool connects to PostgreSQL via psycopg2, parses and validates SQL with sqlparse and sqlvalidator, and adapts its appearance to the system theme using Darkdetect.",
+    "thumbnail": "./projects/sql-query-evolution-analyzer.png",
+    "technologies": [
+      "Python",
+      "Tkinter",
+      "CustomTkinter",
+      "psycopg2‑binary",
+      "Graphviz",
+      "sqlparse",
+      "sqlvalidator",
+      "Darkdetect",
+      "Pmw",
+      "PySimpleGUI"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC3020-Query-Analyzer",
+    "demo": "",
+    "completed": "2023-04"
+  },
+  {
+    "id": "market-basket-analysis",
+    "title": "Market Basket Analysis for E‑commerce",
+    "description": "A market‑basket analysis project identifying product affinities and recommending complementary items to boost sales, with additional insights into customer segments and inventory.",
+    "longDescription": "This project conducts association rule mining on transaction data from an e‑commerce store to discover frequently co‑purchased items and generate targeted product recommendations. Through thorough exploratory data analysis, frequent itemsets and high‑confidence rules are extracted to inform cross‑selling strategies. Further analysis on customer segmentation and inventory utilization provides actionable insights for marketing optimization and stock management.",
+    "thumbnail": "./projects/market-basket-analysis.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "pandas",
+      "NumPy",
+      "mlxtend",
+      "matplotlib",
+      "seaborn"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC1015-Market-Basket-Analysis",
+    "demo": "",
+    "completed": "2022-04"
+  },
+  {
+    "id": "speech-analysis-housing-prediction",
+    "title": "Neural Networks: Speech Polarity & Housing Price Prediction",
+    "description": "A dual-stage deep learning assignment combining speech polarity classification and HDB flat resale price regression.",
+    "longDescription": "This project showcases two complementary neural network applications. In the first stage, a feedforward network is trained on extracted audio features to detect speech polarity, with thorough hyperparameter tuning via cross‑validation and interpretation of predictions using SHAP. In the second stage, advanced PyTorch architectures (PyTorch Tabular and Pytorch‑WideDeep) are employed to predict HDB flat resale prices, with model explainability using Captum and drift analysis via Alibi Detect.\n\nBuilt in Python within Jupyter Notebooks, the end‑to‑end workflow covers data preprocessing, model design, training, evaluation (accuracy for classification; RMSE and R² for regression), and visualizations of learning curves and prediction outcomes. This assignment illustrates best practices in deep learning experimentation, model robustness, and interpretability across both audio and tabular domains.",
+    "thumbnail": "./projects/speech-analysis-housing-prediction.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "NumPy",
+      "pandas",
+      "Matplotlib",
+      "Seaborn",
+      "scikit-learn",
+      "PyTorch",
+      "PyTorch Lightning",
+      "PyTorch Tabular",
+      "Pytorch-WideDeep",
+      "Captum",
+      "Alibi Detect",
+      "librosa"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4001-Speech-Analysis-and-Housing-Prediction",
+    "demo": "",
+    "completed": "2024-03"
   }
 ]

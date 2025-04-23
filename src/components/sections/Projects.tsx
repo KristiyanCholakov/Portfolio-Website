@@ -1,7 +1,7 @@
 'use client'
 
-import { useState, useMemo, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useMemo, useEffect, useRef } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
 import {
   Code,
   ExternalLink,
@@ -258,11 +258,7 @@ const FilterBar = ({
 // Animation variants
 const fadeInUp = {
   hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: 0.1 * i, duration: 0.5, ease: 'easeOut' },
-  }),
+  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
 const staggerContainer = {
@@ -730,12 +726,42 @@ export default function Projects() {
           setSortOrder={setSortOrder}
         />
 
+        {/* Project Counter */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.2 }}
+          className="mb-6 flex items-center justify-between"
+        >
+          <div className="bg-card/60 border-border rounded-md border px-3 py-1.5 backdrop-blur-sm">
+            <span className="text-muted-foreground text-sm">
+              Showing <span className="text-accent font-medium">{filteredProjects.length}</span>
+              {filteredProjects.length === 1 ? ' project' : ' projects'}
+              {(activeCategory !== 'All' || activeTechs.length > 0) && (
+                <span> with applied filters</span>
+              )}
+            </span>
+          </div>
+
+          {/* Conditional reset button (mobile friendly position) */}
+          {(activeCategory !== 'All' || activeTechs.length > 0) && (
+            <button
+              onClick={() => {
+                setActiveCategory('All')
+                setActiveTechs([])
+              }}
+              className="text-accent hover:text-accent/80 text-sm font-medium"
+            >
+              Reset filters
+            </button>
+          )}
+        </motion.div>
+
         {/* Projects Grid */}
         <AnimatePresence mode="wait">
           {filteredProjects.length > 0 ? (
             <motion.div
               key={`projects-grid-${activeCategory}-${activeTechs.join(',')}-${sortOrder}`}
-              variants={staggerContainer}
               initial="hidden"
               animate="visible"
               className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
@@ -792,7 +818,7 @@ export default function Projects() {
   )
 }
 
-// ProjectCard with fixed dimensions
+// ProjectCard with fixed dimensions and scroll animations
 function ProjectCard({
   project,
   index,
@@ -802,6 +828,12 @@ function ProjectCard({
   index: number
   onClick: () => void
 }) {
+  const ref = useRef(null)
+  const isInView = useInView(ref, {
+    once: true,
+    margin: '0px 0px -100px 0px', // Trigger animation slightly before card fully enters viewport
+  })
+
   // Function to ensure correct image path from public directory
   const getImagePath = (path: string) => {
     // If path already starts with a slash or http, return it as is
@@ -823,31 +855,43 @@ function ProjectCard({
 
   return (
     <motion.div
+      ref={ref}
+      initial="hidden"
+      animate={isInView ? 'visible' : 'hidden'}
       variants={fadeInUp}
-      custom={index}
       whileHover={{
         y: -8,
         boxShadow: '0 15px 30px rgba(0, 0, 0, 0.15), 0 5px 15px rgba(56, 189, 248, 0.1)',
-        transition: { duration: 0.2 },
+      }}
+      transition={{
+        type: 'spring',
+        stiffness: 300,
+        damping: 25,
       }}
       onClick={onClick}
-      className="group relative h-[460px] cursor-pointer overflow-hidden rounded-xl shadow-sm transition-all"
+      className="group relative h-[460px] cursor-pointer overflow-hidden rounded-xl shadow-sm"
     >
       {/* Card inner container with gradient border */}
       <div className="relative h-full overflow-hidden rounded-xl">
         {/* Animated gradient border */}
-        <div className="border-accent/10 from-accent/20 to-primary/20 absolute -inset-[1px] rounded-xl bg-gradient-to-tr opacity-70 transition-all duration-300 group-hover:opacity-100" />
+        <div className="border-accent/10 from-accent/20 to-primary/20 absolute -inset-[1px] rounded-xl bg-gradient-to-tr opacity-70 group-hover:opacity-100" />
 
         {/* Project content */}
         <div className="bg-card relative flex h-full flex-col overflow-hidden rounded-xl">
           {/* Project image - Fixed height */}
           <div className="relative h-[200px] w-full overflow-hidden">
-            <Image
-              src={getImagePath(project.thumbnail)}
-              alt={project.title}
-              fill
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
-            />
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.5 }}
+              className="h-full w-full"
+            >
+              <Image
+                src={getImagePath(project.thumbnail)}
+                alt={project.title}
+                fill
+                className="object-cover"
+              />
+            </motion.div>
 
             {/* Category badge */}
             <div className="bg-card/80 text-accent absolute top-3 left-3 rounded-full px-2 py-1 text-xs backdrop-blur-sm">
@@ -892,7 +936,7 @@ function ProjectCard({
                 href={project.github}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm"
                 onClick={(e) => e.stopPropagation()}
               >
                 <Github size={16} />
@@ -904,7 +948,7 @@ function ProjectCard({
                   href={project.demo}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm transition-colors"
+                  className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm"
                   onClick={(e) => e.stopPropagation()}
                 >
                   <ExternalLink size={16} />
@@ -926,7 +970,7 @@ function ProjectCard({
 
       {/* Decorative background elements that extend to full card */}
       <motion.div
-        className="from-accent/5 absolute -inset-40 z-[1] bg-gradient-to-br to-transparent opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+        className="from-accent/5 absolute -inset-40 z-[1] bg-gradient-to-br to-transparent opacity-0 blur-3xl group-hover:opacity-100"
         style={{ mixBlendMode: 'soft-light' }}
         animate={{
           transform: [

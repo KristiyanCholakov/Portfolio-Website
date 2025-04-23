@@ -284,7 +284,7 @@ export default function Experience() {
                     <motion.button
                       key={job.id}
                       variants={itemVariants}
-                      className={`flex w-full flex-col border-l-2 px-4 py-4 text-left transition-all ${
+                      className={`flex w-full flex-col border-l-2 px-4 py-4 text-left ${
                         activeJob === job.id
                           ? 'border-accent bg-accent/5 text-accent font-medium'
                           : 'text-text-muted hover:border-accent/30 hover:bg-surface border-transparent'
@@ -294,6 +294,9 @@ export default function Experience() {
                         borderLeftWidth: '3px',
                       }}
                       onClick={() => setActiveJob(job.id)}
+                      // Prevent Framer Motion from interfering with our state changes
+                      transition={{ type: 'tween', duration: 0 }}
+                      animate={{}} // Empty animate prop to prevent default animations
                     >
                       {/* Job title and icon row */}
                       <div className="flex items-center">

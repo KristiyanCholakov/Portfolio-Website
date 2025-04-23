@@ -275,5 +275,142 @@
     "github": "https://github.com/KristiyanCholakov/SC4001-Speech-Analysis-and-Housing-Prediction",
     "demo": "",
     "completed": "2024-03"
+  },
+  {
+    "id": "agent-decision-making",
+    "title": "Maze Solver Agent with Value and Policy Iteration",
+    "description": "An implementation of value and policy iteration algorithms that computes optimal policies and utilities in a grid-based maze environment.",
+    "longDescription": "This project develops an intelligent agent for solving maze environments using Markov Decision Process techniques. It implements both value iteration and policy iteration to compute state utilities and derive optimal action policies for each non-wall state. The workflow includes visualizing convergence of utility and policy through reward and utility plots, rendering the maze with annotated optimal moves, and automated tests to verify algorithm correctness and performance.",
+    "thumbnail": "./projects/agent-decision-making.png",
+    "technologies": [
+      "Python",
+      "NumPy",
+      "Matplotlib",
+      "TensorBoard",
+      "PyGame"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4003-Agent-Decision-Making",
+    "demo": "",
+    "completed": "2024-03"
+  },
+  {
+    "id": "speech-emotion-recognition",
+    "title": "Multimodal Speech & Text Emotion Recognition",
+    "description": "A multimodal emotion recognition system that integrates speech-to-text conversion and deep learning classifiers to detect emotional states from audio and text data.",
+    "longDescription": "This project explores multimodal emotion recognition by combining speech-based and text-based analysis. Speech inputs are transcribed with OpenAI’s Whisper model, acoustic features are extracted using Librosa and openSMILE, and a Multi-Layer Perceptron classifies audio emotion. In parallel, a Convolutional Neural Network processes textual inputs. A fusion model then dynamically integrates both modalities to deliver context-aware emotion predictions.\n\nDeveloped in Python within Jupyter Notebooks, the workflow covers data preprocessing, model training, and hyperparameter tuning. Multiple CNN variants (including GRU, Bi-GRU, and LSTM) and MLP architectures were benchmarked. The final fusion model achieved 71.87% validation accuracy, outperforming standalone text (60.04%) and audio (68.91%) classifiers. All experiments are reproducible via provided notebooks and PyTorch checkpoints.",
+    "thumbnail": "./projects/speech-emotion-recognition.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "OpenAI Whisper",
+      "Librosa",
+      "openSMILE",
+      "PyTorch",
+      "TensorFlow"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4001-Speech-Emotion-Recognition",
+    "demo": "",
+    "completed": "2024-04"
+  },
+  {
+    "id": "opinion-search-engine",
+    "title": "Opinion Search Engine for VR/AR Headset Discussions",
+    "description": "An NLP-powered search engine that retrieves and analyzes public opinions on VR and AR headsets from Reddit.",
+    "longDescription": "The Opinion Search Engine (OSE) combines Reddit data crawling, advanced text processing, and an Apache Solr–based index to allow users to search VR and AR headset discussions with high relevance. It features phonetic encoding, synonym expansion, spell-checking, and ranking enhancements for precise query results.\n\nA modern web application built with Next.js, React, Tailwind CSS, and Material Tailwind, it visualizes sentiment distributions using Plotly.js. Machine-learning sentiment analysis employs an ensemble of fine-tuned RoBERTa models to classify discussion sentiment with high precision, recall, and F1 score.",
+    "thumbnail": "./projects/opinion-search-engine.png",
+    "technologies": [
+      "Apache Solr",
+      "Python",
+      "PRAW",
+      "pandas",
+      "scikit-learn",
+      "Next.js",
+      "React",
+      "Tailwind CSS",
+      "Material Tailwind",
+      "Plotly.js"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4021-OSE",
+    "demo": "https://youtu.be/P68TdXkUfHA",
+    "completed": "2025-02"
+  },
+  {
+    "id": "collaboration-network-analysis",
+    "title": "Network Science Analysis of Data Scientists Collaboration",
+    "description": "A network science-based study of DBLP collaboration data revealing structural properties, evolution, and reduction strategies in a large-scale scientist network.",
+    "longDescription": "This project constructs and analyzes a large-scale collaboration network of data scientists extracted from DBLP, exploring degree distributions, clustering coefficients, centrality measures, and component structures. It compares the real network to an Erdős-Rényi random graph to highlight scale-free characteristics and studies network evolution over time, tracking hub emergence and connectivity changes.\n\nAdditionally, the project implements network reduction techniques—such as degree cutoff and closeness centrality scaling—to preserve key structural properties while decreasing network size. The workflow combines advanced data preprocessing, NetworkX-based analysis, and interactive visualizations to provide comprehensive insights into scientific collaborations.",
+    "thumbnail": "./projects/collaboration-network-analysis.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "NetworkX",
+      "pandas",
+      "NumPy",
+      "Matplotlib"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4022-Collaboration-Network-Analysis",
+    "demo": "",
+    "completed": "2024-04"
+  },
+  {
+    "id": "repeated-prisoners-dilemma-agent",
+    "title": "Three-Player Repeated Prisoners’ Dilemma Agent",
+    "description": "An adaptive hybrid-strategy agent for three-player repeated Prisoners’ Dilemma tournaments that balances cooperation and defection through dynamic history analysis.",
+    "longDescription": "This project implements a competitive agent tailored for three-player repeated Prisoners’ Dilemma tournaments, leveraging a hybrid strategy that blends classic game theory tactics (like Tit-for-Tat and Grim Trigger) with real-time history analysis, cooperative initiation, adaptive endgame defection, and punitive response mechanisms. A custom tournament framework simulates matches of variable length (90–110 rounds), pits the agent against diverse opponent strategies, and gathers statistical performance metrics to demonstrate robustness and strategic depth.",
+    "thumbnail": "./projects/repeated-prisoners-dilemma-agent.png",
+    "technologies": [
+      "Java"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4003-Repeated-Prisoners-Dilemma-Agent",
+    "demo": "",
+    "completed": "2024-03"
+  },
+  {
+    "id": "elo-merchant-category-recommendation",
+    "title": "ELO Merchant Category Recommendation",
+    "description": "A scalable machine-learning pipeline using dual LightGBM models and outlier detection to predict customer loyalty scores in the Kaggle ELO Merchant Category Recommendation challenge.",
+    "longDescription": "This project tackles the ELO Merchant Category Recommendation challenge by combining a novel dual-model strategy with extensive feature engineering. A binary LightGBM classifier first identifies outlier transactions, and two separate LightGBM regressors—one trained on all data and another on non-outliers—produce loyalty score predictions depending on the classifier’s output. This targeted approach improves accuracy and robustness against anomalous records.\n\nThe end-to-end workflow, implemented in Jupyter Notebooks, includes exploratory data analysis, data cleaning, behavioral and interaction feature construction, automated feature selection, and systematic hyperparameter tuning via cross-validation. The final solution achieved a public leaderboard RMSE of 3.68232, placing in the top 6.7% of participants.",
+    "thumbnail": "./projects/elo-merchant-category-recommendation.png",
+    "technologies": [
+      "Python",
+      "Jupyter Notebook",
+      "pandas",
+      "NumPy",
+      "LightGBM",
+      "FeatureSelector",
+      "matplotlib"
+    ],
+    "category": "Data Science",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC4000-ELO-Merchant-Category-Recommendation",
+    "demo": "",
+    "completed": "2024-04"
+  },
+  {
+    "id": "scse-buddy",
+    "title": "SCSEBuddy: 360° Indoor Navigation & Community Forum",
+    "description": "An Android app offering immersive 360° indoor navigation within NTU’s SCSE building and integrated community features like course reviews and discussion forums.",
+    "longDescription": "SCSEBuddy provides SCSE students with an end-to-end 360° indoor navigation experience by leveraging panoramic imagery and Dijkstra’s algorithm to compute and display the shortest routes across multiple floors. Users input their current location and desired destination to receive a sequence of annotated panoramic views with directional markers and stair instructions, ensuring intuitive wayfinding even in complex building layouts.\n\nBeyond navigation, the app fosters campus engagement through built-in course review and forum modules, allowing students to share feedback, ask questions, and collaborate. Developed in Java with the Android SDK and managed via Gradle, SCSEBuddy is optimized for Android 10 (API level 29) or higher, delivering smooth performance and reliable routing on both devices and emulators.",
+    "thumbnail": "./projects/scse-buddy.png",
+    "technologies": [
+      "Java",
+      "Android SDK",
+      "Gradle"
+    ],
+    "category": "Mobile Development",
+    "featured": false,
+    "github": "https://github.com/KristiyanCholakov/SC2006-SCSE-Buddy",
+    "demo": "https://youtu.be/If7BrzpTVg4",
+    "completed": "2022-06"
   }
 ]

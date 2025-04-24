@@ -26,7 +26,7 @@
     "id": "linkedin-game-agents",
     "title": "LinkedIn Game Agents",
     "description": "A fully automated puzzle‑solving agent for LinkedIn’s Queens, Tango, and Zip games combining computer vision and algorithmic reasoning.",
-    "longDescription": "This project implements end‑to‑end agents that play LinkedIn’s visual logic puzzles—Queens, Tango, and Zip—automatically. It uses Selenium to capture game screens, OpenCV and Pillow for image processing, pytesseract for OCR, and scikit‑learn for clustering. A modular core (base_game_agent and game_registry) dynamically loads each game’s solver, recognizer, and placer components.\n\nEach game employs specialized vision and algorithmic strategies: Queens uses edge filters, Hough transforms, and DBSCAN color clustering to enforce placement constraints; Tango leverages adaptive thresholding, KMeans clustering, and template matching with backtracking to respect sign‑based rules; Zip applies adaptive grid detection, dynamic OCR, wall detection, and a Hamiltonian path solver to traverse numbered cells under movement constraints.",
+    "longDescription": "This project implements end‑to‑end agents that autonomously play LinkedIn’s visual logic puzzles: Queens, Tango, and Zip. It uses Selenium to capture game screens, OpenCV and Pillow for image processing, pytesseract for OCR, and scikit‑learn for clustering. A modular core dynamically loads each game’s solver, recognizer, and placer components.\n\nEach game employs specialized vision and algorithmic strategies: Queens uses edge filters, Hough transforms, and DBSCAN color clustering to enforce placement constraints; Tango leverages adaptive thresholding, KMeans clustering, and template matching with backtracking to respect sign‑based rules; Zip applies adaptive grid detection, dynamic OCR, wall detection, and a Hamiltonian path solver to traverse numbered cells under movement constraints.",
     "thumbnail": "./projects/linkedin-game-agents.png",
     "technologies": [
       "Python",
@@ -110,8 +110,8 @@
   {
     "id": "point-processing-spatial-frequency-filtering",
     "title": "Point Processing, Spatial & Frequency Filtering",
-    "description": "MATLAB implementations of point processing, spatial filtering, and frequency filtering techniques for image enhancement and restoration.",
-    "longDescription": "This lab project introduces fundamental image processing techniques in MATLAB, covering contrast stretching, histogram equalization, linear spatial (Gaussian) filtering, median filtering, noise interference suppression in the frequency domain, perspective distortion correction of planar surfaces, and perceptron algorithms.\n\nAll experiments are scripted in a single MATLAB file (`lab1_code.m`) organized into sections, with input images stored in an `images/` folder. A detailed PDF report (`lab1_report.pdf`) provides theoretical background, code analysis, and comparative results. The project uses MATLAB’s Image Processing Toolbox and Statistics and Machine Learning Toolbox to perform quantitative and visual assessments of each technique.",
+    "description": "An exploration of essential image enhancement and restoration techniques in MATLAB, covering intensity transformations, spatial filtering with both linear and non-linear kernels, and noise reduction in the frequency domain.",
+    "longDescription": "This lab demonstrates core image processing workflows in MATLAB, covering intensity transformations (contrast stretching, histogram equalization), spatial filtering (Gaussian and median), frequency-domain noise reduction, perspective correction, and basic classification techniques. Each method is evaluated on sample images to assess its impact on enhancement and restoration.",
     "thumbnail": "./projects/point-processing-spatial-frequency-filtering.png",
     "technologies": [
       "MATLAB",

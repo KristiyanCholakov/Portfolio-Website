@@ -505,7 +505,29 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
                   ))}
                 </div>
 
-                {/* Description */}
+                {/* Short Description - Added */}
+                <div className="mb-6">
+                  <div className="bg-accent/5 border-accent relative rounded-r-lg border-l-2 p-4">
+                    <div className="bg-background text-accent absolute top-4 -left-3 rounded-full p-1">
+                      <motion.div
+                        initial={{ rotate: 0 }}
+                        animate={{ rotate: 360 }}
+                        transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                      >
+                        <Code size={18} />
+                      </motion.div>
+                    </div>
+                    <p className="text-foreground pl-6 text-lg leading-relaxed font-medium">
+                      {project.description}
+                    </p>
+                    <div className="bg-accent/40 mt-4 h-1 w-16 rounded-full"></div>
+                  </div>
+                </div>
+
+                {/* Divider between descriptions */}
+                <div className="bg-border/50 mb-6 h-px w-full"></div>
+
+                {/* Long Description */}
                 <div className="mb-8">
                   <h4 className="text-foreground mb-3 text-xl font-semibold">About this project</h4>
                   {project.longDescription.split('\n\n').map((paragraph, idx) => (

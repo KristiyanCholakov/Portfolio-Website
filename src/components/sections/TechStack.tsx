@@ -66,6 +66,7 @@ const iconMap: Record<string, LucideIcon> = {
   Cpu,
   Database,
   Cloud,
+  Code,
 }
 
 // Process tech categories from JSON with proper type casting for position
@@ -491,7 +492,8 @@ export default function TechStack() {
         >
           <p className="text-text-primary">
             My technology ecosystem spans multiple domains - from web development to artificial
-            intelligence. Below is a visualization of the technologies I work with regularly.
+            intelligence. Below is a visualization of the technologies I have worked with, organized
+            by category.
           </p>
         </motion.div>
 
@@ -511,7 +513,7 @@ export default function TechStack() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.6 }}
-          className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6"
+          className="mt-8 flex flex-wrap justify-center gap-4"
         >
           {techCategories.map((category, index) => (
             <motion.div
@@ -520,7 +522,7 @@ export default function TechStack() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.3, delay: 0.7 + index * 0.1 }}
-              className="bg-surface/60 border-accent/10 flex items-center gap-2 rounded-lg border p-3 backdrop-blur-sm"
+              className="bg-surface/60 border-accent/10 flex w-full items-center gap-2 rounded-lg border p-3 backdrop-blur-sm sm:w-[calc(50%-0.5rem)] md:w-[calc(33.33%-1rem)] lg:w-[calc(25%-0.75rem)]"
               style={{ borderLeftColor: '#38bdf8', borderLeftWidth: '3px' }}
             >
               <div className="text-accent flex h-8 w-8 items-center justify-center">

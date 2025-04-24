@@ -1,5 +1,19 @@
 [
   {
+    "name": "Programming Languages",
+    "icon": "Code",
+    "color": "#38bdf8",
+    "position": [0, 10, 5],
+    "technologies": [
+      { "name": "Python", "logo": "/tech-stack-logos/python.svg", "level": 90 },
+      { "name": "JavaScript", "logo": "/tech-stack-logos/javascript.svg", "level": 90 },
+      { "name": "TypeScript", "logo": "/tech-stack-logos/typescript.svg", "level": 80 },
+      { "name": "MATLAB", "logo": "/tech-stack-logos/matlab.svg", "level": 90 },
+      { "name": "Java", "logo": "/tech-stack-logos/java.svg", "level": 70 },
+      { "name": "Kotlin", "logo": "/tech-stack-logos/kotlin.svg", "level": 70 }
+    ]
+  },
+  {
     "name": "AI & ML",
     "icon": "Cpu",
     "color": "#38bdf8",
@@ -19,7 +33,6 @@
     "color": "#38bdf8",
     "position": [8, 0, -5],
     "technologies": [
-      { "name": "Python", "logo": "/tech-stack-logos/python.svg", "level": 90 },
       { "name": "NumPy", "logo": "/tech-stack-logos/numpy.svg", "level": 85 },
       { "name": "pandas", "logo": "/tech-stack-logos/pandas.svg", "level": 80 },
       { "name": "matplotlib", "logo": "/tech-stack-logos/matplotlib.svg", "level": 75 },
@@ -28,6 +41,7 @@
       { "name": "Jupyter", "logo": "/tech-stack-logos/jupyter.svg", "level": 80 },
       { "name": "scikit-learn", "logo": "/tech-stack-logos/scikitlearn.svg", "level": 80 },
       { "name": "Apache Spark", "logo": "/tech-stack-logos/apachespark.svg", "level": 60 },
+      { "name": "Apache Solr", "logo": "/tech-stack-logos/apachesolr.svg", "level": 60 },
       { "name": "Anaconda", "logo": "/tech-stack-logos/anaconda.svg", "level": 50 }
     ]
   },
@@ -52,8 +66,6 @@
     "technologies": [
       { "name": "React", "logo": "/tech-stack-logos/react.svg", "level": 90 },
       { "name": "Next.js", "logo": "/tech-stack-logos/nextdotjs.svg", "level": 85 },
-      { "name": "TypeScript", "logo": "/tech-stack-logos/typescript.svg", "level": 80 },
-      { "name": "JavaScript", "logo": "/tech-stack-logos/javascript.svg", "level": 90 },
       { "name": "HTML5", "logo": "/tech-stack-logos/html5.svg", "level": 90 },
       { "name": "CSS", "logo": "/tech-stack-logos/css.svg", "level": 85 },
       { "name": "Bootstrap", "logo": "/tech-stack-logos/bootstrap.svg", "level": 80 },

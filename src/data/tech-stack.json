@@ -7,8 +7,8 @@
     "technologies": [
       { "name": "Python", "logo": "/tech-stack-logos/python.svg", "level": 90 },
       { "name": "JavaScript", "logo": "/tech-stack-logos/javascript.svg", "level": 90 },
-      { "name": "TypeScript", "logo": "/tech-stack-logos/typescript.svg", "level": 80 },
       { "name": "MATLAB", "logo": "/tech-stack-logos/matlab.svg", "level": 90 },
+      { "name": "TypeScript", "logo": "/tech-stack-logos/typescript.svg", "level": 80 },
       { "name": "Java", "logo": "/tech-stack-logos/java.svg", "level": 70 },
       { "name": "Kotlin", "logo": "/tech-stack-logos/kotlin.svg", "level": 70 }
     ]
@@ -19,12 +19,12 @@
     "color": "#38bdf8",
     "position": [0, 0, 0],
     "technologies": [
+      { "name": "OpenCV", "logo": "/tech-stack-logos/opencv.svg", "level": 80 },
       { "name": "TensorFlow", "logo": "/tech-stack-logos/tensorflow.svg", "level": 75 },
       { "name": "PyTorch", "logo": "/tech-stack-logos/pytorch.svg", "level": 70 },
-      { "name": "OpenCV", "logo": "/tech-stack-logos/opencv.svg", "level": 80 },
       { "name": "Keras", "logo": "/tech-stack-logos/keras.svg", "level": 70 },
-      { "name": "Hugging Face", "logo": "/tech-stack-logos/huggingface.svg", "level": 65 },
-      { "name": "OpenAI API", "logo": "/tech-stack-logos/openai.svg", "level": 70 }
+      { "name": "OpenAI API", "logo": "/tech-stack-logos/openai.svg", "level": 70 },
+      { "name": "Hugging Face", "logo": "/tech-stack-logos/huggingface.svg", "level": 70 }
     ]
   },
   {
@@ -35,14 +35,14 @@
     "technologies": [
       { "name": "NumPy", "logo": "/tech-stack-logos/numpy.svg", "level": 85 },
       { "name": "pandas", "logo": "/tech-stack-logos/pandas.svg", "level": 80 },
-      { "name": "matplotlib", "logo": "/tech-stack-logos/matplotlib.svg", "level": 75 },
-      { "name": "seaborn", "logo": "/tech-stack-logos/seaborn.png", "level": 70 },
-      { "name": "Plotly", "logo": "/tech-stack-logos/plotly.svg", "level": 65 },
       { "name": "Jupyter", "logo": "/tech-stack-logos/jupyter.svg", "level": 80 },
       { "name": "scikit-learn", "logo": "/tech-stack-logos/scikitlearn.svg", "level": 80 },
-      { "name": "Apache Spark", "logo": "/tech-stack-logos/apachespark.svg", "level": 60 },
-      { "name": "Apache Solr", "logo": "/tech-stack-logos/apachesolr.svg", "level": 60 },
-      { "name": "Anaconda", "logo": "/tech-stack-logos/anaconda.svg", "level": 50 }
+      { "name": "matplotlib", "logo": "/tech-stack-logos/matplotlib.svg", "level": 75 },
+      { "name": "seaborn", "logo": "/tech-stack-logos/seaborn.png", "level": 70 },
+      { "name": "Plotly", "logo": "/tech-stack-logos/plotly.svg", "level": 70 },
+      { "name": "Apache Spark", "logo": "/tech-stack-logos/apachespark.svg", "level": 70 },
+      { "name": "Apache Solr", "logo": "/tech-stack-logos/apachesolr.svg", "level": 70 },
+      { "name": "Anaconda", "logo": "/tech-stack-logos/anaconda.svg", "level": 70 }
     ]
   },
   {
@@ -53,8 +53,8 @@
     "technologies": [
       { "name": "Node.js", "logo": "/tech-stack-logos/nodedotjs.svg", "level": 80 },
       { "name": "Express.js", "logo": "/tech-stack-logos/express.svg", "level": 75 },
-      { "name": "Django", "logo": "/tech-stack-logos/django.svg", "level": 70 },
       { "name": "Flask", "logo": "/tech-stack-logos/flask.svg", "level": 75 },
+      { "name": "Django", "logo": "/tech-stack-logos/django.svg", "level": 70 },
       { "name": "FastAPI", "logo": "/tech-stack-logos/fastapi.svg", "level": 70 }
     ]
   },
@@ -65,16 +65,16 @@
     "position": [0, -8, -5],
     "technologies": [
       { "name": "React", "logo": "/tech-stack-logos/react.svg", "level": 90 },
-      { "name": "Next.js", "logo": "/tech-stack-logos/nextdotjs.svg", "level": 85 },
       { "name": "HTML5", "logo": "/tech-stack-logos/html5.svg", "level": 90 },
+      { "name": "Next.js", "logo": "/tech-stack-logos/nextdotjs.svg", "level": 85 },
       { "name": "CSS", "logo": "/tech-stack-logos/css.svg", "level": 85 },
+      { "name": "Tailwind CSS", "logo": "/tech-stack-logos/tailwindcss.svg", "level": 85 },
       { "name": "Bootstrap", "logo": "/tech-stack-logos/bootstrap.svg", "level": 80 },
       { "name": "Material UI", "logo": "/tech-stack-logos/mui.svg", "level": 75 },
-      { "name": "Tailwind CSS", "logo": "/tech-stack-logos/tailwindcss.svg", "level": 85 },
       { "name": "Framer Motion", "logo": "/tech-stack-logos/framer.svg", "level": 75 },
-      { "name": "Vue.js", "logo": "/tech-stack-logos/vuedotjs.svg", "level": 65 },
       { "name": "Sass", "logo": "/tech-stack-logos/sass.svg", "level": 75 },
-      { "name": "Three.js", "logo": "/tech-stack-logos/threedotjs.svg", "level": 60 }
+      { "name": "Vue.js", "logo": "/tech-stack-logos/vuedotjs.svg", "level": 70 },
+      { "name": "Three.js", "logo": "/tech-stack-logos/threedotjs.svg", "level": 70 }
     ]
   },
   {
@@ -86,8 +86,8 @@
       { "name": "MongoDB", "logo": "/tech-stack-logos/mongodb.svg", "level": 80 },
       { "name": "PostgreSQL", "logo": "/tech-stack-logos/postgresql.svg", "level": 75 },
       { "name": "MySQL", "logo": "/tech-stack-logos/mysql.svg", "level": 70 },
-      { "name": "Redis", "logo": "/tech-stack-logos/redis.svg", "level": 65 },
-      { "name": "SQLite", "logo": "/tech-stack-logos/sqlite.svg", "level": 55 }
+      { "name": "Redis", "logo": "/tech-stack-logos/redis.svg", "level": 70 },
+      { "name": "SQLite", "logo": "/tech-stack-logos/sqlite.svg", "level": 70 }
     ]
   },
   {
@@ -96,12 +96,12 @@
     "color": "#38bdf8",
     "position": [-5, 5, 5],
     "technologies": [
-      { "name": "Docker", "logo": "/tech-stack-logos/docker.svg", "level": 70 },
-      { "name": "Kubernetes", "logo": "/tech-stack-logos/kubernetes.svg", "level": 65 },
       { "name": "Git", "logo": "/tech-stack-logos/git.svg", "level": 85 },
       { "name": "GitHub", "logo": "/tech-stack-logos/github.svg", "level": 75 },
-      { "name": "AWS", "logo": "/tech-stack-logos/aws.svg", "level": 65 },
-      { "name": "Azure DevOps", "logo": "/tech-stack-logos/azure.svg", "level": 60 }
+      { "name": "Docker", "logo": "/tech-stack-logos/docker.svg", "level": 70 },
+      { "name": "Kubernetes", "logo": "/tech-stack-logos/kubernetes.svg", "level": 70 },
+      { "name": "AWS", "logo": "/tech-stack-logos/aws.svg", "level": 70 },
+      { "name": "Azure DevOps", "logo": "/tech-stack-logos/azure.svg", "level": 70 }
     ]
   }
 ]

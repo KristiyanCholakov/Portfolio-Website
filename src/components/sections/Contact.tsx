@@ -10,7 +10,6 @@ import {
   Linkedin,
   Mail,
   Clock,
-  ExternalLink,
   AlertCircle,
 } from 'lucide-react'
 import TypingText from '@/components/ui/TypingText'
@@ -282,19 +281,19 @@ export default function Contact() {
                           } flex cursor-pointer items-center justify-between rounded-lg border p-2.5 transition-colors`}
                           onClick={() => setSelectedEmailType(email.id)}
                         >
-                          <div>
+                          <div className="pr-4">
                             <p className="text-text-primary text-sm font-medium">{email.type}</p>
-                            <span className="text-text-muted text-xs">{email.description}</span>
+                            <p className="text-text-muted text-xs">{email.description}</p>
                           </div>
                           <div
-                            className={`h-4 w-4 rounded-full border ${
+                            className={`h-5 w-5 flex-shrink-0 rounded-full border ${
                               selectedEmailType === email.id
                                 ? 'border-accent bg-accent/50'
                                 : 'border-accent/30'
-                            }`}
+                            } ml-1 flex items-center justify-center`}
                           >
                             {selectedEmailType === email.id && (
-                              <div className="bg-accent h-full w-full scale-50 rounded-full" />
+                              <div className="bg-accent h-2.5 w-2.5 rounded-full" />
                             )}
                           </div>
                         </motion.div>

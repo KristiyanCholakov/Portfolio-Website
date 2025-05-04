@@ -238,7 +238,7 @@ export default function Education() {
             transition={{ duration: 0.5, delay: 0.1 }}
           >
             <div className="border-accent/10 relative h-full overflow-hidden rounded-xl border">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {education.map((edu) => {
                   const IconComponent = getEducationIcon(edu.id)
                   return (

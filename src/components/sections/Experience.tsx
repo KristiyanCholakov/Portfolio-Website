@@ -343,7 +343,7 @@ export default function Experience() {
             transition={{ duration: 0.5, delay: 0.2 }}
           >
             <div className="border-accent/10 relative h-full overflow-hidden rounded-xl border">
-              <AnimatePresence mode="wait">
+              <AnimatePresence>
                 {experience.map(
                   (job) =>
                     activeJob === job.id && (

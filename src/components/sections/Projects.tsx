@@ -780,7 +780,7 @@ export default function Projects() {
         </motion.div>
 
         {/* Projects Grid */}
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           {filteredProjects.length > 0 ? (
             <motion.div
               key={`projects-grid-${activeCategory}-${activeTechs.join(',')}-${sortOrder}`}

@@ -9,8 +9,6 @@ import ScrollArrow from '@/components/ui/ScrollArrow'
 export default function Hero() {
   const [particlesCount, setParticlesCount] = useState(50)
   const canvasRef = useRef<HTMLCanvasElement>(null)
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [isMouseInCanvas, setIsMouseInCanvas] = useState(false)
 
   // Adjust particle count based on screen size
   useEffect(() => {
@@ -38,21 +36,6 @@ export default function Hero() {
     const ctx = canvas.getContext('2d')
     if (!ctx) return
 
-    // Track mouse position for interactive effects
-    const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect()
-      const x = e.clientX - rect.left
-      const y = e.clientY - rect.top
-      setMousePosition({ x, y })
-    }
-
-    const handleMouseEnter = () => setIsMouseInCanvas(true)
-    const handleMouseLeave = () => setIsMouseInCanvas(false)
-
-    canvas.addEventListener('mousemove', handleMouseMove)
-    canvas.addEventListener('mouseenter', handleMouseEnter)
-    canvas.addEventListener('mouseleave', handleMouseLeave)
-
     // Set canvas dimensions
     const setCanvasDimensions = () => {
       const { width, height } = canvas.getBoundingClientRect()
@@ -65,6 +48,11 @@ export default function Hero() {
     setCanvasDimensions()
     window.addEventListener('resize', setCanvasDimensions)
 
+    // Theme colors for consistent styling
+    const accentColor = { r: 56, g: 189, b: 248 } // #38bdf8 from theme
+    const highlightColor = { r: 14, g: 165, b: 233 } // #0ea5e9 - a deeper blue
+    const dataColor = { r: 2, g: 132, b: 199 } // #0284c7 - an even deeper blue
+
     // Create particles with more variety
     const particles: {
       x: number
@@ -74,10 +62,20 @@ export default function Hero() {
       speedY: number
       connections: number[]
       alpha: number
+      baseAlpha: number
       type: 'normal' | 'highlight' | 'data'
       oscillationSpeed: number
       oscillationOffset: number
+      flashValue: number
+      flashActive: boolean
     }[] = []
+
+    // Track flash propagation
+    let flashOriginIndex = -1
+    let flashTimer = 0
+    const flashInterval = 3000 // Time between flash events
+    const flashPropagationSpeed = 150 // Speed of propagation
+    const maxFlashDistance = 6 // How many "hops" away the flash can travel
 
     // Different particle types for visual interest
     for (let i = 0; i < particlesCount; i++) {
@@ -89,6 +87,9 @@ export default function Hero() {
       const sizeFactor = type === 'data' ? 2.5 : type === 'highlight' ? 1.5 : 1
       const speedFactor = type === 'data' ? 0.5 : type === 'highlight' ? 0.8 : 1
 
+      const baseAlpha =
+        type === 'data' ? 0.6 : type === 'highlight' ? 0.5 : 0.1 + Math.random() * 0.3
+
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
@@ -96,10 +97,13 @@ export default function Hero() {
         speedX: (Math.random() - 0.5) * 0.15 * speedFactor,
         speedY: (Math.random() - 0.5) * 0.15 * speedFactor,
         connections: [],
-        alpha: type === 'data' ? 0.6 : type === 'highlight' ? 0.5 : 0.1 + Math.random() * 0.3,
+        alpha: baseAlpha,
+        baseAlpha: baseAlpha,
         type,
         oscillationSpeed: Math.random() * 0.01 + 0.005,
         oscillationOffset: Math.random() * Math.PI * 2,
+        flashValue: 0,
+        flashActive: false,
       })
     }
 
@@ -145,90 +149,100 @@ export default function Hero() {
 
     connectParticles()
 
-    // Animation loop with enhanced effects
-    let animationId: number
-    let lastPulseTime = 0
-    const pulseInterval = 4000 // Slightly more frequent pulses
-    let activePulses: Array<{
-      origin: number
-      time: number
-      duration: number
-      color: string
-    }> = []
+    // Start a new flash propagation from a random particle
+    const startNewFlash = () => {
+      // Reset all particle flash values
+      particles.forEach((p) => {
+        p.flashValue = 0
+        p.flashActive = false
+      })
 
-    const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      const now = Date.now()
+      // Choose a random particle as the flash origin (prefer data or highlight particles)
+      const potentialOrigins = particles
+        .map((p, i) => ({ index: i, type: p.type }))
+        .filter((p) => p.type === 'data' || p.type === 'highlight' || Math.random() < 0.2)
 
-      // Randomly start new pulses
-      if (now - lastPulseTime > pulseInterval) {
-        // Use data nodes as pulse origins when possible
-        const dataNodes = particles
-          .map((p, i) => ({ index: i, type: p.type }))
-          .filter((p) => p.type === 'data')
-
-        const origin =
-          dataNodes.length > 0
-            ? dataNodes[Math.floor(Math.random() * dataNodes.length)].index
-            : Math.floor(Math.random() * particles.length)
-
-        // Only blue theme colors with different intensities
-        const colors = [
-          'rgba(56, 189, 248, alpha)', // Accent (default)
-          'rgba(6, 182, 212, alpha)', // Darker cyan blue
-          'rgba(125, 211, 252, alpha)', // Lighter blue
-        ]
-
-        const color =
-          Math.random() > 0.7 ? colors[Math.floor(Math.random() * colors.length)] : colors[0]
-
-        activePulses.push({
-          origin,
-          time: now,
-          duration: 2500 + Math.random() * 1000,
-          color,
-        })
-
-        lastPulseTime = now
+      if (potentialOrigins.length === 0) {
+        flashOriginIndex = Math.floor(Math.random() * particles.length)
+      } else {
+        flashOriginIndex =
+          potentialOrigins[Math.floor(Math.random() * potentialOrigins.length)].index
       }
 
-      // Mouse interaction - create subtle attraction or effect
-      if (isMouseInCanvas) {
-        particles.forEach((p) => {
-          const dx = mousePosition.x - p.x
-          const dy = mousePosition.y - p.y
-          const distance = Math.sqrt(dx * dx + dy * dy)
-          const maxDistance = 150
+      // Initialize the flash at the origin
+      particles[flashOriginIndex].flashValue = 1
+      particles[flashOriginIndex].flashActive = true
 
-          if (distance < maxDistance) {
-            // Subtle attraction toward mouse
-            const force = (1 - distance / maxDistance) * 0.02
-            p.speedX += (dx * force) / distance
-            p.speedY += (dy * force) / distance
+      // Compute propagation distances from origin
+      const distances = new Array(particles.length).fill(Infinity)
+      distances[flashOriginIndex] = 0
 
-            // Limit speed
-            const speed = Math.sqrt(p.speedX * p.speedX + p.speedY * p.speedY)
-            if (speed > 0.5) {
-              p.speedX = (p.speedX / speed) * 0.5
-              p.speedY = (p.speedY / speed) * 0.5
-            }
+      // BFS to compute distances
+      const queue: number[] = [flashOriginIndex]
+      while (queue.length > 0) {
+        const current = queue.shift()!
+        const currentDistance = distances[current]
+
+        if (currentDistance >= maxFlashDistance) continue
+
+        for (const neighborIdx of particles[current].connections) {
+          if (distances[neighborIdx] === Infinity) {
+            distances[neighborIdx] = currentDistance + 1
+            queue.push(neighborIdx)
           }
-        })
+        }
       }
 
-      // Draw connections with enhanced visuals
+      // Assign propagation delays based on distances
+      particles.forEach((p, i) => {
+        if (distances[i] < Infinity) {
+          // This sets a delay for when this particle's flash will start
+          // The setTimeout is internal to the animation loop
+          setTimeout(() => {
+            p.flashActive = true
+          }, distances[i] * flashPropagationSpeed)
+        }
+      })
+    }
+
+    // Animation loop with network flashing effects
+    let animationId: number
+    let lastTimestamp = 0
+
+    const animate = (timestamp: number) => {
+      const deltaTime = timestamp - lastTimestamp
+      lastTimestamp = timestamp
+
+      // Update flash timer
+      flashTimer += deltaTime
+      if (flashTimer >= flashInterval) {
+        flashTimer = 0
+        startNewFlash()
+      }
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      // Draw connections with flash effects
       ctx.lineWidth = 0.5
 
       for (let i = 0; i < particles.length; i++) {
         const p = particles[i]
 
-        // Apply oscillation to certain particle types
-        if (p.type === 'data' || p.type === 'highlight') {
-          p.x += Math.sin(now * p.oscillationSpeed + p.oscillationOffset) * 0.1
-          p.y += Math.cos(now * p.oscillationSpeed + p.oscillationOffset) * 0.1
+        // Update flash values for active particles
+        if (p.flashActive) {
+          // Smooth increase of flash value
+          p.flashValue = Math.min(p.flashValue + 0.05, 1)
+
+          // After reaching full flash, start decreasing
+          if (p.flashValue === 1) {
+            p.flashActive = false
+          }
+        } else if (p.flashValue > 0) {
+          // Smooth decrease of flash value
+          p.flashValue = Math.max(p.flashValue - 0.02, 0)
         }
 
-        // Draw connections with varied styles
+        // Draw connections with varied styles based on flash state
         for (const j of p.connections) {
           const p2 = particles[j]
 
@@ -239,58 +253,47 @@ export default function Hero() {
           const maxDistance = canvas.width * 0.12
 
           // Higher base opacity for connections between special nodes
-          let baseOpacity = 0.15
+          let baseOpacity = 0.25 // Increased from 0.15 for more pronounced links
           if (p.type === 'data' && p2.type === 'data') {
-            baseOpacity = 0.5
+            baseOpacity = 0.6 // Increased from 0.5
           } else if (p.type === 'data' || p2.type === 'data') {
-            baseOpacity = 0.3
+            baseOpacity = 0.4 // Increased from 0.3
           } else if (p.type === 'highlight' || p2.type === 'highlight') {
-            baseOpacity = 0.25
+            baseOpacity = 0.35 // Increased from 0.25
           }
 
+          // Calculate flash effect for the connection (max of both connected particles)
+          const connectionFlash = Math.max(p.flashValue, p2.flashValue)
+
+          // Increase opacity when flashing
           let opacity = baseOpacity * (1 - distance / maxDistance)
+          opacity = opacity + (0.9 - opacity) * connectionFlash // Increased from 0.8 to 0.9 for brighter flash
 
-          // Apply pulse effects from all active pulses
-          for (const pulse of activePulses) {
-            const timeFactor = 1 - Math.min(1, (now - pulse.time) / pulse.duration)
+          // Use the theme accent color as base
+          let r = accentColor.r
+          let g = accentColor.g
+          let b = accentColor.b
 
-            // Apply pulse effect based on network proximity
-            let pulseOpacity = 0
-            if (i === pulse.origin || j === pulse.origin) {
-              pulseOpacity = 0.7 * timeFactor
-            } else if (
-              particles[pulse.origin].connections.includes(i) ||
-              particles[pulse.origin].connections.includes(j)
-            ) {
-              pulseOpacity = 0.5 * timeFactor
-            } else if (
-              particles[pulse.origin].connections.some(
-                (k) => particles[k].connections.includes(i) || particles[k].connections.includes(j)
-              )
-            ) {
-              // Secondary connections (2 hops away)
-              pulseOpacity = 0.3 * timeFactor
-            }
-
-            opacity = Math.max(opacity, pulseOpacity)
+          // When flashing, shift to a brighter blue rather than changing hue
+          if (connectionFlash > 0) {
+            // Increase intensity of blue when flashing, while maintaining blue hue
+            r = Math.min(r + connectionFlash * 40, 120) // Slight increase in red
+            g = Math.min(g + connectionFlash * 40, 220) // Moderate increase in green
+            b = Math.min(b + connectionFlash * 20, 255) // Small increase in blue to maintain blue tone
           }
 
-          // Determine connection color based on active pulses
-          let strokeColor = `rgba(56, 189, 248, ${opacity})`
-          for (const pulse of activePulses) {
-            if (
-              (i === pulse.origin ||
-                j === pulse.origin ||
-                particles[pulse.origin].connections.includes(i) ||
-                particles[pulse.origin].connections.includes(j)) &&
-              pulse.color !== 'rgba(56, 189, 248, alpha)'
-            ) {
-              strokeColor = pulse.color.replace('alpha', String(opacity))
-              break
-            }
+          // Different color for special node connections
+          if (p.type === 'data' || p2.type === 'data') {
+            r = dataColor.r + connectionFlash * 60
+            g = dataColor.g + connectionFlash * 50
+            b = dataColor.b + connectionFlash * 40
+          } else if (p.type === 'highlight' || p2.type === 'highlight') {
+            r = highlightColor.r + connectionFlash * 50
+            g = highlightColor.g + connectionFlash * 40
+            b = highlightColor.b + connectionFlash * 30
           }
 
-          ctx.strokeStyle = strokeColor
+          ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${opacity})`
           ctx.beginPath()
           ctx.moveTo(p.x, p.y)
           ctx.lineTo(p2.x, p2.y)
@@ -298,9 +301,9 @@ export default function Hero() {
         }
       }
 
-      // Draw particles with enhanced visuals
-      particles.forEach((p, i) => {
-        // Update position with slight damping for more natural movement
+      // Draw particles with consistent visuals
+      particles.forEach((p) => {
+        // Update position
         p.x += p.speedX
         p.y += p.speedY
 
@@ -320,72 +323,47 @@ export default function Hero() {
         if (p.y < 0) p.y = canvas.height
         if (p.y > canvas.height) p.y = 0
 
-        // Calculate particle color/size based on type and pulses
-        let particleAlpha = p.alpha
-        let particleSize = p.size
-        let particleColor = `rgba(56, 189, 248, ${particleAlpha})`
-
-        // Apply effects from all active pulses
-        for (const pulse of activePulses) {
-          const timeFactor = 1 - Math.min(1, (now - pulse.time) / pulse.duration)
-
-          if (i === pulse.origin) {
-            particleAlpha = Math.max(particleAlpha, 0.9 * timeFactor)
-            particleSize = p.size + 3 * timeFactor
-            particleColor = pulse.color.replace('alpha', String(particleAlpha))
-          } else if (particles[pulse.origin].connections.includes(i)) {
-            particleAlpha = Math.max(particleAlpha, 0.7 * timeFactor)
-            particleSize = p.size + 1.5 * timeFactor
-            particleColor = pulse.color.replace('alpha', String(particleAlpha))
-          } else if (
-            particles[pulse.origin].connections.some((k) => particles[k].connections.includes(i))
-          ) {
-            // Secondary effect (2 hops away)
-            particleAlpha = Math.max(particleAlpha, 0.5 * timeFactor)
-            particleSize = p.size + 0.5 * timeFactor
-          }
-        }
+        // Make particles also slightly brighter during flash
+        const particleAlpha = p.baseAlpha + (1 - p.baseAlpha) * p.flashValue * 0.5
 
         // Use only blue theme colors for all particle types
         if (p.type === 'data') {
-          ctx.fillStyle = 'rgba(14, 165, 233, ' + particleAlpha + ')' // Lighter blue
+          ctx.fillStyle = `rgba(${dataColor.r}, ${dataColor.g}, ${dataColor.b}, ${particleAlpha})`
         } else if (p.type === 'highlight') {
-          ctx.fillStyle = 'rgba(2, 132, 199, ' + particleAlpha + ')' // Darker blue
+          ctx.fillStyle = `rgba(${highlightColor.r}, ${highlightColor.g}, ${highlightColor.b}, ${particleAlpha})`
         } else {
-          ctx.fillStyle = particleColor
+          ctx.fillStyle = `rgba(${accentColor.r}, ${accentColor.g}, ${accentColor.b}, ${particleAlpha})`
         }
 
         ctx.beginPath()
-        ctx.arc(p.x, p.y, particleSize, 0, Math.PI * 2)
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2)
         ctx.fill()
 
         // Draw rings around data nodes
         if (p.type === 'data') {
-          ctx.strokeStyle = 'rgba(14, 165, 233, ' + particleAlpha * 0.6 + ')'
+          ctx.strokeStyle = `rgba(${dataColor.r}, ${dataColor.g}, ${dataColor.b}, ${particleAlpha * 0.6})`
           ctx.lineWidth = 0.5
           ctx.beginPath()
-          ctx.arc(p.x, p.y, particleSize + 2, 0, Math.PI * 2)
+          ctx.arc(p.x, p.y, p.size + 2, 0, Math.PI * 2)
           ctx.stroke()
         }
       })
 
-      // Remove completed pulses
-      activePulses = activePulses.filter((pulse) => now - pulse.time <= pulse.duration)
-
       animationId = requestAnimationFrame(animate)
     }
 
-    animate()
+    // Start first flash effect
+    startNewFlash()
+
+    // Start animation loop
+    animationId = requestAnimationFrame(animate)
 
     // Cleanup
     return () => {
       cancelAnimationFrame(animationId)
       window.removeEventListener('resize', setCanvasDimensions)
-      canvas.removeEventListener('mousemove', handleMouseMove)
-      canvas.removeEventListener('mouseenter', handleMouseEnter)
-      canvas.removeEventListener('mouseleave', handleMouseLeave)
     }
-  }, [particlesCount, isMouseInCanvas, mousePosition])
+  }, [particlesCount])
 
   return (
     <section

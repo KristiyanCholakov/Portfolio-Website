@@ -427,7 +427,7 @@ const TechNetwork = () => {
         }}
         className="bg-surface/20 border-accent/10 rounded-xl border p-6 backdrop-blur-sm"
       >
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
           <motion.div
             key={activeCategory || 'all'}
             initial={{ opacity: 0 }}

@@ -1,5 +1,32 @@
 [
   {
+    "id": "job0",
+    "role": "Senior Data Modeller",
+    "company": "Experian Bulgaria",
+    "location": "Sofia, Bulgaria",
+    "period": "August 2025 - Present",
+    "type": "Full-time",
+    "description": "Driving data-driven insights through ETL optimization, advanced feature engineering, and machine learning applications for credit scoring and financial risk assessment at one of the world's leading information services companies.",
+    "responsibilities": [
+      "Optimised and automated ETL pipelines to ensure reliable and efficient monthly refresh cycles for mission-critical Tableau dashboards used across Experian's analytics teams",
+      "Performed advanced feature engineering tailored to client-specific requirements, enabling improved predictive performance in credit scoring, income estimation, and related financial risk models",
+      "Applied machine learning models for credit score prediction, salary estimation, and behavioural forecasting, contributing to more accurate and data-driven decision tools",
+      "Constructed detailed benchmarking reports for high-value banking clients across the USA, covering full-market comparisons, peer-group positioning, and deep-dive performance analysis"
+    ],
+    "technologies": [
+      "Python",
+      "Tableau",
+      "ETL Pipelines",
+      "Machine Learning",
+      "Feature Engineering",
+      "Credit Scoring",
+      "Data Analysis",
+      "SQL"
+    ],
+    "color": "#38bdf8",
+    "icon": "TrendingUp"
+  },
+  {
     "id": "job1",
     "role": "Data Engineer",
     "company": "TÜV SÜD",

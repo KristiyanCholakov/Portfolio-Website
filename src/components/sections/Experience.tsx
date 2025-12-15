@@ -11,6 +11,7 @@ import {
   Server,
   Equal,
   Database,
+  TrendingUp,
 } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import TypingText from '@/components/ui/TypingText'
@@ -39,6 +40,7 @@ const iconMap = {
   Server,
   Equal,
   Database,
+  TrendingUp,
 }
 
 // Process experience data to include icon components
@@ -93,7 +95,7 @@ const itemVariants = {
 }
 
 export default function Experience() {
-  const [activeJob, setActiveJob] = useState('job1')
+  const [activeJob, setActiveJob] = useState('job0')
   // Add state for the glowing dots
   const [glowingDots, setGlowingDots] = useState<
     Array<{

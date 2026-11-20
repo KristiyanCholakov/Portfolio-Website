@@ -8,6 +8,7 @@
     "type": "Full-time",
     "description": "I lead the Bulgaria-based members of Proactive Analytics at Experian, delivering credit analytics and reporting for the U.S. market.",
     "responsibilities": [
+      "Design studies of U.S. consumer credit, choosing the scope, metrics and charts. I examine buy now, pay later (BNPL) borrowing trends and student-loan refinancing patterns, and use interest rates to infer whether loans are federal or private when the loan type is missing.",
       "As sole developer, designed and built a self-service platform with five reporting workflows for presentations, spreadsheets and interactive dashboards. Development began during my Data Modeller role.",
       "Reduced generation time for reports of 50 or more pages from one day to several minutes using LLMs and Model Context Protocol (MCP).",
       "Built text-to-SQL and conversational tools. Evaluator agents check financial figures against source calculations and flag unsupported interpretations.",

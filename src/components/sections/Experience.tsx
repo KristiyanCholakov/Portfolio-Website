@@ -63,7 +63,7 @@ const typingCommands = [
   { content: '$ cat job_history.json | jq .', delay: 3.0 },
   {
     content:
-      '{\n  "name": "Kristiyan Cholakov",\n  "title": "AI Developer & Engineer",\n  "experience": "5+ years",\n  "expertise": ["AI", "Web Dev", "Cloud", "Data Science"],\n  "jobs": [...]',
+      '{\n  "name": "Kristiyan Cholakov",\n  "title": "Senior Data Scientist",\n  "team": "Proactive Analytics",\n  "expertise": ["AI", "Web Dev", "Cloud", "Data Science"],\n  "jobs": [...]',
     delay: 3.5,
   },
   { content: '$ npm run start:career', delay: 5.0 },
@@ -95,7 +95,7 @@ const itemVariants = {
 }
 
 export default function Experience() {
-  const [activeJob, setActiveJob] = useState('job0')
+  const [activeJob, setActiveJob] = useState(experience[0].id)
   // Add state for the glowing dots
   const [glowingDots, setGlowingDots] = useState<
     Array<{
@@ -309,7 +309,7 @@ export default function Experience() {
                             color: activeJob === job.id ? job.color : undefined,
                           }}
                         />
-                        <div className="ml-3 truncate font-medium">{job.role}</div>
+                        <div className="ml-3 font-medium">{job.role}</div>
                       </div>
 
                       {/* Company name row */}

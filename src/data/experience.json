@@ -1,17 +1,41 @@
 [
   {
+    "id": "experian-data-scientist",
+    "role": "Senior Data Scientist",
+    "company": "Experian",
+    "location": "Sofia, Bulgaria",
+    "period": "October 2026 – Present",
+    "type": "Full-time",
+    "description": "I lead the Bulgaria-based members of Proactive Analytics at Experian, delivering credit analytics and reporting for the U.S. market.",
+    "responsibilities": [
+      "As sole developer, designed and built a self-service platform with five reporting workflows for presentations, spreadsheets and interactive dashboards. Development began during my Data Modeller role.",
+      "Reduced generation time for reports of 50 or more pages from one day to several minutes using LLMs and Model Context Protocol (MCP).",
+      "Built text-to-SQL and conversational tools. Evaluator agents check financial figures against source calculations and flag unsupported interpretations.",
+      "Tested the platform and prepared it for deployment with parallel workers, input validation, role-based access and secure sharing."
+    ],
+    "technologies": [
+      "SQL",
+      "LLMs",
+      "Model Context Protocol",
+      "Credit Analytics",
+      "Text-to-SQL"
+    ],
+    "color": "#38bdf8",
+    "icon": "TrendingUp"
+  },
+  {
     "id": "job0",
     "role": "Senior Data Modeller",
-    "company": "Experian Bulgaria",
+    "company": "Experian",
     "location": "Sofia, Bulgaria",
-    "period": "August 2025 - Present",
+    "period": "August 2025 – October 2026",
     "type": "Full-time",
-    "description": "Driving data-driven insights through ETL optimization, advanced feature engineering, and machine learning applications for credit scoring and financial risk assessment at one of the world's leading information services companies.",
+    "description": "In Proactive Analytics, I built reporting pipelines for U.S. credit-market and customer-borrowing analyses.",
     "responsibilities": [
-      "Optimised and automated ETL pipelines to ensure reliable and efficient monthly refresh cycles for mission-critical Tableau dashboards used across Experian's analytics teams",
-      "Performed advanced feature engineering tailored to client-specific requirements, enabling improved predictive performance in credit scoring, income estimation, and related financial risk models",
-      "Applied machine learning models for credit score prediction, salary estimation, and behavioural forecasting, contributing to more accurate and data-driven decision tools",
-      "Constructed detailed benchmarking reports for high-value banking clients across the USA, covering full-market comparisons, peer-group positioning, and deep-dive performance analysis"
+      "Replaced single-client notebooks with configurable pipelines that supported multiple clients per run. Report preparation fell from about one day to one hour per report.",
+      "Reduced Tableau dashboard deployment from several days to one day and optimised database schemas for credit analytics.",
+      "Analysed tens of millions of U.S. loans and delivered over 90 customer-borrowing presentations to more than 50 clients, alongside 39 credit-market reports.",
+      "Engineered features for credit-score prediction, income estimation and behavioural forecasting. Adjusted comparisons for late-reported loans and duplicate consumers."
     ],
     "technologies": [
       "Python",
@@ -28,18 +52,16 @@
   },
   {
     "id": "job1",
-    "role": "Data Engineer",
+    "role": "Data Engineer Intern",
     "company": "TÜV SÜD",
     "location": "Singapore",
     "period": "July 2023 - December 2023",
     "type": "Internship",
-    "description": "Played an integral role in TÜV SÜD’s AI department, contributing to AI quality standards analysis, web application development, generative AI enhancements, and full‑stack development.",
+    "description": "Designed the architecture and database models for the AI Readiness Analysis platform and built its frontend and backend.",
     "responsibilities": [
-      "Studied and reviewed unreleased ISO AI quality standards; created comprehensive slide presentations for internal training",
-      "Developed, tested, and bug‑fixed the AI Readiness Analysis web application; designed and improved the user interface",
-      "Hosted and fine‑tuned Meta’s Llama 2 to generate industry‑specific evaluation questions for AI readiness",
-      "Managed project workflows in Microsoft Azure DevOps, including work items, user stories, timelines, and documentation",
-      "Implemented front‑end features with React.js and Next.js, and back‑end services with Node.js; secured authentication via OAuth"
+      "Built React and Next.js interfaces with server-side rendering, Node.js services and OAuth authentication.",
+      "Hosted and fine-tuned Llama 2 locally to generate industry- and client-specific assessment questions.",
+      "Implemented CI/CD in Azure DevOps, tested features and reviewed draft ISO AI quality standards for internal training."
     ],
     "technologies": [
       "Python",
@@ -56,18 +78,16 @@
   },
   {
     "id": "job2",
-    "role": "Researcher",
-    "company": "Nanyang Technological University Singapore",
+    "role": "Undergraduate Researcher",
+    "company": "NTU URECA Programme",
     "location": "Singapore",
     "period": "September 2022 - June 2023",
     "type": "Part-time",
-    "description": "Advanced handwritten mathematical expression recognition (HMER) through a complexity‑driven model combination approach, incorporating multi‑GPU acceleration and real‑time symbol detection.",
+    "description": "Studied how the complexity of a handwritten mathematical expression could guide the choice of recognition model.",
     "responsibilities": [
-      "Conducted in‑depth analysis of state‑of‑the‑art HMER models and identified their limitations",
-      "Developed a complexity‑based model combination mechanism to dynamically apply the most effective pre‑trained model",
-      "Integrated YOLO for real‑time mathematical symbol detection and refined segmentation pipelines",
-      "Implemented multi‑GPU processing to accelerate deep learning architectures for faster recognition",
-      "Optimized model architectures to achieve a 65.21% recognition rate on the CROHME 2019 test dataset"
+      "Trained a classifier to select CoMER or SAN using character count, ink density and ratio features.",
+      "Reached 65.21% expression recognition on CROHME 2019, compared with 64.39% for CoMER and 53.52% for SAN.",
+      "Added YOLO-based symbol detection and segmentation and implemented multi-GPU processing."
     ],
     "technologies": [
       "Python",

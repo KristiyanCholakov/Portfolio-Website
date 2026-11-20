@@ -255,7 +255,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className="relative flex min-h-[75vh] items-center justify-center overflow-hidden px-4 pt-16 pb-12 sm:min-h-[70vh] sm:px-6 sm:pt-20 sm:pb-16 lg:px-8"
+      className="relative flex min-h-[calc(100svh-4rem)] items-center justify-center overflow-hidden px-4 pt-16 pb-12 sm:px-6 sm:pt-20 sm:pb-16 lg:px-8"
     >
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" />
 
@@ -307,7 +307,7 @@ export default function Hero() {
               style={{ borderRadius: '60% 40% 55% 45% / 45% 55% 40% 60%' }}
             >
               <Image
-                src="/profile.jpeg"
+                src="/profile.jpeg?v=2"
                 alt="Kristiyan Cholakov"
                 fill
                 priority
@@ -333,15 +333,8 @@ export default function Hero() {
           transition={{ delay: 0.5, duration: 0.4 }}
           className="text-text-muted mt-4 max-w-2xl text-sm sm:text-base md:text-lg"
         >
-          <TypingText
-            text="Computer Science graduate specializing in Artificial Intelligence and Data Science."
-            delay={30}
-            className="inline-block"
-          />
+          Senior Data Scientist at Experian · Sofia, Bulgaria
         </motion.p>
-      </div>
-
-      <div className="absolute right-0 bottom-12 left-0 z-10">
         <ScrollArrow targetSection="about" label="Discover more about me" />
       </div>
     </section>

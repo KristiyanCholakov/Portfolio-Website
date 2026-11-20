@@ -56,8 +56,8 @@ export default function Footer() {
           >
             <button onClick={() => scrollToSection('top')} className="mb-4 flex items-center">
               <Image
-                src="/profile.jpeg"
-                alt="Logo"
+                src="/profile.jpeg?v=2"
+                alt="Kristiyan Cholakov"
                 width={40}
                 height={40}
                 className="mr-2 rounded-full"

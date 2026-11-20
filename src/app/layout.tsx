@@ -17,11 +17,11 @@ import { SpeedInsights } from '@vercel/speed-insights/next'
 export const metadata: Metadata = {
   metadataBase: new URL('https://kristiyancholakov.com'),
   title: {
-    default: 'Kristiyan Cholakov | AI & Software Engineer',
+    default: 'Kristiyan Cholakov | Senior Data Scientist',
     template: '%s | Kristiyan Cholakov',
   },
   description:
-    'Official portfolio of Kristiyan Cholakov – AI & Data Science Engineer. Discover projects, experience, and expertise in Artificial Intelligence, Machine Learning, Computer Vision, and Web Development.',
+    'Kristiyan Cholakov is a Senior Data Scientist at Experian in Sofia. Explore his work in credit analytics, automated reporting and handwritten STEM exam recognition.',
   keywords: [
     'Kristiyan Cholakov',
     'Кристиян Чолаков',
@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   authors: [{ name: 'Kristiyan Cholakov', url: 'https://kristiyancholakov.com' }],
   creator: 'Kristiyan Cholakov',
   openGraph: {
-    title: 'Kristiyan Cholakov | AI & Software Engineer',
+    title: 'Kristiyan Cholakov | Senior Data Scientist',
     description:
-      'Explore the professional portfolio of Kristiyan Cholakov – Web Developer, AI Engineer, and Machine Learning Specialist.',
+      'Kristiyan Cholakov is a Senior Data Scientist at Experian in Sofia. Explore his work in credit analytics, automated reporting and handwritten STEM exam recognition.',
     url: 'https://kristiyancholakov.com',
     siteName: 'Kristiyan Cholakov Portfolio',
     images: [
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
         url: '/preview.png',
         width: 1250,
         height: 670,
-        alt: 'Kristiyan Cholakov - AI & Software Engineer Portfolio',
+        alt: 'Kristiyan Cholakov - Senior Data Scientist Portfolio',
       },
     ],
     locale: 'en_US',
@@ -56,9 +56,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Kristiyan Cholakov | AI & Software Engineer',
+    title: 'Kristiyan Cholakov | Senior Data Scientist',
     description:
-      'Portfolio of Kristiyan Cholakov showcasing experience in AI, Data Science, and Full-Stack Development.',
+      'Kristiyan Cholakov is a Senior Data Scientist at Experian in Sofia. Explore his work in credit analytics, automated reporting and handwritten STEM exam recognition.',
     images: ['/preview.png'],
   },
   alternates: {
@@ -92,7 +92,6 @@ export default function RootLayout({
         {/* Favicon and SEO Enhancers */}
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="manifest" href="/site.webmanifest" />
       </head>
       <body>
         <Navbar />

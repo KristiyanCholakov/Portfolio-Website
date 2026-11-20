@@ -238,6 +238,12 @@ export default function Contact() {
                     delay={30}
                   />
                 </p>
+                <a
+                  className="text-accent mt-3 inline-block text-sm break-all hover:underline"
+                  href="mailto:contact@kristiyancholakov.com"
+                >
+                  contact@kristiyancholakov.com
+                </a>
               </div>
 
               {/* Social links and CTA */}

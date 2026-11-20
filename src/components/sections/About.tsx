@@ -3,7 +3,6 @@
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
-  ChevronDown,
   Code,
   Terminal,
   Braces,
@@ -13,79 +12,42 @@ import {
   Hash,
   Bot,
   ArrowRight,
-  Cpu,
-  Globe,
-  BarChart,
 } from 'lucide-react'
-import TypingText from '@/components/ui/TypingText'
 import { scrollToSection } from '@/utils/navigation'
 import ScrollArrow from '@/components/ui/ScrollArrow'
 import { useState, useEffect } from 'react'
 
-// Highlights with icons
-const highlights = [
+const awards = [
   {
-    icon: '🎓',
-    title: 'Education',
-    description: 'B.Eng. Computer Science, Nanyang Technological University (NTU), Singapore',
+    date: 'Q3 2026',
+    title: 'Best AI Implementation',
+    detail: 'Experian recognised my reporting platform in the Individual Contribution category.',
+  },
+  { date: 'Q1 2026', title: 'Employee of the Quarter', detail: 'Experian' },
+  {
+    date: 'Sep 2025',
+    title: 'Highly Commended',
+    detail:
+      'My handwritten exam platform placed in the top 10% of Computer Science submissions at the Global Undergraduate Awards.',
   },
   {
-    icon: '🧠',
-    title: 'Specialization',
-    description: 'Artificial Intelligence and Data Science with Minor in Mathematics',
-  },
-  {
-    icon: '💻',
-    title: 'Skills',
-    description: 'Machine Learning, Data Analysis, Software Development',
+    date: 'AY 2024/25',
+    title: 'Dean’s List',
+    detail: 'NTU College of Computing and Data Science. Final-semester GPA of 5.00/5.00.',
   },
 ]
 
-// Main technologies
 const mainTech = [
   'Python',
-  'PyTorch',
-  'TensorFlow',
-  'Flask',
-  'Django',
-  'TypeScript',
-  'Next.js',
-  'Kotlin',
+  'SQL',
+  'C++',
   'Java',
-]
-
-// Skills data for visualization
-const skillCategories = [
-  {
-    name: 'Software Development',
-    icon: Globe,
-    skills: [
-      { name: 'Full-Stack Web Development', level: 95 },
-      { name: 'Mobile App Development', level: 95 },
-      { name: 'Backend API Design & Integration', level: 90 },
-      { name: 'Cross-Platform Applications', level: 85 },
-    ],
-  },
-  {
-    name: 'Machine Learning',
-    icon: Cpu,
-    skills: [
-      { name: 'Deep Learning', level: 95 },
-      { name: 'Computer Vision', level: 90 },
-      { name: 'Natural Language Processing (NLP)', level: 90 },
-      { name: 'Model Design & Deployment', level: 90 },
-    ],
-  },
-  {
-    name: 'Data Science',
-    icon: BarChart,
-    skills: [
-      { name: 'Data Visualization', level: 95 },
-      { name: 'Exploratory Data Analysis (EDA)', level: 95 },
-      { name: 'Database & Data Design', level: 90 },
-      { name: 'Statistical Modeling & Inference', level: 90 },
-    ],
-  },
+  'JavaScript',
+  'TypeScript',
+  'PyTorch',
+  'LightGBM',
+  'PySpark',
+  'Tableau',
 ]
 
 // Decorative code icons for the background
@@ -220,9 +182,6 @@ export default function About() {
             transition={{ duration: 0.7, ease: 'easeOut' }}
             className="bg-accent mx-auto mb-4 h-1"
           />
-          <p className="text-text-muted font-mono tracking-wider">
-            <TypingText text="Curious | Creative | Coder" delay={50} />
-          </p>
         </motion.div>
 
         {/* Bio centered with the same max-width as the card grid */}
@@ -235,19 +194,16 @@ export default function About() {
             transition={{ duration: 0.6, ease: 'easeOut' }}
           >
             <p className="text-text-primary leading-relaxed">
-              As a recent graduate in Computer Science from Nanyang Technological University (NTU),
-              Singapore, with a specialization in Artificial Intelligence (AI) and Data Science
-              (DS), I am passionate about leveraging cutting-edge technologies to solve complex
-              problems. My academic journey was enriched by a minor in Mathematics and a range of
-              impactful projects that honed my technical expertise and analytical skills.
+              I’m a Senior Data Scientist in Experian’s Proactive Analytics team in Sofia. I lead
+              the Bulgaria-based team members and build tools that help analysts explain trends in
+              U.S. consumer credit. My reporting platform connects the figures in each report to the
+              calculations behind them.
             </p>
             <p className="text-text-muted leading-relaxed">
-              Over the past four years, I have cultivated a deep interest in Machine Learning (ML)
-              and Data Science, focusing my studies and practical efforts on these fields. Beyond my
-              technical pursuits, I am dedicated to teamwork, leadership, and innovation. I thrive
-              in collaborative environments, identifying critical components of projects,
-              efficiently delegating tasks, and integrating diverse technologies to deliver
-              innovative solutions.
+              At Nanyang Technological University in Singapore, I studied computer science,
+              specialising in AI and data science with a minor in mathematics. For my final year
+              project, I built a system that reads handwritten STEM exams, from page layout to
+              mathematical notation and grading.
             </p>
 
             {/* Main technologies tags */}
@@ -324,111 +280,27 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Interactive Skills Visualization - Replacing Image Section */}
-        <motion.div
-          className="relative mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-        >
-          <div className="border-accent/10 bg-surface/50 relative grid grid-cols-1 gap-6 rounded-xl border p-6 backdrop-blur-sm md:grid-cols-3">
-            {skillCategories.map((category, idx) => (
-              <motion.div
-                key={category.name}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + idx * 0.1, duration: 0.5 }}
-                className="border-accent/10 relative overflow-hidden rounded-lg border p-5"
-                whileHover={{
-                  y: -5,
-                  boxShadow: '0 10px 30px -15px rgba(56,189,248,0.3)',
-                }}
-              >
-                <div className="mb-4 flex items-center gap-3">
-                  <div className="bg-accent/10 text-accent flex h-10 w-10 items-center justify-center rounded-full">
-                    <category.icon size={20} />
-                  </div>
-                  <h3 className="text-accent text-lg font-bold">{category.name}</h3>
+        <div className="mx-auto mb-16 max-w-3xl">
+          <h3 className="text-accent mb-4 text-2xl font-bold">Honours and awards</h3>
+          <ul className="divide-y divide-slate-700/60 border-y border-slate-700/60">
+            {awards.map((award) => (
+              <li key={award.title} className="grid gap-1 py-4 sm:grid-cols-[8rem_1fr]">
+                <span className="font-mono text-sm text-sky-300">{award.date}</span>
+                <div>
+                  <h4 className="font-semibold">{award.title}</h4>
+                  <p className="mt-1 text-sm leading-relaxed text-zinc-300">{award.detail}</p>
                 </div>
-
-                <div className="space-y-3">
-                  {category.skills.map((skill, i) => (
-                    <div key={skill.name} className="space-y-1">
-                      <div className="flex justify-between">
-                        <span className="text-text-primary text-sm">{skill.name}</span>
-                        <span className="text-text-muted text-xs">{skill.level}%</span>
-                      </div>
-                      <div className="bg-accent/10 h-2 w-full overflow-hidden rounded-full">
-                        <motion.div
-                          className="bg-accent h-full rounded-full"
-                          initial={{ width: 0 }}
-                          whileInView={{ width: `${skill.level}%` }}
-                          viewport={{ once: true }}
-                          transition={{
-                            duration: 1,
-                            delay: 0.4 + idx * 0.1 + i * 0.05,
-                            ease: [0.22, 1, 0.36, 1],
-                          }}
-                        />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Decorative elements with controlled opacity */}
-                <div
-                  className="text-accent/5 absolute -right-4 -bottom-4 transition-opacity duration-700"
-                  style={{ opacity: isContentReady ? 0.5 : 0 }}
-                >
-                  <category.icon size={80} />
-                </div>
-              </motion.div>
+              </li>
             ))}
-          </div>
-        </motion.div>
-
-        {/* Highlights/Key Facts */}
-        <motion.div
-          className="relative mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true, margin: '-100px' }}
-          transition={{ duration: 0.6, ease: 'easeOut', delay: 0.2 }}
-        >
-          <div className="grid grid-cols-1 gap-8 sm:grid-cols-3">
-            {highlights.map((item, index) => (
-              <motion.div
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: 0.2 + index * 0.1, duration: 0.5 }}
-                className="bg-surface border-accent/10 hover:shadow-accent/10 group rounded-lg border p-6 shadow-lg"
-                whileHover={{ y: -5 }}
-              >
-                <motion.div
-                  className="mb-3 text-3xl"
-                  whileHover={{ scale: 1.2 }}
-                  transition={{ type: 'spring', stiffness: 300 }}
-                >
-                  {item.icon}
-                </motion.div>
-                <h3 className="text-accent mb-2 text-lg font-bold">{item.title}</h3>
-                <p className="text-text-muted text-sm">{item.description}</p>
-
-                {/* Subtle indicator line */}
-                <motion.div
-                  className="bg-accent mt-4 h-0.5 w-0"
-                  initial={{ width: 0 }}
-                  whileHover={{ width: '100%' }}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+          </ul>
+          <h3 className="text-accent mt-8 mb-2 text-lg font-semibold">Certifications</h3>
+          <p>
+            Google IT Automation with Python, Google Business Intelligence and Google Project
+            Management
+          </p>
+          <h3 className="text-accent mt-6 mb-2 text-lg font-semibold">Languages</h3>
+          <p>Bulgarian (native) and English (full professional proficiency)</p>
+        </div>
 
         {/* Scroll CTA */}
         <ScrollArrow targetSection="education" label="View my education" />

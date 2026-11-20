@@ -1,19 +1,18 @@
 [
   {
     "id": "ntu",
-    "degree": "Bachelor of Engineering - B.Eng, Computer Science",
+    "degree": "Bachelor of Engineering in Computer Science",
     "institution": "Nanyang Technological University Singapore",
     "location": "Singapore",
     "period": "August 2021 - January 2025",
     "distinction": true,
     "focus": "Artificial Intelligence and Data Science, Minor in Mathematics",
-    "description": "Graduated with Highest Distinction (First Class Honours) through NTU's Accelerated Bachelor Program. Completed the degree in 3.5 years with a structured focus on mastering core CS, AI, and DS principles, and applying them through advanced research and projects.",
+    "description": "Completed NTU’s Accelerated Bachelor programme in 3.5 years with Highest Distinction and a cumulative GPA of 4.59/5.00.",
     "achievements": [
-      "Honours Degree with Highest Distinction (First Class Honours) | GPA: 4.59/5.00",
-      "Double Specialization in Artificial Intelligence and Data Science, Minor in Mathematics",
-      "Selected for URECA research program and URECA-FYP, focusing on advanced machine learning models",
-      "Completed degree in 3.5 years by overloading semesters",
-      "Developed leadership, teamwork, and communication skills through collaborative research"
+      "Specialised in Artificial Intelligence and Data Science with a minor in Mathematics.",
+      "Selected for the URECA undergraduate research programme.",
+      "Earned an A+ for the Final Year Project and a nomination for the Nanyang President’s Graduate Scholarship.",
+      "Made the Dean’s List with a 5.00/5.00 final-semester GPA."
     ],
     "color": "#38bdf8",
     "icon": "GraduationCap"
@@ -29,7 +28,7 @@
     "description": "Completed an intensive and project-oriented web development program focused on building real-world Python and Django web applications, including RESTful APIs, database management, and frontend integration.",
     "achievements": [
       "Built full-stack Django applications with PostgreSQL and REST APIs",
-      "Excelled in backend logic, testing, and deployment",
+      "Youngest student in the cohort, completing the diploma alongside secondary school.",
       "Achieved top academic performance with 6.00/6.00 GPA",
       "Delivered production-ready apps with frontend integration and robust backend"
     ],
@@ -46,7 +45,7 @@
     "focus": "Mathematics, Informatics, and Programming",
     "description": "Specialized in mathematics and informatics under the Bulgarian curriculum. Participated in competitive programming and mathematics contests, and served in the student council, developing both technical and leadership skills.",
     "achievements": [
-      "Graduated with 5.97/6.00 GPA",
+      "Graduated as valedictorian with a final grade of 5.97/6.00.",
       "Excelled in mathematics competitions and problem-solving",
       "Took advanced programming courses in web development and C++",
       "Active member of the student council, enhancing leadership and organization skills"

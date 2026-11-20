@@ -1,5 +1,46 @@
 [
   {
+    "id": "bulgarian-typing",
+    "title": "Bulgarian Typing and Cultural Learning",
+    "description": "A pre-release typing platform built around Bulgarian literature and historical figures.",
+    "longDescription": "Since September 2026, I have been developing typing exercises for children and adults using literary works and AI-generated historical summaries.\n\nI am designing an event pipeline for BDS and phonetic keyboards that records corrections, backspaces and timing between keystrokes. Edit alignment will classify errors and relate their frequency to how often learners encounter each word.",
+    "technologies": [
+      "Edit alignment",
+      "Typing analytics"
+    ],
+    "category": "Software Development",
+    "featured": true,
+    "started": "2026-09"
+  },
+  {
+    "id": "invoice-automation",
+    "title": "Bulgarian Invoice Automation",
+    "description": "A desktop tool that reads Bulgarian invoices and transfers stock updates into inventory software.",
+    "longDescription": "In January and February 2025, I built a desktop client connected to a locally hosted LayoutLMv3 model fine-tuned on Bulgarian invoices. It exports Microinvest-compatible files so recognised items can update inventory without manual re-entry.\n\nI also automated client-specific PDF and Word formatting and deployed an e-commerce site with an integrated inventory and invoicing schema.",
+    "technologies": [
+      "LayoutLMv3",
+      "Microinvest"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": true,
+    "completed": "2025-02"
+  },
+  {
+    "id": "handwritten-exams",
+    "title": "Digital Handwritten Examination Platform",
+    "description": "An end-to-end system for taking, recognising and grading handwritten STEM exams.",
+    "longDescription": "For my NTU Final Year Project (January–November 2024), I built a desktop exam-management application, a tablet exam client and backend model servers for recognition and LLM-based grading.\n\nI generated synthetic STEM exam pages and fine-tuned DETR on 10,000 custom samples. Layout analysis achieved 0.921 F1 on a synthetic test set. With PosFormer and TrOCR, full-page recognition of text and formulas reached 82.19% combined F1.",
+    "technologies": [
+      "DETR",
+      "PosFormer",
+      "TrOCR",
+      "LLMs"
+    ],
+    "category": "Artificial Intelligence",
+    "featured": true,
+    "completed": "2024-11"
+  },
+  {
     "id": "portfolio-website",
     "title": "Modern Developer Portfolio",
     "description": "A sleek, interactive, and feature-rich portfolio website built with Next.js and Framer Motion, designed to showcase a developer's skills, projects, and contact information.",
@@ -56,7 +97,7 @@
     "featured": false,
     "github": "https://github.com/KristiyanCholakov/SC4024-Data-Viz-Climate-Change",
     "demo": "https://youtu.be/64C3F0kX-IU",
-    "completed": "2023-12"
+    "completed": "2024-11"
   },
   {
     "id": "sentiment-analysis-ablation-study",
@@ -86,7 +127,7 @@
     "longDescription": "This lab implements and evaluates multiple image segmentation techniques—Otsu’s global thresholding, Niblack’s local thresholding with Bayesian optimization, Sauvola’s adaptive thresholding, and Gabor filter feature extraction with K-Means clustering—to isolate text from degraded document images. It also explores 3D stereo vision by computing disparity maps from stereo image pairs using SSD, NCC/ZNCC, and SAD similarity metrics to infer depth information.\n\nDeveloped entirely in MATLAB using the Image Processing Toolbox and Statistics and Machine Learning Toolbox, with Bayesian optimization for parameter tuning, the project generates quantitative and visual results for each method. All source scripts, image datasets, and a detailed report are included for reproducibility and further analysis.",
     "thumbnail": "./projects/image-segmentation-3d-stereo-vision.png",
     "technologies": [
-        "MATLAB"
+      "MATLAB"
     ],
     "category": "Artificial Intelligence",
     "featured": false,
@@ -101,7 +142,7 @@
     "longDescription": "This lab demonstrates core image processing workflows in MATLAB, covering intensity transformations (contrast stretching, histogram equalization), spatial filtering (Gaussian and median), frequency-domain noise reduction, perspective correction, and basic classification techniques. Each method is evaluated on sample images to assess its impact on enhancement and restoration.",
     "thumbnail": "./projects/point-processing-spatial-frequency-filtering.png",
     "technologies": [
-        "MATLAB"
+      "MATLAB"
     ],
     "category": "Artificial Intelligence",
     "featured": false,
@@ -261,7 +302,7 @@
     "id": "speech-emotion-recognition",
     "title": "Multimodal Speech & Text Emotion Recognition",
     "description": "A multimodal emotion recognition system that integrates speech-to-text conversion and deep learning classifiers to detect emotional states from audio and text data.",
-    "longDescription": "This project explores multimodal emotion recognition by combining speech-based and text-based analysis. Speech inputs are transcribed with OpenAI’s Whisper model, acoustic features are extracted using Librosa and openSMILE, and a Multi-Layer Perceptron classifies audio emotion. In parallel, a Convolutional Neural Network processes textual inputs. A fusion model then dynamically integrates both modalities to deliver context-aware emotion predictions.\n\nDeveloped in Python within Jupyter Notebooks, the workflow covers data preprocessing, model training, and hyperparameter tuning. Multiple CNN variants (including GRU, Bi-GRU, and LSTM) and MLP architectures were benchmarked. The final fusion model achieved 71.87% validation accuracy, outperforming standalone text (60.04%) and audio (68.91%) classifiers. All experiments are reproducible via provided notebooks and PyTorch checkpoints.",
+    "longDescription": "This project explores multimodal emotion recognition by combining speech-based and text-based analysis. Speech inputs are transcribed with OpenAI’s Whisper model, acoustic features are extracted using Librosa and openSMILE, and a Multi-Layer Perceptron classifies audio emotion. In parallel, a Convolutional Neural Network processes textual inputs. A fusion model then dynamically integrates both modalities to deliver context-aware emotion predictions.\n\nDeveloped in Python within Jupyter Notebooks, the workflow covers data preprocessing, model training, and hyperparameter tuning. Multiple CNN variants (including GRU, Bi-GRU, and LSTM) and MLP architectures were benchmarked. The final fusion model achieved 71.87% test accuracy, outperforming standalone text (60.04%) and audio (68.91%) classifiers. All experiments are reproducible via provided notebooks and PyTorch checkpoints.",
     "thumbnail": "./projects/speech-emotion-recognition.png",
     "technologies": [
       "Python",
@@ -273,7 +314,7 @@
     "featured": false,
     "github": "https://github.com/KristiyanCholakov/SC4001-Speech-Emotion-Recognition",
     "demo": "",
-    "completed": "2024-04"
+    "completed": "2024-05"
   },
   {
     "id": "opinion-search-engine",
@@ -335,7 +376,7 @@
     "id": "elo-merchant-category-recommendation",
     "title": "ELO Merchant Category Recommendation",
     "description": "A scalable machine-learning pipeline using dual LightGBM models and outlier detection to predict customer loyalty scores in the Kaggle ELO Merchant Category Recommendation challenge.",
-    "longDescription": "This project tackles the ELO Merchant Category Recommendation challenge by combining a novel dual-model strategy with extensive feature engineering. A binary LightGBM classifier first identifies outlier transactions, and two separate LightGBM regressors—one trained on all data and another on non-outliers—produce loyalty score predictions depending on the classifier’s output. This targeted approach improves accuracy and robustness against anomalous records.\n\nThe end-to-end workflow, implemented in Jupyter Notebooks, includes exploratory data analysis, data cleaning, behavioral and interaction feature construction, automated feature selection, and systematic hyperparameter tuning via cross-validation. The final solution achieved a public leaderboard RMSE of 3.68232, placing in the top 6.7% of participants.",
+    "longDescription": "This project tackles the ELO Merchant Category Recommendation challenge by combining a novel dual-model strategy with extensive feature engineering. A binary LightGBM classifier first identifies outlier transactions, and two separate LightGBM regressors—one trained on all data and another on non-outliers—produce loyalty score predictions depending on the classifier’s output. This targeted approach improves accuracy and robustness against anomalous records.\n\nThe end-to-end workflow, implemented in Jupyter Notebooks, includes exploratory data analysis, data cleaning, behavioral and interaction feature construction, automated feature selection, and systematic hyperparameter tuning via cross-validation. The final solution achieved a public leaderboard RMSE of 3.68232, placing in the top 6.67% on the public leaderboard at submission.",
     "thumbnail": "./projects/elo-merchant-category-recommendation.png",
     "technologies": [
       "Python",

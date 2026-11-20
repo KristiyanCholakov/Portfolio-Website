@@ -32,13 +32,14 @@ interface Project {
   title: string
   description: string
   longDescription: string
-  thumbnail: string
+  thumbnail?: string
   technologies: string[]
   category: string
   featured: boolean
-  github: string
+  github?: string
   demo?: string
-  completed: string
+  completed?: string
+  started?: string
 }
 
 interface Technology {
@@ -394,6 +395,28 @@ const HexagonBackground = () => {
 }
 
 // Project Modal component for displaying project details
+function ProjectCover({ project }: { project: Project }) {
+  if (project.thumbnail) {
+    return (
+      <Image
+        src={project.thumbnail.replace(/^\.\//, '/')}
+        alt=""
+        fill
+        className="object-cover"
+        sizes="(min-width: 1024px) 40vw, 100vw"
+      />
+    )
+  }
+
+  return (
+    <div className="flex h-full items-center bg-gradient-to-br from-slate-800 to-slate-950 px-6">
+      <span className="font-mono text-sm tracking-wide text-sky-200">
+        {project.started ? 'In development' : 'Completed'} · {project.started ?? project.completed}
+      </span>
+    </div>
+  )
+}
+
 interface ProjectModalProps {
   project: Project | null
   isOpen: boolean
@@ -403,25 +426,6 @@ interface ProjectModalProps {
 const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
   // If no project or not open, don't render anything
   if (!project || !isOpen) return null
-
-  // Function to ensure correct image path from public directory
-  const getImagePath = (path: string) => {
-    // If path already starts with a slash or http, return it as is
-    if (path.startsWith('/') || path.startsWith('http')) {
-      return path
-    }
-
-    // If path starts with './projects/' or 'projects/', normalize it
-    if (path.startsWith('./projects/')) {
-      return `/projects/${path.substring(11)}`
-    }
-    if (path.startsWith('projects/')) {
-      return `/projects/${path.substring(9)}`
-    }
-
-    // Default case, assume it's directly in the projects folder
-    return `/projects/${path}`
-  }
 
   return (
     <AnimatePresence>
@@ -464,12 +468,7 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
             <div className="flex flex-col">
               {/* Modal header with image */}
               <div className="relative h-64 w-full sm:h-80">
-                <Image
-                  src={getImagePath(project.thumbnail)}
-                  alt={project.title}
-                  fill
-                  className="object-cover"
-                />
+                <ProjectCover project={project} />
                 <div className="from-background/80 absolute inset-0 bg-gradient-to-t to-transparent" />
 
                 {/* Category badge */}
@@ -539,15 +538,17 @@ const ProjectModal = ({ project, isOpen, onClose }: ProjectModalProps) => {
 
                 {/* Links */}
                 <div className="mt-8 flex flex-wrap gap-4">
-                  <a
-                    href={project.github}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-accent hover:bg-accent/80 text-accent-foreground flex items-center gap-2 rounded-md px-5 py-2 text-sm font-medium transition-colors"
-                  >
-                    <Github size={18} />
-                    View Code
-                  </a>
+                  {project.github && (
+                    <a
+                      href={project.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="bg-accent hover:bg-accent/80 text-accent-foreground flex items-center gap-2 rounded-md px-5 py-2 text-sm font-medium transition-colors"
+                    >
+                      <Github size={18} />
+                      View Code
+                    </a>
+                  )}
                   {project.demo && (
                     <a
                       href={project.demo}
@@ -607,7 +608,7 @@ export default function Projects() {
       list = list.filter((p) => p.technologies.some((t) => activeTechs.includes(t)))
     }
     list.sort((a, b) => {
-      const diff = new Date(a.completed).getTime() - new Date(b.completed).getTime()
+      const diff = (a.completed ?? a.started).localeCompare(b.completed ?? b.started)
       return sortOrder === 'asc' ? diff : -diff
     })
     return list
@@ -856,25 +857,6 @@ function ProjectCard({
     margin: '0px 0px -100px 0px', // Trigger animation slightly before card fully enters viewport
   })
 
-  // Function to ensure correct image path from public directory
-  const getImagePath = (path: string) => {
-    // If path already starts with a slash or http, return it as is
-    if (path.startsWith('/') || path.startsWith('http')) {
-      return path
-    }
-
-    // If path starts with './projects/' or 'projects/', normalize it
-    if (path.startsWith('./projects/')) {
-      return `/projects/${path.substring(11)}`
-    }
-    if (path.startsWith('projects/')) {
-      return `/projects/${path.substring(9)}`
-    }
-
-    // Default case, assume it's directly in the projects folder
-    return `/projects/${path}`
-  }
-
   return (
     <motion.div
       ref={ref}
@@ -907,12 +889,7 @@ function ProjectCard({
               transition={{ duration: 0.5 }}
               className="h-full w-full"
             >
-              <Image
-                src={getImagePath(project.thumbnail)}
-                alt={project.title}
-                fill
-                className="object-cover"
-              />
+              <ProjectCover project={project} />
             </motion.div>
 
             {/* Category badge */}
@@ -933,7 +910,16 @@ function ProjectCard({
           <div className="flex flex-1 flex-col justify-between p-6">
             <div>
               <h3 className="text-foreground mb-2 line-clamp-2 text-xl font-bold">
-                {project.title}
+                <button
+                  type="button"
+                  className="hover:text-accent text-left"
+                  onClick={(event) => {
+                    event.stopPropagation()
+                    onClick()
+                  }}
+                >
+                  {project.title}
+                </button>
               </h3>
               <p className="text-muted-foreground mb-5 line-clamp-2 text-sm">
                 {project.description}
@@ -954,16 +940,18 @@ function ProjectCard({
 
             {/* Action links */}
             <div className="flex items-center gap-3 pt-2">
-              <Link
-                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <Github size={16} />
-                <span>Code</span>
-              </Link>
+              {project.github && (
+                <Link
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-accent flex items-center gap-1 text-sm"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  <Github size={16} />
+                  <span>Code</span>
+                </Link>
+              )}
 
               {project.demo && (
                 <Link
